@@ -1,0 +1,1016 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="排序,算法,桶排序,基数排序,计数排序,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="初级-桶排序一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。">
+<meta name="keywords" content="排序,算法,桶排序,基数排序,计数排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="桶排序">
+<meta property="og:url" content="http://yoursite.com/2019/05/01/bucket-sort/index.html">
+<meta property="og:site_name" content="mswcool&#39;blog">
+<meta property="og:description" content="初级-桶排序一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png">
+<meta property="og:image" content="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png">
+<meta property="og:updated_time" content="2020-05-01T15:47:13.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="桶排序">
+<meta name="twitter:description" content="初级-桶排序一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。">
+<meta name="twitter:image" content="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/01/bucket-sort/">
+
+
+
+
+
+  <title> 桶排序 | mswcool'blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0f1fd626060161a4a86d92f1cbeecd13";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mswcool'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">纪录学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/bucket-sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shengweimao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mswcool'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                桶排序
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-01T21:59:14+08:00">
+                2019-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+         <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">字数统计:</span>
+                 <span class="post-count">3,169(字)</span>
+                 
+               </span>
+          
+            <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">阅读时长:</span>
+                 <span class="post-count">13(分)</span>
+           
+         </span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
+<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
+<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
+<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
+<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
+<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
+<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
+<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
+<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
+<p>是不是很方便快捷呢？</p>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
+<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
+<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
+<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
+<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
+<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
+<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
+<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
+<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/桶排序/" rel="tag"># 桶排序</a>
+          
+            <a href="/tags/基数排序/" rel="tag"># 基数排序</a>
+          
+            <a href="/tags/计数排序/" rel="tag"># 计数排序</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/bubble-sort/" rel="next" title="冒泡排序">
+                <i class="fa fa-chevron-left"></i> 冒泡排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/02/insert-sort/" rel="prev" title="插入排序">
+                插入排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yNzkyMi80NDk5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="shengweimao">
+          <p class="site-author-name" itemprop="name">shengweimao</p>
+           
+              <p class="site-description motion-element" itemprop="description">奋斗吧少年</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初级-桶排序"><span class="nav-number">1.</span> <span class="nav-text">初级-桶排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">1.1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码"><span class="nav-number">1.2.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶-基数排序"><span class="nav-number">2.</span> <span class="nav-text">进阶-基数排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理-1"><span class="nav-number">2.1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-1"><span class="nav-number">2.2.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化的基数排序"><span class="nav-number">3.</span> <span class="nav-text">优化的基数排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理-2"><span class="nav-number">3.1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-2"><span class="nav-number">3.2.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展的基数排序"><span class="nav-number">4.</span> <span class="nav-text">拓展的基数排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理-3"><span class="nav-number">4.1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码-3"><span class="nav-number">4.2.</span> <span class="nav-text">具体代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shengweimao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

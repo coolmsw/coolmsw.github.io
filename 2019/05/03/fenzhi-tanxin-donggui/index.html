@@ -1,0 +1,1050 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="dp,分治,动态规化,贪心,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="一、贪心算法参考 算法（一）：贪心 今天介绍的主题是贪心算法。这是相对比较容易的一种算法。我这里不敢给出严格定义，因为我当年领悟贪心和动态规划的无后效性用了三年时间。从我第一次听说无后效性到终有一天恍然大悟，总共用去了一千天。所以，我这里就不讲定义，咱们直接看例子。 贪心算法，如果不用手动证明一个问题的数学性质的话，其实是比较简单的。 1.例1有一个背包，其最大容量是50KG，现在有各种不同价值的">
+<meta name="keywords" content="dp,分治,动态规化,贪心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心、分治、动规你了解多少">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/fenzhi-tanxin-donggui/index.html">
+<meta property="og:site_name" content="mswcool&#39;blog">
+<meta property="og:description" content="一、贪心算法参考 算法（一）：贪心 今天介绍的主题是贪心算法。这是相对比较容易的一种算法。我这里不敢给出严格定义，因为我当年领悟贪心和动态规划的无后效性用了三年时间。从我第一次听说无后效性到终有一天恍然大悟，总共用去了一千天。所以，我这里就不讲定义，咱们直接看例子。 贪心算法，如果不用手动证明一个问题的数学性质的话，其实是比较简单的。 1.例1有一个背包，其最大容量是50KG，现在有各种不同价值的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2354823-de612a52e5374943.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2354823-e4cbe10aed2d6510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/604/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2354823-2f8e625dd5580965.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/603/format/webp">
+<meta property="og:updated_time" content="2020-05-01T17:35:25.024Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贪心、分治、动规你了解多少">
+<meta name="twitter:description" content="一、贪心算法参考 算法（一）：贪心 今天介绍的主题是贪心算法。这是相对比较容易的一种算法。我这里不敢给出严格定义，因为我当年领悟贪心和动态规划的无后效性用了三年时间。从我第一次听说无后效性到终有一天恍然大悟，总共用去了一千天。所以，我这里就不讲定义，咱们直接看例子。 贪心算法，如果不用手动证明一个问题的数学性质的话，其实是比较简单的。 1.例1有一个背包，其最大容量是50KG，现在有各种不同价值的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2354823-de612a52e5374943.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/720/format/webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/fenzhi-tanxin-donggui/">
+
+
+
+
+
+  <title> 贪心、分治、动规你了解多少 | mswcool'blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0f1fd626060161a4a86d92f1cbeecd13";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mswcool'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">纪录学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/fenzhi-tanxin-donggui/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shengweimao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mswcool'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                贪心、分治、动规你了解多少
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T18:59:44+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+         <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">字数统计:</span>
+                 <span class="post-count">4,512(字)</span>
+                 
+               </span>
+          
+            <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">阅读时长:</span>
+                 <span class="post-count">16(分)</span>
+           
+         </span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="一、贪心算法"><a href="#一、贪心算法" class="headerlink" title="一、贪心算法"></a>一、贪心算法</h5><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F25769975" target="_blank" rel="noopener">算法（一）：贪心</a></p>
+<p>今天介绍的主题是贪心算法。这是相对比较容易的一种算法。我这里不敢给出严格定义，因为我当年领悟贪心和动态规划的无后效性用了三年时间。从我第一次听说无后效性到终有一天恍然大悟，总共用去了一千天。所以，我这里就不讲定义，咱们直接看例子。</p>
+<p>贪心算法，如果不用手动证明一个问题的数学性质的话，其实是比较简单的。</p>
+<h6 id="1-例1"><a href="#1-例1" class="headerlink" title="1.例1"></a>1.例1</h6><p>有一个背包，其最大容量是50KG，现在有各种不同价值的液体，比方说，有水，其价值是10 每千克，共100KG；酒精，其价值是20 每千克，共30KG；有油，价值25每千克，共30KG。<a id="more"></a>问什么样的方案才能使得背包里装的液体的总价值最大？显然，这是一道小学生都会的题目，拣贵的装呗。这谁不会。那就是把30KG油先装了，因为油最贵嘛，剩下20KG的容量装酒精，因为酒精比水贵。</p>
+<p>好，那么，这个思维过程就是贪心：每一阶段做决策都找出当前条件下的最优解。当然这个问题，这种解法的正确性显而易见，贪心类的问题最难的地方在于正确性无法证明。这个我们先不管。毕竟我们不是在做算法研究，我们只要能用贪心去解决具体的编程问题就行了。</p>
+<h6 id="2-例2"><a href="#2-例2" class="headerlink" title="2.例2"></a>2.例2</h6><p>再看一个简单的例子。在商店找零，比如说，售货员要找给你37块钱，那什么样的方案才是找钱的张数最少的方案呢？肯定是找回的零钱面值越大，最后的张数越少。所以我们可以使用贪心的方法来解决这个问题。先找一张20的，如果再找一张20的，那就超过37了，这不行，所以就再找一张10块的，然后是5块的和两张一块的。最终的方案就得到了，这也是一次典型的贪心计算方案。</p>
+<h6 id="3-例3"><a href="#3-例3" class="headerlink" title="3.例3"></a>3.例3</h6><p>在贪心的思想的指导下，也设计了一种排序算法，这种算法被称为选择排序。排序的思想很简单。既然我的目标是把一堆数字从小到大排，那么我按阶段解决这个问题不就好了么？第一步找到最小的那个数把它放到第一位，第二步在剩下的所有数里再找最小的，把它放到第二位，依次类推。</p>
+<h6 id="二、分治算法"><a href="#二、分治算法" class="headerlink" title="二、分治算法"></a>二、分治算法</h6><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F25855644" target="_blank" rel="noopener">算法设计（二）：分治</a><br> 一个小姑娘在图书馆借了一大摞书，抱着出门，警报响了，小姑娘正准备一本本地去试看是哪一本还没有消磁，管理员大妈惊呼：“这得试到什么时候了.” 然后大妈就把书分了两半，去试一下没有响，再把剩下的那一半书再分两半。大妈的这种解法就叫分治。这也是算法设计的一个例子。小姑娘的解法的时间复杂度是O(n)，大妈解法的时间复杂度是O(log n)。当然，段子下面早就有人回复：如果不止一本书没有消磁，大妈解法就挂了。</p>
+<p>分治算法，通过把问题分解为更小的子问题，先解决小问题，再把小问题的解合并起来的一种方法。通常，如果子问题的规模仍然很大，可以继续拆解成更小的任务，更进一步，实践中，大任务往往与子任务有相同的结构，以便于递归地进行任务拆解。</p>
+<h6 id="1-例1-1"><a href="#1-例1-1" class="headerlink" title="1.例1"></a>1.例1</h6><p>以具体的例子来说明。现在一共9枚硬币，已知其中有一枚是假的，它比其他8枚都要轻。现在有一个天平，只称两次，能找到这枚硬币吗？</p>
+<p>我们倒着想，假如现在有两枚，称一次，这很简单，天平高的那一边的是假币，如果有三枚呢？那就有两种情况，如果天平平衡，那么未称的那枚是假币，如果天平不平衡，高的那边是假币。</p>
+<p>再往上一层，如果有9枚硬币，我们可以把它分为三堆，一堆3个，然后任选两堆放在天平上称，如果天平平衡，那么假币一定在没称的那一堆里，如果天平不平衡，那么假币就在天平高起的那一堆里。</p>
+<p>这个例子就是一个很好的分治的例子，我们先把规模为9的大问题，分拆为规模为3的小问题，而且这个小问题与大问题保持了相同的性质。然后再去解决规模为3的小问题，就得到最终的答案了。</p>
+<h6 id="2-解题步骤"><a href="#2-解题步骤" class="headerlink" title="2.解题步骤"></a>2.解题步骤</h6><p>分治法有三个解题步骤，无论是简单的分治还是复杂的，都逃不开这个标准步骤。它们是：</p>
+<ul>
+<li>拆解子任务</li>
+<li>解决子任务</li>
+<li>合并子任务的解</li>
+</ul>
+<p>分治算法应用在方方面面，一般来说，解决子任务这一步骤相对容易，因为当子任务拆到规模一定小的情况下，解就会显得非常简单。分治算法的应用难点一般都会出现在拆解子任务与合并解的步骤上。</p>
+<h6 id="3-例2"><a href="#3-例2" class="headerlink" title="3.例2"></a>3.例2</h6><p>给定一堆平面上的坐标，找出平面上的距离最近的点。暴力地一对对地去查找，这个办法的时间复杂度是O(n^2)，我们能不能使用分治来加速呢？实际上是可以的。但是这个问题的子问题分拆就没有那么简单了。</p>
+<p>我们尝试着拆分一下，把这个平面一分为二，那么距离最小的点可能出现在左边，也可能出现在右边。假如，我们已经把左边最近的两个点找出来了，又把右边最近的两个点找出来了。那么合并这两个子问题的时候，只需要再比较这个子问题的解，看是哪一边的点更近。</p>
+<p>但是等等，我们漏了一点东西。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-de612a52e5374943.png?imageMogr2/auto-orient/strip|imageView2/2/w/720/format/webp" alt="img"></p>
+<p>image.png</p>
+<p>看这幅图，假如，左边那个平面里，找到的最近的一对点是1和2，右边找到的最近的一对是3和4。解合并的时候，如果是检查1，2和3，4之间的距离谁更小是不行的，因为明显这个平面上，距离最近的一对点是2和3。也就是说在进行平面点的拆分的时候时候，就已经把2和3这一对最近的点拆开了，那么我们在合并的时候就要考虑这个问题。这个子问题的解合并是一个非常难的事情，这节课就不展开讲了。（以后还有没有机会再讲，看情况吧）</p>
+<p><strong>总之，使用分治算法解题的时候，如何正确地拆解问题，合并问题是设计算法的核心所在。</strong></p>
+<h6 id="4-例3"><a href="#4-例3" class="headerlink" title="4.例3"></a>4.例3</h6><p>所有的分治算法中，最常用的，还是二分法。二分通常可以使得问题的规模减半。</p>
+<p>我们最常见的一个游戏，猜数字。我选定一个数字，在0到100之间，你来猜，如果猜得比选定数字大，我会提示你猜高了，如果比选定数字小，我会提示你猜低了。那么最多需要几次就一定能猜对呢？</p>
+<p>我们常用的策略就是二分，先报50，如果主持人说低了，那我就知道，这个数字一定位于50，100这个区间，那我再报75。这样每次都能把待选区减少一半。所以最多需要7次就可以找到这个数字。如果是1到1000，只需要10次(从这里也可以看到O(log n)是一种时间复杂度很好的算法了，毕竟一百万地规模也只要20次。)</p>
+<p>我们上面举的例子就是二分法，在一个已经有序的数组里进行查找，我们通常称之为二分查找(Binary Search)。</p>
+<h5 id="三、动态规划"><a href="#三、动态规划" class="headerlink" title="三、动态规划"></a>三、动态规划</h5><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fwww.zhihu.com%2Fquestion%2F39948290%2Fanswer%2F883302989" target="_blank" rel="noopener">如何理解动态规划？</a><br> 入门动态规划第一条：切忌望文生义，切忌用名字反推算法！<strong>如果我来命名</strong>，<strong>可能会取：分步规划</strong>，分步存储法， 递推存储法，数列递推法，状态转移法…..但我就是想不出动态规划啊。</p>
+<h6 id="1-能用动态规划解决的问题"><a href="#1-能用动态规划解决的问题" class="headerlink" title="1.能用动态规划解决的问题"></a>1.能用动态规划解决的问题</h6><p>如果一个问题满足以下两点，那么它就能用动态规划解决。</p>
+<p>(1).问题的答案依赖于问题的规模，也就是问题的所有答案构成了一个数列。举个简单的例子，1个人有2条腿，2个人有4条腿，…， n 个人有多少条腿？答案是 2n 条腿。这里的 2n 是问题的答案， n 则是问题的规模，显然问题的答案是依赖于问题的规模的。答案是因变量，问题规模是自变量。因此，问题在所有规模下的答案可以构成一个数列 (f(1),f(2),…,f(n)) ，比如刚刚“数腿”的例子就构成了间隔为2的等差数列 (0,2,4,…,2n) 。</p>
+<p>(2).大规模问题的答案可以由小规模问题的答案递推得到，也就是 f(n) 的值可以由 {f(i)|i&lt;n} 中的个别求得。还是刚刚“数腿”的例子，显然 f(n) 可以基于 f(n-1) 求得： f(n)=f(n-1)+2 。</p>
+<h6 id="2-适合用动态规划解决的问题"><a href="#2-适合用动态规划解决的问题" class="headerlink" title="2.适合用动态规划解决的问题"></a>2.适合用动态规划解决的问题</h6><p>能用动态规划解决，不代表适合用。比如刚刚的“数腿”例子，你可以写成 f(n)=2n 的显式表达式形式，那么杀鸡就不必用牛刀了。但是，在许多场景， f(n) 的显式式子是不易得到的，大多数情况下甚至无法得到，动态规划的魅力就出来了。</p>
+<h6 id="3-应用动态规划——将动态规划拆分成三个子目标"><a href="#3-应用动态规划——将动态规划拆分成三个子目标" class="headerlink" title="3.应用动态规划——将动态规划拆分成三个子目标"></a>3.应用动态规划——将动态规划拆分成三个子目标</h6><p>当要应用动态规划来解决问题时，归根结底就是想办法完成以下三个关键目标。</p>
+<p>(1).建立状态转移方程<br> 这一步是最难的，大部分人都被卡在这里。这一步没太多的规律可说，只需抓住一个思维：当做已经知道f(1) ~f(n-1) 的值，然后想办法利用它们求得 f(n) 。在“数腿”的例子中，状态转移方程即为f(n)=f(n-1)+2 。</p>
+<p>(2).缓存并复用以往结果<br> 这一步不难，但是很重要。如果没有合适地处理，很有可能就是指数和线性时间复杂度的区别。假设在“数腿”的例子中，我们不能用显式方程，只能用状态转移方程来解。如果现在 f(100) 未知，但是刚刚求解过一次 f(99) 。如果不将其缓存起来，那么求 f(100) 时，我们就必须花100次加法运算重新获取。但是如果刚刚缓存过，只需复用这个子结果，那么将只需一次加法运算即可。</p>
+<p>(3).按顺序从小往大算<br> 这里的“小”和“大”对应的是问题的规模，在这里也就是我们要从 f(0) , f(1) , … 到f(n) 依次顺序计算。这一点在“数腿”的例子来看，似乎显而易见，因为状态方程基本限制了你只能从小到大一步步递推出最终的结果（假设我们仍然不能用显式方程）。然而当问题复杂起来的时候，你有可能乱了套，所以必须记住这也是目标之一。</p>
+<h6 id="4-高中数列题的魔改版"><a href="#4-高中数列题的魔改版" class="headerlink" title="4.高中数列题的魔改版"></a>4.高中数列题的魔改版</h6><p>看到这里，你可能会觉得怎么跟高中的数列题那么像？？其实在我看来这就是高中数列题的魔改版。</p>
+<p>高中的题一般需先推导出状态转移方程，再据此推导出显式表达式（在高中时代称为通项公式）。然而，动态规划是要我们在推导出状态转移方程后，根据状态转移方程用计算机暴力求解出来。显式表达式？在动态规划中是不存在的！</p>
+<p>就是因为要暴力计算，所以前面说的目标有两个是涉及到代码层面上：</p>
+<ul>
+<li>缓存中间结果：也就是搞个数组之类的变量记录中间结果。</li>
+<li>按顺序从小往大算：也就是搞个for循环依次计算。</li>
+</ul>
+<h6 id="5-原文有3个例子，这里只引用第1个"><a href="#5-原文有3个例子，这里只引用第1个" class="headerlink" title="5.原文有3个例子，这里只引用第1个"></a>5.原文有3个例子，这里只引用第1个</h6><p>斐波那契数列（简单）</p>
+<p>斐波那契数列：0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233……<br> 它遵循这样的规律：当前值为前两个值的和。<br> 那么第 n 个值为多少？<br> 首先，我们可以很容易得到状态转移方程： f(n)=f(n-1)+f(n-2) 。接下来我们用两种方法来做：</p>
+<p>(1)简单递归(反例)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = fib(<span class="number">100</span>)  </span><br><span class="line"><span class="comment"># 你等到天荒地老，它还没有执行完</span></span><br></pre></td></tr></table></figure>
+<p>如上所示，代码简单易懂，然而这代码却极其低效。先不说这种递归的方式造成栈空间的极大浪费，就仅仅是该算法的时间复杂度已经属于 O(2^n) 了。指数级别时间复杂度的算法跟不能用没啥区别！</p>
+<p>为什么是指数时间复杂度？图1通过展示求解 f(6) 的过程说明了其原因。如图，随着递归的深入，计算任务不断地翻倍！</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-e4cbe10aed2d6510.png?imageMogr2/auto-orient/strip|imageView2/2/w/604/format/webp" alt="img"></p>
+<p>图1 简单递归的执行过程</p>
+<p>(2).动态规划</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    </span><br><span class="line">    results = list(range(n+<span class="number">1</span>)) <span class="comment"># 用于缓存以往结果，以便复用（目标2）</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):  <span class="comment"># 按顺序从小往大算（目标3）</span></span><br><span class="line">        <span class="keyword">if</span> i &lt; <span class="number">2</span>:</span><br><span class="line">            results[i] = i</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 使用状态转移方程（目标1），同时复用以往结果（目标2）</span></span><br><span class="line">            results[i] = results[i<span class="number">-1</span>] + results[i<span class="number">-2</span>] </span><br><span class="line">     </span><br><span class="line">    <span class="keyword">return</span> results[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = fib(<span class="number">100</span>)  </span><br><span class="line">    <span class="comment"># 秒算，result为：354224848179261915075</span></span><br></pre></td></tr></table></figure>
+<p>如上代码，针对动态规划的三个子目标，都很好地实现了（参考备注），具体为：</p>
+<p>目标1，建立状态转移方程（完成）。也就是前面的 f(n)=f(n-1)+f(n-2) 。<br> 目标2，缓存并复用以往结果（完成）。图1的简单递归存在大量的重复任务。在线性规划解法中，我们把结果缓存在results列表，同时在results[i] = results[i-1] + results[i-2]中进行了复用。这相当于我们只需完成图2中红色部分的计算任务即可，时间复杂度瞬间降为 O(n) 。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-2f8e625dd5580965.png?imageMogr2/auto-orient/strip|imageView2/2/w/603/format/webp" alt="img"></p>
+<p>图2 线性规划通过缓存与复用机制将计算规模缩小到红色部分</p>
+<p>目标3，按顺序从小往大算（完成）。for循环实现了从0到 n 的顺序求解，让问题按着从小规模往大规模求解的顺序走。</p>
+<h6 id="5-【算法-动态规划】-最大子段和"><a href="#5-【算法-动态规划】-最大子段和" class="headerlink" title="5.【算法-动态规划】-最大子段和"></a>5.<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fblog.csdn.net%2Ffxkcsdn%2Farticle%2Fdetails%2F81291465" target="_blank" rel="noopener">【算法-动态规划】-最大子段和</a></h6><blockquote>
+<p>动态规划算法与分治法类似，其基本思想也是将待求解问题分解为若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。与分治法不同的是，适用与动态规划法求解的问题，经分解得到的子问题往往不是互相独立的。<br>分治法的基本思想是将一个规模为n的问题分解为k个规模较小的子问题，这些子问题相互独立且与原问题相同。递归的求解这些子问题，然后将各子问题的解合并得到原问题的解。<br>如果用分治法求解时，有些子问题被重复计算了许多次。如果我们能够保存已解决的子问题的答案，而在需要的时再找出已求得的答案这样就可以避免大量的重复计算，从而得到多项式时间算法。为了达到此目的，可以用一个表来记录所有已经解决的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思想。</p>
+</blockquote>
+<p>问题描述：给定由n个正数（可能为负整数）组成的序列a1,a2,…,an,求该序列形如的子段和的最大值，当所有正数均为负整数时定义其最大字段和为0。<br> 比如-2,11,-4,13,-5.-2，最大字段和是11+(-4)+13=20;6，-1，5，4，-7，其最大子段和为 6+(-1)+5+4</p>
+<p>（1）找出最优解的性质，并刻画其结构特征</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由b[j]的定义易知，当b[j-1]&gt;0时b[j]=b[j-1]+a[j],否则b[j]=a[j]</span><br></pre></td></tr></table></figure>
+<p>（2）递归地定义最优值。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b[j]=<span class="built_in">max</span>&#123;b[j-<span class="number">1</span>]+a[j],a[j]&#125;,<span class="number">1</span>&lt;=j&lt;=n</span><br></pre></td></tr></table></figure>
+<p>（3）以自底向上的方式计算出最优值。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MaxSumClass3</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">MaxSum</span>(<span class="params"><span class="keyword">int</span> n,<span class="keyword">int</span>[] a</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(b&lt;<span class="number">0</span>)b=a[i];</span><br><span class="line">            <span class="keyword">else</span> b=b+a[i];</span><br><span class="line">            <span class="keyword">if</span>(b&gt;sum)</span><br><span class="line">                sum=b;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=<span class="number">6</span>;</span><br><span class="line">        <span class="keyword">int</span>[] a=&#123;<span class="number">0</span>,<span class="number">-2</span>,<span class="number">11</span>,<span class="number">-4</span>,<span class="number">13</span>,<span class="number">-5</span>,<span class="number">-2</span>&#125;;</span><br><span class="line">        System.<span class="keyword">out</span>.println(MaxSum(n,a));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作者：合肥懒皮<br>链接：<a href="https://www.jianshu.com/p/c63850cec6eb" target="_blank" rel="noopener">https://www.jianshu.com/p/c63850cec6eb</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dp/" rel="tag"># dp</a>
+          
+            <a href="/tags/分治/" rel="tag"># 分治</a>
+          
+            <a href="/tags/动态规化/" rel="tag"># 动态规化</a>
+          
+            <a href="/tags/贪心/" rel="tag"># 贪心</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/02/quick-sort/" rel="next" title="快速排序">
+                <i class="fa fa-chevron-left"></i> 快速排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/08/python-zhishi/" rel="prev" title="python基础知识">
+                python基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yNzkyMi80NDk5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="shengweimao">
+          <p class="site-author-name" itemprop="name">shengweimao</p>
+           
+              <p class="site-description motion-element" itemprop="description">奋斗吧少年</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、贪心算法"><span class="nav-number">1.</span> <span class="nav-text">一、贪心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-例1"><span class="nav-number">1.1.</span> <span class="nav-text">1.例1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-例2"><span class="nav-number">1.2.</span> <span class="nav-text">2.例2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-例3"><span class="nav-number">1.3.</span> <span class="nav-text">3.例3</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#二、分治算法"><span class="nav-number">1.4.</span> <span class="nav-text">二、分治算法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-例1-1"><span class="nav-number">1.5.</span> <span class="nav-text">1.例1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-解题步骤"><span class="nav-number">1.6.</span> <span class="nav-text">2.解题步骤</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-例2"><span class="nav-number">1.7.</span> <span class="nav-text">3.例2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-例3"><span class="nav-number">1.8.</span> <span class="nav-text">4.例3</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、动态规划"><span class="nav-number">2.</span> <span class="nav-text">三、动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-能用动态规划解决的问题"><span class="nav-number">2.1.</span> <span class="nav-text">1.能用动态规划解决的问题</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-适合用动态规划解决的问题"><span class="nav-number">2.2.</span> <span class="nav-text">2.适合用动态规划解决的问题</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-应用动态规划——将动态规划拆分成三个子目标"><span class="nav-number">2.3.</span> <span class="nav-text">3.应用动态规划——将动态规划拆分成三个子目标</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-高中数列题的魔改版"><span class="nav-number">2.4.</span> <span class="nav-text">4.高中数列题的魔改版</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-原文有3个例子，这里只引用第1个"><span class="nav-number">2.5.</span> <span class="nav-text">5.原文有3个例子，这里只引用第1个</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-【算法-动态规划】-最大子段和"><span class="nav-number">2.6.</span> <span class="nav-text">5.【算法-动态规划】-最大子段和</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shengweimao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

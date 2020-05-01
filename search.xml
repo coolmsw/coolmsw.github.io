@@ -1,12 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>博客搭建历程</title>
-    <url>/2020/05/01/firststeps/</url>
-    <content><![CDATA[<blockquote>
-<p>折腾了差不多快一个星期了，总算把这个博客给鼓捣出来了，记录一下，帮助一下想要搭建的小伙伴！</p>
+    <title>冒泡排序</title>
+    <url>/2019/05/01/bubble-sort/</url>
+    <content><![CDATA[<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><h2 id="算法基本思想："><a href="#算法基本思想：" class="headerlink" title="算法基本思想："></a>算法基本思想：</h2><p>对相邻的元素进行两两比较，顺序相反则进行交换，这样，每一趟会将最小或最大的元素“浮”到顶端，最终达到完全有序。就好像一串气泡一样，最终从小到大或从大到小依次排下来。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/7095972-664fc5103f91b162.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/959/format/webp" alt="img"></p>
+<p>示意图<a id="more"></a></p>
+<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><p>分析可以看出，对于一个长度为n的数组，需要进行n-1趟操作，才能完全确保排序完成，时间复杂度为O(n^2)。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BubbleSort</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> len = arr.length;</span><br><span class="line">        <span class="keyword">int</span> tmp;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"原始顺序： "</span>+ Arrays.toString(arr));</span><br><span class="line">        <span class="comment">//i表示第几趟排序</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="comment">//每次都从最后一个开始，知道第len-1趟排序</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = len - <span class="number">1</span>; j &gt; i<span class="number">-1</span>; j--) &#123;</span><br><span class="line">                <span class="comment">//如果后面的比前面的小，就像泡泡一样冒上去</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                    tmp = arr[j];</span><br><span class="line">                    arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">                    arr[j - <span class="number">1</span>] = tmp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">"第"</span>+i+<span class="string">"趟排序: "</span>+ Arrays.toString(arr));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">        <span class="comment">//初始化数组</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            arr[i] = (<span class="keyword">int</span>) (Math.random() * (<span class="number">100</span> + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        BubbleSort.sort(arr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/7095972-fe96bf0590e66173.png?imageMogr2/auto-orient/strip|imageView2/2/w/458/format/webp" alt="img"></p>
+<p>作者：noonbiteun<br>链接：<a href="https://www.jianshu.com/p/ea6fd54ab7a6" target="_blank" rel="noopener">https://www.jianshu.com/p/ea6fd54ab7a6</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>冒泡排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>经典DP问题</title>
+    <url>/2020/04/02/dp/</url>
+    <content><![CDATA[<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><strong>最长递增子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/585d46a1447b4064b749f08c2ab9ce66" target="_blank" rel="noopener">[编程题]最长递增子序列-牛客网</a></p>
 </blockquote>
-<h2 id="源起"><a href="#源起" class="headerlink" title="源起"></a>源起</h2><p>本来早就打算自己搭建个博客了，一来可以记录学习中遇到的各种问题，以防忘记；二来可以督促自己该学习了，别特么一天到晚就知道瞎扯淡，否则啥时候能买得起一套房，怎么对得起一直陪自己吃苦的女友；三来还可以打发空闲时间，岂不快哉！所以，也就有了这个博客的诞生。<a id="more"></a></p>
+<p><strong>题目</strong><br>对于一个数字序列，请设计一个复杂度为O(nlogn)的算法，返回该序列的最长上升子序列的长度，这里的子序列定义为这样一个序列U1，U2…，其中Ui &lt; Ui+1，且A[Ui] &lt; A[Ui+1]。<br>给定一个数字序列A及序列的长度n，请返回最长上升子序列的长度。</p>
+<p><strong>测试样例</strong><br>[2,1,4,3,1,5,6],7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i]记录长度为i的上升子序列的最后一个数中的最小值（可能有多个长度为i的上升子序列，我们只记录最后一个数最小的那个）<a id="more"></a><br>每次遍历的时候在dp[0,max]中找出第一个比A[i]大的数进行替换</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(int[] A,int n)&#123;</span><br><span class="line">	int[] dp = new int[n];</span><br><span class="line">	dp[0] = A[0];</span><br><span class="line">	int max = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		int index = binarySearch(dp, 0, max, A[i]);</span><br><span class="line">		if(index&lt;n)&#123;</span><br><span class="line">			dp[index] = A[i];</span><br><span class="line">			if(index&gt;max)</span><br><span class="line">				max = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return max+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回第一个比target大的数的下标</span><br><span class="line"> * 如果没有target大的数，则返回end+1</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public static int binarySearch(int[] dp,int start,int end,int target)&#123;</span><br><span class="line">	if(start==end)&#123;</span><br><span class="line">		if(dp[start]&gt;=target)</span><br><span class="line">			return start;</span><br><span class="line">		else</span><br><span class="line">			return start+1;</span><br><span class="line">	&#125;</span><br><span class="line">	int mid = (start+end)/2;</span><br><span class="line">	if(dp[mid]&gt;target)&#123;</span><br><span class="line">		if(mid==start)</span><br><span class="line">			return start;</span><br><span class="line">		return binarySearch(dp, start, mid-1, target);</span><br><span class="line">	&#125;</span><br><span class="line">	else if(dp[mid]&lt;target)</span><br><span class="line">		return binarySearch(dp, mid+1, end, target);</span><br><span class="line">	else</span><br><span class="line">		return mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	int[] A = &#123;2,1,4,3,1,5,6&#125;;</span><br><span class="line">	System.out.println(findLongest(A, A.length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a><strong>最长公共子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/c996bbb77dd447d681ec6907ccfb488a" target="_blank" rel="noopener">[编程题]最长公共子序列-牛客网</a></p>
+</blockquote>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个高效算法，求他们的最长公共子序列的长度，这里的最长公共子序列定义为有两个序列U1,U2,U3…Un和V1,V2,V3…Vn,其中Ui&amp;ltUi+1，Vi&amp;ltVi+1。且A[Ui]== B[Vi]。<br>给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。保证两串长度均小于等于300。</p>
+<p><strong>测试样例</strong><br>“1A2C3D4B56”,10,”B1D23CA45B6A”,12<br>返回：6</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表子串A[0…i]和子串B[0…j]最长公共子序列的长度<br>如果A[i]==B[j],dp[i][j]=dp[i-1][j-1]<br>否则，dp[i][j]=max{dp[i][j-1],dp[i-1][j]}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLCS(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">           dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">           dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">           for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">               int tempMax = 0;</span><br><span class="line">               if(A.charAt(i-1)==B.charAt(j-1))</span><br><span class="line">                   tempMax = dp[i-1][j-1]+1;</span><br><span class="line">               else</span><br><span class="line">                   tempMax = Math.max(dp[i][j-1], dp[i-1][j]);</span><br><span class="line">               dp[i][j] = tempMax;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return dp[n][m];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;rsymsknwbiapzhuoeyhjubogitoqfkswhbqhwqzyjuvdlzjlhlaubecnkzgvurdsuvqghpjazgxvue&quot;;</span><br><span class="line">	String B = &quot;sclzdzbtrrkdybusjyjrszzqaebkpdtqnqadndvkenqirqqsplmceuuzhukcxxnkcyyvucqjlkysfarxkulpayvtwfmfaqpikzdslpklomafvtesecxygahwnyljldutzsoywiwkugerfbfefcqfvcrzcvbevufzbkbhfeshhdasqo&quot;;</span><br><span class="line">	System.out.println(findLCS(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a><strong>最长公共子串</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/02e7cc263f8a49e8b1e1dc9c116f7602" target="_blank" rel="noopener">[编程题]最长公共子串-牛客网</a></p>
+</blockquote>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个时间复杂度为O(m*n)的算法(这里的m和n为两串的长度)，求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列U1,U2,..Un和V1,V2,…Vn，其中Ui + 1 == Ui+1,Vi + 1 == Vi+1，同时Ui == Vi。<br>给定两个字符串A和B，同时给定两串的长度n和m。</p>
+<p><strong>测试样例</strong><br>“1AB2345CD”,9,”12345EF”,7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表以A[i-1]和B[j-1]为结尾的公共子串的最长长度（若A[i-1]!=B[j-1],dp[i][j]==0）<br>如果A[i-1]==B[i-1]&amp;&amp;A[i-2]==B[i-2], dp[i][j] == dp[i-1][j-1] + 1<br>如果A[i-1]==B[i-1], dp[i][j] = 1<br>如果A[i-1]!=B[i-1], dp[i][j] = 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       </span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">       	dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">       	dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       	for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">       		if(A.charAt(i-1)==B.charAt(j-1))&#123;</span><br><span class="line">       			if(i-2&gt;=0 &amp;&amp; j-2&gt;=0 &amp;&amp; A.charAt(i-2)==B.charAt(j-2))</span><br><span class="line">       				dp[i][j] = dp[i-1][j-1] + 1;</span><br><span class="line">       			else&#123;</span><br><span class="line">       				dp[i][j] = 1;</span><br><span class="line">       			&#125;</span><br><span class="line">       			</span><br><span class="line">       			if(dp[i][j]&gt;max)</span><br><span class="line">           			max = dp[i][j];</span><br><span class="line">       		&#125;</span><br><span class="line">       		else&#123;</span><br><span class="line">       			dp[i][j] = 0;</span><br><span class="line">       		&#125;</span><br><span class="line">       	&#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return max;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;12345CC1235&quot;;</span><br><span class="line">	String B = &quot;12345B12345&quot;;</span><br><span class="line">	System.out.println(findLongest(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>dp</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>桶排序</title>
+    <url>/2019/05/01/bucket-sort/</url>
+    <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
+<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
+<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
+<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
+<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
+<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
+<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
+<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
+<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
+<p>是不是很方便快捷呢？</p>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
+<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
+<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
+<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
+<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
+<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
+<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
+<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
+<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+        <tag>桶排序</tag>
+        <tag>基数排序</tag>
+        <tag>计数排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>贪心、分治、动规你了解多少</title>
+    <url>/2019/05/03/fenzhi-tanxin-donggui/</url>
+    <content><![CDATA[<h5 id="一、贪心算法"><a href="#一、贪心算法" class="headerlink" title="一、贪心算法"></a>一、贪心算法</h5><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F25769975" target="_blank" rel="noopener">算法（一）：贪心</a></p>
+<p>今天介绍的主题是贪心算法。这是相对比较容易的一种算法。我这里不敢给出严格定义，因为我当年领悟贪心和动态规划的无后效性用了三年时间。从我第一次听说无后效性到终有一天恍然大悟，总共用去了一千天。所以，我这里就不讲定义，咱们直接看例子。</p>
+<p>贪心算法，如果不用手动证明一个问题的数学性质的话，其实是比较简单的。</p>
+<h6 id="1-例1"><a href="#1-例1" class="headerlink" title="1.例1"></a>1.例1</h6><p>有一个背包，其最大容量是50KG，现在有各种不同价值的液体，比方说，有水，其价值是10 每千克，共100KG；酒精，其价值是20 每千克，共30KG；有油，价值25每千克，共30KG。<a id="more"></a>问什么样的方案才能使得背包里装的液体的总价值最大？显然，这是一道小学生都会的题目，拣贵的装呗。这谁不会。那就是把30KG油先装了，因为油最贵嘛，剩下20KG的容量装酒精，因为酒精比水贵。</p>
+<p>好，那么，这个思维过程就是贪心：每一阶段做决策都找出当前条件下的最优解。当然这个问题，这种解法的正确性显而易见，贪心类的问题最难的地方在于正确性无法证明。这个我们先不管。毕竟我们不是在做算法研究，我们只要能用贪心去解决具体的编程问题就行了。</p>
+<h6 id="2-例2"><a href="#2-例2" class="headerlink" title="2.例2"></a>2.例2</h6><p>再看一个简单的例子。在商店找零，比如说，售货员要找给你37块钱，那什么样的方案才是找钱的张数最少的方案呢？肯定是找回的零钱面值越大，最后的张数越少。所以我们可以使用贪心的方法来解决这个问题。先找一张20的，如果再找一张20的，那就超过37了，这不行，所以就再找一张10块的，然后是5块的和两张一块的。最终的方案就得到了，这也是一次典型的贪心计算方案。</p>
+<h6 id="3-例3"><a href="#3-例3" class="headerlink" title="3.例3"></a>3.例3</h6><p>在贪心的思想的指导下，也设计了一种排序算法，这种算法被称为选择排序。排序的思想很简单。既然我的目标是把一堆数字从小到大排，那么我按阶段解决这个问题不就好了么？第一步找到最小的那个数把它放到第一位，第二步在剩下的所有数里再找最小的，把它放到第二位，依次类推。</p>
+<h6 id="二、分治算法"><a href="#二、分治算法" class="headerlink" title="二、分治算法"></a>二、分治算法</h6><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F25855644" target="_blank" rel="noopener">算法设计（二）：分治</a><br> 一个小姑娘在图书馆借了一大摞书，抱着出门，警报响了，小姑娘正准备一本本地去试看是哪一本还没有消磁，管理员大妈惊呼：“这得试到什么时候了.” 然后大妈就把书分了两半，去试一下没有响，再把剩下的那一半书再分两半。大妈的这种解法就叫分治。这也是算法设计的一个例子。小姑娘的解法的时间复杂度是O(n)，大妈解法的时间复杂度是O(log n)。当然，段子下面早就有人回复：如果不止一本书没有消磁，大妈解法就挂了。</p>
+<p>分治算法，通过把问题分解为更小的子问题，先解决小问题，再把小问题的解合并起来的一种方法。通常，如果子问题的规模仍然很大，可以继续拆解成更小的任务，更进一步，实践中，大任务往往与子任务有相同的结构，以便于递归地进行任务拆解。</p>
+<h6 id="1-例1-1"><a href="#1-例1-1" class="headerlink" title="1.例1"></a>1.例1</h6><p>以具体的例子来说明。现在一共9枚硬币，已知其中有一枚是假的，它比其他8枚都要轻。现在有一个天平，只称两次，能找到这枚硬币吗？</p>
+<p>我们倒着想，假如现在有两枚，称一次，这很简单，天平高的那一边的是假币，如果有三枚呢？那就有两种情况，如果天平平衡，那么未称的那枚是假币，如果天平不平衡，高的那边是假币。</p>
+<p>再往上一层，如果有9枚硬币，我们可以把它分为三堆，一堆3个，然后任选两堆放在天平上称，如果天平平衡，那么假币一定在没称的那一堆里，如果天平不平衡，那么假币就在天平高起的那一堆里。</p>
+<p>这个例子就是一个很好的分治的例子，我们先把规模为9的大问题，分拆为规模为3的小问题，而且这个小问题与大问题保持了相同的性质。然后再去解决规模为3的小问题，就得到最终的答案了。</p>
+<h6 id="2-解题步骤"><a href="#2-解题步骤" class="headerlink" title="2.解题步骤"></a>2.解题步骤</h6><p>分治法有三个解题步骤，无论是简单的分治还是复杂的，都逃不开这个标准步骤。它们是：</p>
+<ul>
+<li>拆解子任务</li>
+<li>解决子任务</li>
+<li>合并子任务的解</li>
+</ul>
+<p>分治算法应用在方方面面，一般来说，解决子任务这一步骤相对容易，因为当子任务拆到规模一定小的情况下，解就会显得非常简单。分治算法的应用难点一般都会出现在拆解子任务与合并解的步骤上。</p>
+<h6 id="3-例2"><a href="#3-例2" class="headerlink" title="3.例2"></a>3.例2</h6><p>给定一堆平面上的坐标，找出平面上的距离最近的点。暴力地一对对地去查找，这个办法的时间复杂度是O(n^2)，我们能不能使用分治来加速呢？实际上是可以的。但是这个问题的子问题分拆就没有那么简单了。</p>
+<p>我们尝试着拆分一下，把这个平面一分为二，那么距离最小的点可能出现在左边，也可能出现在右边。假如，我们已经把左边最近的两个点找出来了，又把右边最近的两个点找出来了。那么合并这两个子问题的时候，只需要再比较这个子问题的解，看是哪一边的点更近。</p>
+<p>但是等等，我们漏了一点东西。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-de612a52e5374943.png?imageMogr2/auto-orient/strip|imageView2/2/w/720/format/webp" alt="img"></p>
+<p>image.png</p>
+<p>看这幅图，假如，左边那个平面里，找到的最近的一对点是1和2，右边找到的最近的一对是3和4。解合并的时候，如果是检查1，2和3，4之间的距离谁更小是不行的，因为明显这个平面上，距离最近的一对点是2和3。也就是说在进行平面点的拆分的时候时候，就已经把2和3这一对最近的点拆开了，那么我们在合并的时候就要考虑这个问题。这个子问题的解合并是一个非常难的事情，这节课就不展开讲了。（以后还有没有机会再讲，看情况吧）</p>
+<p><strong>总之，使用分治算法解题的时候，如何正确地拆解问题，合并问题是设计算法的核心所在。</strong></p>
+<h6 id="4-例3"><a href="#4-例3" class="headerlink" title="4.例3"></a>4.例3</h6><p>所有的分治算法中，最常用的，还是二分法。二分通常可以使得问题的规模减半。</p>
+<p>我们最常见的一个游戏，猜数字。我选定一个数字，在0到100之间，你来猜，如果猜得比选定数字大，我会提示你猜高了，如果比选定数字小，我会提示你猜低了。那么最多需要几次就一定能猜对呢？</p>
+<p>我们常用的策略就是二分，先报50，如果主持人说低了，那我就知道，这个数字一定位于50，100这个区间，那我再报75。这样每次都能把待选区减少一半。所以最多需要7次就可以找到这个数字。如果是1到1000，只需要10次(从这里也可以看到O(log n)是一种时间复杂度很好的算法了，毕竟一百万地规模也只要20次。)</p>
+<p>我们上面举的例子就是二分法，在一个已经有序的数组里进行查找，我们通常称之为二分查找(Binary Search)。</p>
+<h5 id="三、动态规划"><a href="#三、动态规划" class="headerlink" title="三、动态规划"></a>三、动态规划</h5><p>参考<br> <a href="https://links.jianshu.com/go?to=https%3A%2F%2Fwww.zhihu.com%2Fquestion%2F39948290%2Fanswer%2F883302989" target="_blank" rel="noopener">如何理解动态规划？</a><br> 入门动态规划第一条：切忌望文生义，切忌用名字反推算法！<strong>如果我来命名</strong>，<strong>可能会取：分步规划</strong>，分步存储法， 递推存储法，数列递推法，状态转移法…..但我就是想不出动态规划啊。</p>
+<h6 id="1-能用动态规划解决的问题"><a href="#1-能用动态规划解决的问题" class="headerlink" title="1.能用动态规划解决的问题"></a>1.能用动态规划解决的问题</h6><p>如果一个问题满足以下两点，那么它就能用动态规划解决。</p>
+<p>(1).问题的答案依赖于问题的规模，也就是问题的所有答案构成了一个数列。举个简单的例子，1个人有2条腿，2个人有4条腿，…， n 个人有多少条腿？答案是 2n 条腿。这里的 2n 是问题的答案， n 则是问题的规模，显然问题的答案是依赖于问题的规模的。答案是因变量，问题规模是自变量。因此，问题在所有规模下的答案可以构成一个数列 (f(1),f(2),…,f(n)) ，比如刚刚“数腿”的例子就构成了间隔为2的等差数列 (0,2,4,…,2n) 。</p>
+<p>(2).大规模问题的答案可以由小规模问题的答案递推得到，也就是 f(n) 的值可以由 {f(i)|i&lt;n} 中的个别求得。还是刚刚“数腿”的例子，显然 f(n) 可以基于 f(n-1) 求得： f(n)=f(n-1)+2 。</p>
+<h6 id="2-适合用动态规划解决的问题"><a href="#2-适合用动态规划解决的问题" class="headerlink" title="2.适合用动态规划解决的问题"></a>2.适合用动态规划解决的问题</h6><p>能用动态规划解决，不代表适合用。比如刚刚的“数腿”例子，你可以写成 f(n)=2n 的显式表达式形式，那么杀鸡就不必用牛刀了。但是，在许多场景， f(n) 的显式式子是不易得到的，大多数情况下甚至无法得到，动态规划的魅力就出来了。</p>
+<h6 id="3-应用动态规划——将动态规划拆分成三个子目标"><a href="#3-应用动态规划——将动态规划拆分成三个子目标" class="headerlink" title="3.应用动态规划——将动态规划拆分成三个子目标"></a>3.应用动态规划——将动态规划拆分成三个子目标</h6><p>当要应用动态规划来解决问题时，归根结底就是想办法完成以下三个关键目标。</p>
+<p>(1).建立状态转移方程<br> 这一步是最难的，大部分人都被卡在这里。这一步没太多的规律可说，只需抓住一个思维：当做已经知道f(1) ~f(n-1) 的值，然后想办法利用它们求得 f(n) 。在“数腿”的例子中，状态转移方程即为f(n)=f(n-1)+2 。</p>
+<p>(2).缓存并复用以往结果<br> 这一步不难，但是很重要。如果没有合适地处理，很有可能就是指数和线性时间复杂度的区别。假设在“数腿”的例子中，我们不能用显式方程，只能用状态转移方程来解。如果现在 f(100) 未知，但是刚刚求解过一次 f(99) 。如果不将其缓存起来，那么求 f(100) 时，我们就必须花100次加法运算重新获取。但是如果刚刚缓存过，只需复用这个子结果，那么将只需一次加法运算即可。</p>
+<p>(3).按顺序从小往大算<br> 这里的“小”和“大”对应的是问题的规模，在这里也就是我们要从 f(0) , f(1) , … 到f(n) 依次顺序计算。这一点在“数腿”的例子来看，似乎显而易见，因为状态方程基本限制了你只能从小到大一步步递推出最终的结果（假设我们仍然不能用显式方程）。然而当问题复杂起来的时候，你有可能乱了套，所以必须记住这也是目标之一。</p>
+<h6 id="4-高中数列题的魔改版"><a href="#4-高中数列题的魔改版" class="headerlink" title="4.高中数列题的魔改版"></a>4.高中数列题的魔改版</h6><p>看到这里，你可能会觉得怎么跟高中的数列题那么像？？其实在我看来这就是高中数列题的魔改版。</p>
+<p>高中的题一般需先推导出状态转移方程，再据此推导出显式表达式（在高中时代称为通项公式）。然而，动态规划是要我们在推导出状态转移方程后，根据状态转移方程用计算机暴力求解出来。显式表达式？在动态规划中是不存在的！</p>
+<p>就是因为要暴力计算，所以前面说的目标有两个是涉及到代码层面上：</p>
+<ul>
+<li>缓存中间结果：也就是搞个数组之类的变量记录中间结果。</li>
+<li>按顺序从小往大算：也就是搞个for循环依次计算。</li>
+</ul>
+<h6 id="5-原文有3个例子，这里只引用第1个"><a href="#5-原文有3个例子，这里只引用第1个" class="headerlink" title="5.原文有3个例子，这里只引用第1个"></a>5.原文有3个例子，这里只引用第1个</h6><p>斐波那契数列（简单）</p>
+<p>斐波那契数列：0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233……<br> 它遵循这样的规律：当前值为前两个值的和。<br> 那么第 n 个值为多少？<br> 首先，我们可以很容易得到状态转移方程： f(n)=f(n-1)+f(n-2) 。接下来我们用两种方法来做：</p>
+<p>(1)简单递归(反例)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = fib(<span class="number">100</span>)  </span><br><span class="line"><span class="comment"># 你等到天荒地老，它还没有执行完</span></span><br></pre></td></tr></table></figure>
+<p>如上所示，代码简单易懂，然而这代码却极其低效。先不说这种递归的方式造成栈空间的极大浪费，就仅仅是该算法的时间复杂度已经属于 O(2^n) 了。指数级别时间复杂度的算法跟不能用没啥区别！</p>
+<p>为什么是指数时间复杂度？图1通过展示求解 f(6) 的过程说明了其原因。如图，随着递归的深入，计算任务不断地翻倍！</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-e4cbe10aed2d6510.png?imageMogr2/auto-orient/strip|imageView2/2/w/604/format/webp" alt="img"></p>
+<p>图1 简单递归的执行过程</p>
+<p>(2).动态规划</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    </span><br><span class="line">    results = list(range(n+<span class="number">1</span>)) <span class="comment"># 用于缓存以往结果，以便复用（目标2）</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):  <span class="comment"># 按顺序从小往大算（目标3）</span></span><br><span class="line">        <span class="keyword">if</span> i &lt; <span class="number">2</span>:</span><br><span class="line">            results[i] = i</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 使用状态转移方程（目标1），同时复用以往结果（目标2）</span></span><br><span class="line">            results[i] = results[i<span class="number">-1</span>] + results[i<span class="number">-2</span>] </span><br><span class="line">     </span><br><span class="line">    <span class="keyword">return</span> results[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = fib(<span class="number">100</span>)  </span><br><span class="line">    <span class="comment"># 秒算，result为：354224848179261915075</span></span><br></pre></td></tr></table></figure>
+<p>如上代码，针对动态规划的三个子目标，都很好地实现了（参考备注），具体为：</p>
+<p>目标1，建立状态转移方程（完成）。也就是前面的 f(n)=f(n-1)+f(n-2) 。<br> 目标2，缓存并复用以往结果（完成）。图1的简单递归存在大量的重复任务。在线性规划解法中，我们把结果缓存在results列表，同时在results[i] = results[i-1] + results[i-2]中进行了复用。这相当于我们只需完成图2中红色部分的计算任务即可，时间复杂度瞬间降为 O(n) 。</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/2354823-2f8e625dd5580965.png?imageMogr2/auto-orient/strip|imageView2/2/w/603/format/webp" alt="img"></p>
+<p>图2 线性规划通过缓存与复用机制将计算规模缩小到红色部分</p>
+<p>目标3，按顺序从小往大算（完成）。for循环实现了从0到 n 的顺序求解，让问题按着从小规模往大规模求解的顺序走。</p>
+<h6 id="5-【算法-动态规划】-最大子段和"><a href="#5-【算法-动态规划】-最大子段和" class="headerlink" title="5.【算法-动态规划】-最大子段和"></a>5.<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fblog.csdn.net%2Ffxkcsdn%2Farticle%2Fdetails%2F81291465" target="_blank" rel="noopener">【算法-动态规划】-最大子段和</a></h6><blockquote>
+<p>动态规划算法与分治法类似，其基本思想也是将待求解问题分解为若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。与分治法不同的是，适用与动态规划法求解的问题，经分解得到的子问题往往不是互相独立的。<br>分治法的基本思想是将一个规模为n的问题分解为k个规模较小的子问题，这些子问题相互独立且与原问题相同。递归的求解这些子问题，然后将各子问题的解合并得到原问题的解。<br>如果用分治法求解时，有些子问题被重复计算了许多次。如果我们能够保存已解决的子问题的答案，而在需要的时再找出已求得的答案这样就可以避免大量的重复计算，从而得到多项式时间算法。为了达到此目的，可以用一个表来记录所有已经解决的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思想。</p>
+</blockquote>
+<p>问题描述：给定由n个正数（可能为负整数）组成的序列a1,a2,…,an,求该序列形如的子段和的最大值，当所有正数均为负整数时定义其最大字段和为0。<br> 比如-2,11,-4,13,-5.-2，最大字段和是11+(-4)+13=20;6，-1，5，4，-7，其最大子段和为 6+(-1)+5+4</p>
+<p>（1）找出最优解的性质，并刻画其结构特征</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">由b[j]的定义易知，当b[j-1]&gt;0时b[j]=b[j-1]+a[j],否则b[j]=a[j]</span><br></pre></td></tr></table></figure>
+<p>（2）递归地定义最优值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">b[j]=<span class="built_in">max</span>&#123;b[j-<span class="number">1</span>]+a[j],a[j]&#125;,<span class="number">1</span>&lt;=j&lt;=n</span><br></pre></td></tr></table></figure>
+<p>（3）以自底向上的方式计算出最优值。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MaxSumClass3</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">MaxSum</span>(<span class="params"><span class="keyword">int</span> n,<span class="keyword">int</span>[] a</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(b&lt;<span class="number">0</span>)b=a[i];</span><br><span class="line">            <span class="keyword">else</span> b=b+a[i];</span><br><span class="line">            <span class="keyword">if</span>(b&gt;sum)</span><br><span class="line">                sum=b;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=<span class="number">6</span>;</span><br><span class="line">        <span class="keyword">int</span>[] a=&#123;<span class="number">0</span>,<span class="number">-2</span>,<span class="number">11</span>,<span class="number">-4</span>,<span class="number">13</span>,<span class="number">-5</span>,<span class="number">-2</span>&#125;;</span><br><span class="line">        System.<span class="keyword">out</span>.println(MaxSum(n,a));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作者：合肥懒皮<br>链接：<a href="https://www.jianshu.com/p/c63850cec6eb" target="_blank" rel="noopener">https://www.jianshu.com/p/c63850cec6eb</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>dp</tag>
+        <tag>分治</tag>
+        <tag>动态规化</tag>
+        <tag>贪心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客搭建历程</title>
+    <url>/2019/04/12/first/</url>
+    <content><![CDATA[<blockquote>
+<p>折腾了两天，总算把这个博客给鼓捣出来了，记录一下，帮助一下想要搭建的小伙伴！</p>
+</blockquote>
+<h2 id="源起"><a href="#源起" class="headerlink" title="源起"></a>源起</h2><p>本来早就打算自己搭建个博客了，一来可以记录学习中遇到的各种问题，以防忘记；二来可以督促自己该学习了；三来还可以打发空闲时间，岂不快哉！所以，也就有了这个博客的诞生。</p>
+<a id="more"></a>
 <h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>虽然有了这个搭博客的想法，却一直纠结在博客页面布局上，我想要的是简洁，美观，高大上的类型，必须得自己搭建的博客。了解到现在的主流博客基本都是用Hexo、jekyll或者是express来搭建，或者借助于第三方的平台，比如CSDN，简书，头条等等。后来，偶然间在网上发现了一个博客，是用hexo+next搭建在github上的博客，满足了我的所有要求，简洁，炫酷，简直就是写博客的上选之作，于是，找了一些教程，说干就干…</p>
 <h2 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h2><h3 id="搭建git环境"><a href="#搭建git环境" class="headerlink" title="搭建git环境"></a>搭建git环境</h3><blockquote>
 <p>点击<a href="https://git-for-windows.github.io/" target="_blank" rel="noopener">这里</a>download下载，然后next,next,next…</p>
@@ -14,27 +204,32 @@
 <h3 id="hexo、next安装"><a href="#hexo、next安装" class="headerlink" title="hexo、next安装"></a>hexo、next安装</h3><blockquote>
 <ul>
 <li>打开Git Bash，全局安装hexo：<code>npm install -g hexo</code></li>
+</ul>
+</blockquote>
+<ul>
 <li>定位到想要创建博客的路径上，运行命令：<code>hexo init</code>，创建搭建hexo博客需要的文件</li>
 <li>安装npm依赖包：<code>npm install</code></li>
 <li>从github上拉next到博客路径：<code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
 <li>修改博客配置文件youbolg/_config.yml，找到 <strong><em>theme</em></strong> 字段，并将其值更改为 <strong><em>next</em></strong>，这样就把hexo的主题设置为next了</li>
 <li>其他的基本设置请参考：<a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a></li>
 </ul>
-</blockquote>
 <h3 id="优化主题"><a href="#优化主题" class="headerlink" title="优化主题"></a>优化主题</h3><blockquote>
 <ul>
-<li>增加文章阅读时长，字数统计显示<br>安装： <code>npm i --save hexo-wordcount</code><br>使用：搜索<strong><em>leancloud-visitors-count</em></strong> 放到下面:<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>字数统计:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; wordcount(post.content) &#125;&#125;(字)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">		<span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>阅读时长:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; min2read(post.content) &#125;&#125;(分)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>增加文章阅读时长，字数统计显示<br>安装： <code>npm i --save hexo-wordcount</code><br>使用：搜索<strong><em>leancloud-visitors-count</em></strong> 放到下面:</li>
 </ul>
 </blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>字数统计:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; wordcount(post.content) &#125;&#125;(字)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">		<span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>阅读时长:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; min2read(post.content) &#125;&#125;(分)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="部署github"><a href="#部署github" class="headerlink" title="部署github"></a>部署github</h3><blockquote>
 <ul>
 <li>登录github、创建repo(注意注册的名字必须和repo名字相同)参考链接：<a href="https://www.cnblogs.com/keZhenxu94/p/5288488.html" target="_blank" rel="noopener">kezhenxue</a></li>
+</ul>
+</blockquote>
+<ul>
 <li>获取并设置ssh key, 复制repo的https url复制到博客配置文件中：<br><code>deploy:
 type: git
 repository: https://github.com/fuey/fuey.github.io.git
 branch: master</code></li>
-<li>设置Git的username 和 email地址：<br><code>git config --global user.name &quot;xuhaiyan&quot;</code>、<code>git config --global user.email &quot;haiyan.xu.vip@gmail.com&quot;</code></li>
+<li>设置Git的username 和 email地址：<br><code>git config --global user.name &quot;coolmsw&quot;</code>、<code>git config --global user.email &quot;mswqmn@gmail.com&quot;</code></li>
 <li>检查ssh key，创建ssh key，设置ssh key</li>
 </ul>
 <ol>
@@ -45,46 +240,30 @@ branch: master</code></li>
 <li>然后到刚才创建的repo下，setting-&gt;SSH keys-&gt;add SSH key -&gt;填入title(随便填),key(直接Ctrl+v)。</li>
 <li>测试配置是否正确:<code>ssh -T git@github.com</code>，输入yes，看到successful，那么恭喜你也有了一个炫酷的博客了！</li>
 </ol>
-</blockquote>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><blockquote>
 <p>hexo c      #相当于 hexo clean  清除缓存<br>hexo g      #相当于 hexo generate  生成解析过后的博客代码<br>hexo s      #相当于 hexo server  本地服务<br>hexo d      #相当于 hexo deploy  部署到设置的github或者coding</p>
 </blockquote>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a> | <a href="http://www.joryhe.com" target="_blank" rel="noopener">JORY’S BLOG</a> | <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo theme list</a>  | <a href="http://www.cnblogs.com/syd192/p/6074323.html" target="_blank" rel="noopener">cnblogs</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a>  | <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo theme list</a>  </p>
 ]]></content>
       <categories>
-        <category>博客搭建</category>
+        <category>博客</category>
       </categories>
       <tags>
-        <tag>git</tag>
-        <tag>npm</tag>
         <tag>hexo</tag>
+        <tag>git</tag>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对2016年总结和感想</title>
-    <url>/2020/05/01/my2016/</url>
-    <content><![CDATA[<p>时间过得真的很快，转眼间，自己已经毕业将近一年了。对了，顾着写博客貌似忘了自我介绍，博主来自贵州一个不太知名的小山村，12年考上了贵阳某二本院校，计算机科学与技术专业，虽然心有不甘，但还是撑到了毕业的那天。幸运的是在大学遇到了我的一生挚爱，也就是现在的女朋友，将来的伴侣，还有一群趣(chou)味相投的小伙伴<a id="more"></a>,虽然毕业之后都各奔东西，但是总有相遇的那一天，然后一起干一番(da)事(mei)业(zi)…咳咳，扯远了，毕业之后，父母建议考公务员或者事业单位，混几年，娶个老婆、生个娃，然后安安稳稳过一生，说句实话，我也确实心动过，想想就觉得开心：每天蹲办公室，喝着茶，看着报纸，年复一年，日复一日，小生活就这么过着，多好…可是，博主是个装逼的人，我的人生不该这么过，就该过当上总经理，出任ceo，迎娶白富美这种丰富多彩的生活，所以，博主(知道自己考不上)毅然决定，留在贵阳，继续干码农。<br>博主第一家公司在世纪城，回想起来，一把辛酸一把泪(苦逼脸)，单休，基本天天加班，真是干码农的标准配置，有时候凌晨一二点通过漆黑的街道也曾怀疑过人生，动摇过自己的初心，不过，年轻嘛，多经历点也不是什么坏事，博主也算是体验到了当码农的艰辛，由于公司是创业公司，其实这种情况也不奇怪，刚进公司那会儿，被叔(项目经理，咱公司都这么叫,习惯了)安排负责公司内部使用的管理系统的开发，看到项目架构，简直是一脸懵比，各种陌生的名词:dubbo、redis、druid、zookeeper、ecache…这都是些什么鬼，玩毛线，不过，老板给你开了工资，你敢不干？于是，就只能硬着头皮冲了，所幸的是，在做项目的过程中遇到了很多问题，问部门的同事，他们都很细心的给我讲，在这表示感谢(害羞…)。经过差不多半年的连滚带爬，自己确实学到了不少东西，平时工作除了干我后台的东西，也写过一些微信公众号的接口，并且喜欢上了这种只用写后台逻辑的感觉，就觉得，不用写jsp页面，真尼玛爽。<br>时间在执行公司各种政策下快速流逝，转眼到了年末。公司举行了对博主来说很隆重的年会，大家都很开心！不过，世事无常，下一秒会发生啥，谁也说不准。差不多到过年的前几天的某一天，博主有点事，上完上午就请假了，大概在下午4，5点的时候陆续收到部门小伙伴发来的微信，qq，短信，甚至是电话说公司把研发部解散了，我开始还不太相信，觉得这群傻逼，骗谁呢，怎么可能嘛，研发在公司处于举足轻重的地位，怎么可能会解散，就当玩笑听过去了。博主6点左右回到家，老鹰(安卓扛把子)打电话来说，叫我过去吃顿散伙饭，说研发解散了，解散了，解散…我真的没有听错，确实说得是解散了，吃散伙饭。我一阵懵比，就想着过去见他们一面，问清楚到底发生了什么，我就请了一个下午，发生了这么大的事…上午还在的研发部，下午就不在了。后来，知道了，这仅仅只是公司的一个战略部署的一个部分而已，紧接着是裁员，100多号人的公司，差不多最后只剩一半不到！当时就觉得心里挺不是滋味的，好好的部门说没了就没了，辛辛苦苦一起做的项目就这么拱手让人了，心里真不爽。不过，那又有什么办法，自己只是一个小员工，根本不值得一提，想着，如果自己那时候技术和能力很牛逼，事情会不会发生一点点改变，偏向博主这边的一点点的改变，只能怪自己技术真的不行，无法达到那种程度，所以还得继续努力，不会让这种事再次发生在自己身上(叔，花姐，小龚，小明，小伟哥，小稍匕，小杜儿，潘潘，李洋，老鹰，安好，咱还会见面的….)。<br>年后，经过小明的内推，进了一家外企，也就是现在呆的公司。博主要努力，努力，再努力，达到自己期望的高度。所以，今年搭了博客，开始了自己的规划，加油！故，共勉!</p>
-]]></content>
-      <categories>
-        <category>总结</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
+        <tag>nodejs</tag>
       </tags>
   </entry>
   <entry>
     <title>git常用命令</title>
-    <url>/2020/05/01/git/gitCmd/</url>
-    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><blockquote>
-<p>好不容易搭好的博客，前几次改了几个文件，差点GG，所以为了以防不测，故上传github，备份之!<a id="more"></a></p>
-</blockquote>
-<ul>
+    <url>/2019/04/12/git-mingling/</url>
+    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><ul>
 <li><code>touch README.md</code> 创建并添加一个名字为readme.md的文件</li>
 <li><code>git init</code> 初始化git仓库</li>
 <li><code>git add README.MD</code> 添加一个文件到本地仓库，用于之后的提交(只有在本地代码库里面的代码才能够提交到git的远程仓库上去)</li>
 <li><code>git add .</code> 添加当前路径下的所有文件到本地仓库(注意那个.与add中间有一个空格)</li>
-<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)</li>
+<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)<a id="more"></a></li>
 <li><code>git remote add origin https://github.com/***/***.git</code> 创建远程仓库，并为仓库命名,<strong>origin</strong>为仓库的别名(origin则设为默认主机)，用于将来引用,此处的<strong>url</strong>为git上事先创建好的url地址</li>
 <li><code>git push -u origin master</code> 本地的master分支推送到origin主机的master分支</li>
 <li><code>git pull --rebase origin master</code> 代码合并</li>
@@ -94,65 +273,384 @@ branch: master</code></li>
 <li><code>git add .</code>、<code>git commit -m &quot;notes&quot;</code>、<code>git remote add origin https://github.com/***/***.git</code>、 <code>git pull --rebase origin master</code>、<code>git push -u origin master</code>，顺序执行即可</li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>插入排序</title>
+    <url>/2019/05/02/insert-sort/</url>
+    <content><![CDATA[<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p><strong>插入排序（Insertion Sort）</strong>算法是一个对少量元素进行排序的有效算法。<br> 插入排序是稳定的（即：两个相等的数不会交换位置）。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p><strong>直接插入排序</strong>，二分插入排序（又称折半插入排序），链表插入排序，希尔排序（又称缩小增量排序）。<br> （<strong>注：</strong>此文只讲直接插入排序，其他插入排序有时间会另写博客。）</p>
+<h2 id="原理（直接插入排序思想）"><a href="#原理（直接插入排序思想）" class="headerlink" title="原理（直接插入排序思想）"></a>原理（直接插入排序思想）</h2><p><strong>每次从无序表中取出最后一个元素，把它插入到有序表的合适位置，使有序表仍然有序。</strong><br> <strong>详解：</strong></p>
+<a id="more"></a>
+<blockquote>
+<p>从数组的第二个元素开始,将数组中的每一个元素按照（升序或者降序）规则插入到已排好序的数组中以达到排序的目的.<br>一般情况下将数组的第一个元素作为起始元素,从第二个元素开始依次插入。由于要插入到的数组是已经排好序的,所以只要从右向左（或者从后向前）找到排序插入点插入元素，以此类推，直到将最后一个数组元素插入到数组中,整个排序过程完成。</p>
+</blockquote>
+<h2 id="原理过程图（升序排列为例）"><a href="#原理过程图（升序排列为例）" class="headerlink" title="原理过程图（升序排列为例）"></a>原理过程图（升序排列为例）</h2><p>每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。（如下图）</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-acb8314a712ee2ab.png?imageMogr2/auto-orient/strip|imageView2/2/w/607/format/webp" alt="img"></p>
+<p>插入排序原理图.png</p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><blockquote>
+<p>将有n个元素的数组排序。<br>最佳情况就是，数组已经是正序排列了，在这种情况下，需要进行的比较操作是  （n-1）次即可。<br>最坏情况就是，数组是反序排列，那么此时需要进行的比较共有n(n-1)/2次。<br>插入排序的赋值操作是比较操作的次数加上 (n-1）次。<br>平均插入排序算法的<strong>时间复杂度为 O(n²)</strong>。因而，插入排序不适合对于数据量比较大的排序应用。但是，如果需要排序的数据量很小（eg：量级小于千），那么插入排序是一个不错的选择</p>
+</blockquote>
+<blockquote>
+<p><strong>Note：尽管插入排序的时间复杂度也是O(n²)，但一般情况下，插入排序会比冒泡排序快一倍，要比选择排序还要快一点。</strong></p>
+</blockquote>
+<h2 id="性能分析-稳定性"><a href="#性能分析-稳定性" class="headerlink" title="性能分析(稳定性)"></a>性能分析(稳定性)</h2><blockquote>
+<p>插入排序是在一个已经有序的小序列的基础上，一次插入一个元素。当然，刚开始这个有序的小序列只有1个元素，就是第一个元素。比较是从有序序列的末尾开始，也就是想要插入的元素和已经有序的最大者开始比起，如果比它大则直接插入在其后面，否则一直往前找直到找到它该插入的位置。如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序就是排好序后的顺序，所以插入排序是稳定的。</p>
+</blockquote>
+<p>##　示例代码（ Java）</p>
+<p>＃＃＃　核心代码</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  </span></span><br><span class="line"><span class="comment">     * 原理：每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。</span></span><br><span class="line"><span class="comment">     * 升序为例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;<span class="comment">// i: 代表即将插入的元素角标,作为每一组比较数据的最后一个元素    </span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;   <span class="comment">//j:代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">                    arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">                    arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="直接插入排序完整代码示例"><a href="#直接插入排序完整代码示例" class="headerlink" title="直接插入排序完整代码示例"></a>直接插入排序完整代码示例</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ArrayTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] arr=&#123;<span class="number">90</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">45</span>,<span class="number">34</span>,<span class="number">88</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序前；</span></span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"原数组："</span>);</span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序</span></span><br><span class="line">        insertionSort(arr);</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"升序排序后："</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序后：</span></span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  升序为例</span></span><br><span class="line"><span class="comment">     * 原理：每次将最后一个元素作为插入元素，  与有序数列比较后 插入正确位置</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;  <span class="comment">//i&lt;6  1,2,3,4,5</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;       <span class="comment">//j=i  代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    swap(arr,j,j<span class="number">-1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    发现无论什么排序。都需要对满足条件的元素进行位置置换。</span></span><br><span class="line"><span class="comment">    所以可以把这部分相同的代码提取出来，单独封装成一个函数。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span>(<span class="params"><span class="keyword">int</span>[] arr,<span class="keyword">int</span> a,<span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[a];</span><br><span class="line">        arr[a] = arr[b];</span><br><span class="line">        arr[b] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printArray</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.print(<span class="string">"["</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;arr.length; x++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x!=arr.length<span class="number">-1</span>)</span><br><span class="line">                System.<span class="keyword">out</span>.print(arr[x]+<span class="string">", "</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                System.<span class="keyword">out</span>.println(arr[x]+<span class="string">"]"</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果：</strong></p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-66391a218cafb18c.png?imageMogr2/auto-orient/strip|imageView2/2/w/252/format/webp" alt="img"></p>
+<p>插入排序运行结果.png</p>
+<p>作者：春莉姐姐<br>链接：<a href="https://www.jianshu.com/p/c49884d8805e" target="_blank" rel="noopener">https://www.jianshu.com/p/c49884d8805e</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+]]></content>
       <categories>
-        <category>git</category>
+        <category>算法</category>
       </categories>
       <tags>
-        <tag>git</tag>
+        <tag>排序</tag>
+        <tag>插入排序</tag>
       </tags>
   </entry>
   <entry>
-    <title>第 2 章 计算机组成原理与体系结构</title>
-    <url>/2017/04/18/softwaretest/%E7%AC%AC%202%20%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/first/</url>
-    <content><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>　　提起软考，都是泪啊，这算是第三次考了，第一、二次考试都是在大学的时候考的，第一次下午题差３分，差点没把我气吐血，第二次由于没咋看书，简直惨不忍睹，刚毕业出来，学校的一些知识还没忘光，还是打算把这证给考了，爷就不信了．．．．话不多说，开始作死模式．．．<a id="more"></a></p>
-<h2 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h2><h3 id="进制转化"><a href="#进制转化" class="headerlink" title="进制转化"></a>进制转化</h3><ul>
-<li>R进制转十进制：101001.010 -&gt; 1<em>2^5+1</em>2^3+1*2^-2</li>
-<li>十进制转R进制：十进制数除以R，反向取余</li>
-<li>二进制转八进制：从右边开始，每三位二进制位按照421乘以二进制数相加即可，比如，1011-&gt;1<em>1 2</em>2+1*1= 15</li>
-<li>二进制转十六进制：从右边开始，每三位二进制位按照8421乘以二进制数相加即可，比如，101011 -&gt;2B<h3 id="码制"><a href="#码制" class="headerlink" title="码制"></a>码制</h3></li>
-<li>原码：把一个数转为二进制，并把最高位设为符号位，不足七位用0补全，即，1的原码为0000 0001，-1为1000 0001</li>
-<li>反码：整数的原码与反码相同，负数的原码除符号位外，其他位按位取反，即，1的反码为0000 0001，-1为1111 1110</li>
-<li>补码：整数的补码与反码相同，负数为反码+1,即，1的补码为0000 0001，-1为1111 1111</li>
-<li>移码：补码的符号位取反，即，1的补码为1000 0001，-1为0111 1111，通常用来表示浮点数的阶码<h3 id="数值表示范围"><a href="#数值表示范围" class="headerlink" title="数值表示范围"></a>数值表示范围</h3>由于补码的+0和-0相同，所以比原码和反码多一位<br><img src="http://i2.muimg.com/591560/2356ce58761bd50b.png" alt="范围"><h3 id="浮点数表示"><a href="#浮点数表示" class="headerlink" title="浮点数表示"></a>浮点数表示</h3>浮点数是指通过科学记数法表示的数，通常，表示为N=M<em>R^e,则M为尾数，e为指数，R为基数<br>浮点数之间的运算，通常要经过对阶-&gt;尾数计算-&gt;结果格式化的过程,对价时，通常由低向高对价，比如：2.34</em>10^5 + 1.04<em>10^6<br>对阶后：0.234</em>10^6 + 1.04<em>10^6 = 1.274</em>10^6<br>其中，结果格式化表示尾数的第一位必须为不为零且之后必须为小数点(即不能为0.11或11.2)<h2 id="计算机结构"><a href="#计算机结构" class="headerlink" title="计算机结构"></a>计算机结构</h2><h3 id="硬件组成"><a href="#硬件组成" class="headerlink" title="硬件组成"></a>硬件组成</h3>计算机由cpu（运算器，控制器）、存储器、输入设备、输出设备组成<br>运算器：算术逻辑单元（ALU），累加寄存器（AC）、数据缓冲寄存器（DR）、状态条件寄存器（PSW）<br>控制器：程序计数器（PC）、指令寄存器（IR）、指令译码器、时序部件<h3 id="计算机体系结构分类"><a href="#计算机体系结构分类" class="headerlink" title="计算机体系结构分类"></a>计算机体系结构分类</h3><img src="http://i4.buimg.com/591560/dbebe915d26826d2.png" alt="flynn分类法"><h3 id="CISC和RISC"><a href="#CISC和RISC" class="headerlink" title="CISC和RISC"></a>CISC和RISC</h3>CISC:复杂指令集计算机(提高效率)<br>RISC:精简指令集计算机（提高性能）<br><img src="http://i2.muimg.com/591560/1be830fa4d71f3dd.png" alt="CISC和RISC"></li>
+    <title>python基础知识</title>
+    <url>/2019/05/08/python-zhishi/</url>
+    <content><![CDATA[<h1 id="Python基础知识"><a href="#Python基础知识" class="headerlink" title="Python基础知识"></a>Python基础知识</h1><p>有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。</p>
+<h3 id="1-缩进"><a href="#1-缩进" class="headerlink" title="1 缩进"></a>1 缩进</h3><p>当语句以冒号：结尾时，缩进的语句视为代码块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">age = 20</span><br><span class="line">if age &gt;= 18:</span><br><span class="line">    print(&apos;your age is&apos;, age)</span><br><span class="line">    print(&apos;adult&apos;)</span><br><span class="line">else:</span><br><span class="line">    print(&apos;you are child’)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>else if 可以缩写成 elif<a id="more"></a></p>
+<h3 id="2-转义"><a href="#2-转义" class="headerlink" title="2 转义"></a>2 转义</h3><p>使用r’’来表示内部的字符串不转义</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; print(r&apos;\\\t\\&apos;)</span><br><span class="line">\\\t\\</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="3-‘’’"><a href="#3-‘’’" class="headerlink" title="3 ‘’’"></a>3 ‘’’</h3><p>使用’’’ (三个“’”单引号来允许多行内容)</p>
+<h3 id="4-布尔值"><a href="#4-布尔值" class="headerlink" title="4 布尔值"></a>4 布尔值</h3><p>两种值： True 和 False<br>可以用逻辑运算符 and or not 来参与运算</p>
+<h3 id="5-空值"><a href="#5-空值" class="headerlink" title="5 空值"></a>5 空值</h3><p>None 特殊的空值</p>
+<h3 id="6-变量常量"><a href="#6-变量常量" class="headerlink" title="6 变量常量"></a>6 变量常量</h3><p>动态语言，不需要声明类型，a = 2 常量用大写和下划线表示，但是不能保证这个值不会变化</p>
+<h3 id="7-除法"><a href="#7-除法" class="headerlink" title="7 除法"></a>7 除法</h3><p>/ 除法的结果是浮点数 // 地板除的结果是整数</p>
+<h3 id="8-字符串str"><a href="#8-字符串str" class="headerlink" title="8 字符串str"></a>8 字符串str</h3><ul>
+<li>ord() 函数获取字符的整数表示</li>
+<li>chr() 函数把编码转换为对应的字符</li>
+<li>bytes类型带b前缀的单引号或双引号表示： 如 b’ABC’ ABC每个字符都只占用一个字节. （可以使用encode/decode进行编码）</li>
+<li>len() 计算字符个数</li>
+<li>格式化 使用%运算符来格式化字符串。 或者用format()方法， 替换字符串内的{0},{1}…如 print(‘Hello, {0}, 成绩提升了{1:.1f}%’.format(‘小明’, 17.125)) 打印 Hello, 小明, 成绩提升了17.1%</li>
+<li>str(), int(), float() 进行类型转换</li>
+<li>startswith()和endswith() 判断是否传入的字符串开始或结束</li>
+<li>join() 将字符串列表拼接成一个字符串 ‘,’.join([])</li>
+<li>split() 将一个字符串分割成一个字符串列表 ‘asf’.split(‘ ‘)</li>
+<li>rjust(), ljust(), center() 通过插入空格或其他字符来进行对齐</li>
+<li>strip(), strip(),strip() 删除空白字符，或传入的字符并且字符单个匹配</li>
+<li></li>
+</ul>
+<p>注意：</p>
+<ol>
+<li>不能进行字符串和整型数的“+”操作， 因为不支持自动类型转换。</li>
+<li>字符串乘以整型数，“*”为字符串复制，进行复制字符串。</li>
+</ol>
+<h3 id="9-list"><a href="#9-list" class="headerlink" title="9 list"></a>9 list</h3><ul>
+<li>有序集合，可以添加和删除元素。 classmates = [‘Michael’, ‘Bob’, ‘Tracy’]</li>
+<li>classmates[-1], 获取最后一个元素， -2，倒数第二个。</li>
+<li>append 追加元素到末尾</li>
+<li>insert 把元素插入到指定位置</li>
+<li>pop 删除list末尾的元素， pop(i) 删除指定索引位置的元素</li>
+</ul>
+<h3 id="10-tuple"><a href="#10-tuple" class="headerlink" title="10 tuple"></a>10 tuple</h3><p>元组，有序列表，初始化后不能修改。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">classmates = (&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy’)  </span><br><span class="line">t = (1,)  //  一个元素的时候需要加一个逗号</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用tuple(数组)，可以将数组转化为元组</li>
+<li>使用list(元组)，可以将元组转化为数组</li>
+</ul>
+<h3 id="11-循环"><a href="#11-循环" class="headerlink" title="11 循环"></a>11 循环</h3><ul>
+<li>for…in循环</li>
+<li>range() 提供生成整数序列 range(101) 生成0-100的整数序列</li>
+<li>while 循环</li>
+<li>break 语句退出循环</li>
+<li>continue 跳过当前的这次循环，开始下一次循环</li>
+</ul>
+<h3 id="12-字典"><a href="#12-字典" class="headerlink" title="12 字典"></a>12 字典</h3><ul>
+<li>dict 与iOS的Dictionary和Android的map一样</li>
+<li>d = {‘Micheal’: 95, ‘Bob’: 75, ‘Tracy’: 85}</li>
+<li>dict[‘key’] 当key不存在的时候会报错。需要先进行in判断</li>
+<li>get() 获取value， 如果key不存在返回None， d.get(‘Thomas’, -1) 如果不存在，返回指定值</li>
+<li>pop() 删除key和对应的value</li>
+<li>setdefault() 当key不存在时，设置默认值，然后返回value。如果key存在，则直接返回value。</li>
+</ul>
+<h3 id="13-in"><a href="#13-in" class="headerlink" title="13 in"></a>13 in</h3><p>判断是否在集合中 ‘Thomas’ in d</p>
+<h3 id="14-set"><a href="#14-set" class="headerlink" title="14 set"></a>14 set</h3><ul>
+<li>一组不能重复的key 初始化 s = set([1,2,3,4])</li>
+<li>add(key) 添加元素</li>
+<li>remove(key) 删除元素</li>
+</ul>
+<h3 id="15-def函数"><a href="#15-def函数" class="headerlink" title="15 def函数"></a>15 def函数</h3><ul>
+<li>def my_abs(x): 函数体</li>
+<li>pass 语句，定义什么都不做的空函数</li>
+<li>isinstance() 检查类型, isinstance(x, (int, float)) 检查x是否是int或float类型.包括继承关系</li>
+<li>return 可以返回多个值，使用的是truple</li>
+<li>默认参数 def power(x, n=2): 那么第二个参数可以不传。 默认参数要牢记一点： 默认参数必须指向不变对象！</li>
+<li>可变参数 参数前面加一个*号</li>
+<li>关键字参数 参数前面加两个*号， 传入的是一个字典</li>
+<li>命名关键字参数 特殊分隔符<em>,后被视为命名关键字参数。如果已经定义了可变参数，那么不需要再写一个</em>，</li>
+<li>参数顺序，必选参数-&gt;默认参数-&gt;可变参数-&gt;命名关键字参数-&gt;关键字参数</li>
+</ul>
+<h3 id="16-切片Slice"><a href="#16-切片Slice" class="headerlink" title="16 切片Slice"></a>16 切片Slice</h3><p>L[0:3] 取集合的前三个元素，相当于L[0], L[1], L[2] L[::5] 从0开始，每5个取一个 可以去字符串，结合进行切片操作</p>
+<h3 id="17-迭代Iteration"><a href="#17-迭代Iteration" class="headerlink" title="17 迭代Iteration"></a>17 迭代Iteration</h3><p>enumerate 可以将list变成索引-元素</p>
+<h3 id="18-列表生成式"><a href="#18-列表生成式" class="headerlink" title="18 列表生成式"></a>18 列表生成式</h3><p>[m + n for m in ‘ABC’ for n in ‘XYZ’] 将表达式写前面后面紧跟for，可以二层，三层及以上</p>
+<h3 id="19-生成器generator"><a href="#19-生成器generator" class="headerlink" title="19 生成器generator"></a>19 生成器generator</h3><ul>
+<li>一边循环一边计算。将列表生成式的[]换成(), 就是生成器。</li>
+<li>列表生成式是返回一个列表，而生成器是返回一个generator，通过next()函数获取下一个值。</li>
+<li>如果函数中定义了yield 关键字，那么这个函数就变成了generator</li>
+</ul>
+<h3 id="20-迭代器Iterable"><a href="#20-迭代器Iterable" class="headerlink" title="20 迭代器Iterable"></a>20 迭代器Iterable</h3><ul>
+<li>可以直接作用于for循环的对象list, tuple, dict, set, str等统称为迭代器Iterable。</li>
+<li>可以被next()函数调用并不断返回下一个值的对象成为迭代器Iterator。</li>
+<li>使用iter()函数，可以将Iterable变成Iterator。</li>
+</ul>
+<h3 id="21-捕获异常"><a href="#21-捕获异常" class="headerlink" title="21 捕获异常"></a>21 捕获异常</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">try:</span><br><span class="line">except  XXX:</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="22-高阶函数"><a href="#22-高阶函数" class="headerlink" title="22 高阶函数"></a>22 高阶函数</h3><p>一个函数可以接受另一个函数作为参数，这个函数就是高阶函数。</p>
+<ul>
+<li>map() 接受2个参数，一个函数和一个Iterable。使用函数对Iterable中每一个元素进行运算。</li>
+<li>reduce() 接受2个参数，一个函数和一个Iterable， 这个函数必须接受两个参数。 把结果和下一个元素使用函数进行累计计算。</li>
+<li>filter() 用于过滤序列，接受一个函数和一个Iterable。</li>
+<li>sorted() 接受一个列表和一个函数。</li>
+<li>闭包（返回函数）不要引用任何循环变量或者后续会发生变化的变量。</li>
+<li>函数变量，<strong>name</strong> 属性获取函数的名字。</li>
+<li>偏函数，使用functools.partial()把函数的某些参数给固定住，返回一个新的函数。</li>
+</ul>
+<h3 id="23-装饰器decorator"><a href="#23-装饰器decorator" class="headerlink" title="23 装饰器decorator"></a>23 装饰器decorator</h3><p>在代码运行期间动态增加功能的方式，称为装饰器。 @log 置于函数定义处，不仅会运行函数，还会在运行前执行log的内容。</p>
+<h3 id="24-模块、包"><a href="#24-模块、包" class="headerlink" title="24 模块、包"></a>24 模块、包</h3><p>每个py文件就是一个模块，每个文件夹就是一个包，包中必须要有一个<strong>init</strong>.py的文件。 模块不能和Python自带的模块名冲突，否者将无法导入系统自带的模块。</p>
+<ul>
+<li>导入模块 import，然后可以直接用模块内的变量和函数</li>
+<li>变量名使用“_”开头，说明是private的不能直接引用，不然是public。</li>
+</ul>
+<h3 id="25-类"><a href="#25-类" class="headerlink" title="25 类"></a>25 类</h3><ul>
+<li>class Student(object): class后紧跟类型，（）中是继承的类。</li>
+<li>可以自由绑定属性</li>
+<li>使用<strong>init</strong>函数实例类并绑定属性</li>
+<li>类中的函数，第一参数一定是self。调用的时候self不需要传递，其他参数正常传入。</li>
+<li>属性名前面添加下划线”__”，那么这个属性就是私有变量，只有内部可以访问</li>
+<li>如果属性名是下划线”__”开头和结尾的，那么这个属性是特殊属性，可以直接访问</li>
+<li>type() 获取对象的类属性</li>
+<li>dir() 获取对象的所有属性和方法，使用hasattr(obj, ‘x’)判断是否有属性x，setattr(obj, ‘y’, 19)设置一个属性y并赋值19，getattr(obj, ‘y’) 获取属性y的值</li>
+<li>类属性，在类中直接定义属性，使用类名访问</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name, score):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.score = score</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="26-限制实例属性"><a href="#26-限制实例属性" class="headerlink" title="26 限制实例属性"></a>26 限制实例属性</h3><p>对类和实例可以动态的添加属性和方法，使用<strong>slots</strong>可以限制</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    __slots__ = (&apos;name&apos;, &apos;age&apos;) # 用tuple定义允许绑定的属性名称</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="27-property"><a href="#27-property" class="headerlink" title="27 @property"></a>27 @property</h3><p>负责把一个方法变成属性调用。 @property把getter方法变成属性， 并会创建另一个装饰器@xxx.setter把setter方法变成属性赋值。 如果没有定义@xxx.setter那么说明这个属性是只读属性</p>
+<h3 id="28-多继承MixIn"><a href="#28-多继承MixIn" class="headerlink" title="28 多继承MixIn"></a>28 多继承MixIn</h3><p>一个类可以继承多个类。</p>
+<h3 id="29-定制类"><a href="#29-定制类" class="headerlink" title="29 定制类"></a>29 定制类</h3><ul>
+<li><strong>str</strong> 返回类的描述，可以重载<strong>str</strong>来实现输出类的描述</li>
+<li><strong>iter</strong> 使类支持for…in循环操作，同时需要实现<strong>next</strong>方法用来支持迭代</li>
+<li><strong>getitem</strong> 使类可以像list一样获取第几个元素</li>
+</ul>
+<h3 id="30-枚举类"><a href="#30-枚举类" class="headerlink" title="30 枚举类"></a>30 枚举类</h3><p>Enum类 value属性自动赋值给成员int常量，默认从1开始计数</p>
+<h3 id="31-文件读"><a href="#31-文件读" class="headerlink" title="31 文件读"></a>31 文件读</h3><ul>
+<li>open()函数，打开一个文件对象</li>
+<li>read()函数， 读取内容到内存</li>
+<li>close()函数，关闭文件</li>
+<li>with 语句，可以自动调用close函数</li>
+<li>write() 写文件 with open(‘/path/to/file’, ‘r’) as f: print(f.read())</li>
+</ul>
+<h3 id="32-StringIO"><a href="#32-StringIO" class="headerlink" title="32 StringIO"></a>32 StringIO</h3><p>内存中读写str getvalue() 获取写入后的str</p>
+<h3 id="33-BytesIO"><a href="#33-BytesIO" class="headerlink" title="33 BytesIO"></a>33 BytesIO</h3><p>内存中读写bytes</p>
+<h3 id="34-操作文件和目录"><a href="#34-操作文件和目录" class="headerlink" title="34 操作文件和目录"></a>34 操作文件和目录</h3><ul>
+<li>os模块直接调用操作系统提供的接口函数</li>
+<li>name 操作系统类型</li>
+<li>uname() 详细的系统信息</li>
+<li>environ 环境变量</li>
+<li>path 操作文件和目录模块 abspath(), join(), mkdir(), reader(), split(), splitext(),</li>
+<li>rename 重命名</li>
+<li>remove 删掉文件</li>
+</ul>
+<h3 id="35-序列化"><a href="#35-序列化" class="headerlink" title="35 序列化"></a>35 序列化</h3><p>pickling pickle 模块</p>
+<ul>
+<li>对象序列化 pickle.dumps(d)</li>
+<li>对象反序列化 pickle.load(f) json模块 可以直接进行对dict进行json的转换</li>
+</ul>
+<h3 id="36-多进程"><a href="#36-多进程" class="headerlink" title="36 多进程"></a>36 多进程</h3><p>fork() 调用创建一个子进程 getpid() 获取进程的ID getppid() 获取父进程的ID</p>
+<h3 id="37-del"><a href="#37-del" class="headerlink" title="37 del"></a>37 del</h3><p>删除一个定义的变量 删除列表中一个元素</p>
+<h3 id="38-exec"><a href="#38-exec" class="headerlink" title="38 exec"></a>38 exec</h3><p>内置语句 执行一个表达式</p>
+<h3 id="39-raise"><a href="#39-raise" class="headerlink" title="39 raise"></a>39 raise</h3><p>触发一个异常</p>
+<h3 id="40-星号"><a href="#40-星号" class="headerlink" title="40 *星号"></a>40 *星号</h3><p>*   该位置接受任意多个非关键字（non-keyword）参数，在函数中将其转化为元组（1,2,3,4） <strong>  该位置接受任意多个关键字（keyword）参数，在函数</strong>位置上转化为词典 [key:value, key:value ]</p>
+<h3 id="41-super"><a href="#41-super" class="headerlink" title="41 super"></a>41 super</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class C(B):</span><br><span class="line">       def meth(self, arg):</span><br><span class="line">           super(C, self).meth(arg)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="42-指数"><a href="#42-指数" class="headerlink" title="42 **指数"></a>42 **指数</h3><p>指数操作， 2 ** 3 得到8</p>
+<h3 id="43-print不换行"><a href="#43-print不换行" class="headerlink" title="43 print不换行"></a>43 print不换行</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">print(&apos;Hello&apos;, end=&apos; &apos;)</span><br><span class="line">print(&quot;World&quot;)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>打印 Hello World</p>
+<h3 id="44-global"><a href="#44-global" class="headerlink" title="44 global"></a>44 global</h3><p>将局部变量作用域使用global声明变量，那么这个变量为全局变量</p>
+<h3 id="45-copy"><a href="#45-copy" class="headerlink" title="45 copy"></a>45 copy</h3><p>copy.copy() 函数用来复制列表或字典这样的可变值。 copy.deepcopy() 函数用来复制列表中包含列表的情况。</p>
+<h3 id="46-isX字符串方法"><a href="#46-isX字符串方法" class="headerlink" title="46 isX字符串方法"></a>46 isX字符串方法</h3><ul>
+<li>slower() 字符都是小写</li>
+<li>ismpper() 字符都是大写</li>
+<li>isalpha() 只包含字母，且非空</li>
+<li>isalnum() 只包含字母和数字，且非空</li>
+<li>isdecimal() 只包含数字字符，且非空(不包含小数点)</li>
+<li>isspace() 只包含空格，制表符和换行，且非空</li>
+<li>istitle() 仅包含大写字母开头，后面是小写字母的单词</li>
+</ul>
+<h3 id="47-正则表达式"><a href="#47-正则表达式" class="headerlink" title="47 正则表达式"></a>47 正则表达式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import re</span><br><span class="line">phoneNumRegex = re.compile(r&apos;(\d\d\d)-(\d\d\d-\d\d\d\d)’)  #创建正则表达式</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>search返回一个March对象</li>
+<li>findall()返回一组字符串</li>
+<li>sub() 用新的字符串替换掉匹配的模式 匹配符</li>
+<li>字符？ 表示它前面的分组在这个模式中是可选的（0次或1次）</li>
+<li>字符* 表示它之前的分组在这个模式中匹配0次或多次</li>
+<li>字符+ 表示它之前的分组在这个模式中匹配1次或多次</li>
+<li>符号{} 表示它之前的分组重复指定次数，用两个数字“，”分隔表示一个范围 通配符： ‘.’ 匹配除了换行之外的所有字符，仅仅匹配一个字符</li>
+<li>使用.* 来匹配除了换行符的所有字符</li>
+<li>？ 后面添加一个？，表示非贪心匹配，也就是匹配最短符合的字符串</li>
+<li>re.DOTALL 表示匹配所有字符</li>
+<li>re.IGNORECASE 或 re.I 表示不区分大小写</li>
+<li>re.VERBOSE 忽略正则表达式中的空格和注释 字符分类</li>
+<li>\d 0到9的任何数字</li>
+<li>\D 除了0到9的数字之外的任何字符</li>
+<li>\w 任何字母、数字和下划线字符 （相当于单词word）</li>
+<li>\W 除了字母、数字和下划线字符之外的任何字符</li>
+<li>\s 空格、制表符或换行符 （相当于空白space）</li>
+<li>\S 除了空格、制表符或换行符之外的任何字符</li>
+<li>[123] 自定义字符分类，匹配中括号内的字符。字符’.’,’*’,’?’,’(‘和’)’需要转义</li>
+<li>^ 中括号中插入^表示非字符类。也表明必须此分组开始</li>
+<li>$ 必须此分组结尾</li>
 </ul>
 ]]></content>
       <categories>
-        <category>软考</category>
+        <category>python学习</category>
       </categories>
       <tags>
-        <tag>软考</tag>
-        <tag>计算机组成原理与体系结构</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
-    <title>单节点Nginx环境搭建</title>
-    <url>/2017/04/16/technology/nginx/%E5%8D%95%E8%8A%82%E7%82%B9nginx%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<p>　　上星期，由于工作需要，要搭建一个nginx服务器用于公司业务系统的反向代理，大概了解了一下，就动手搭建了一下，顺便出一个教程，方便新(zi)手(ji)查阅<a id="more"></a></p>
-<h4 id="一、安装Nginx"><a href="#一、安装Nginx" class="headerlink" title="一、安装Nginx"></a>一、安装Nginx</h4><ol>
-<li>点击<a href="https://nginx.org/en/download.html" target="_blank" rel="noopener">这里</a>，下载安装最新版本Nginx,并解压安装包：<code>tar -zxvf nginx-xxxx.tar.gz</code></li>
-<li>安装Nginx编译必须的lib包，pcre、zlib和OpenSSL：<br> <code>yum -y install pcre-devel</code><br> <code>yum install openssl openssl-devel</code><br> <code>yum install -y zlib-devel</code></li>
-<li>检查Nginx必须的lib是否已经有了：<code>./configure --with-http_ssl_module</code>，若出现以下内容则表示lib已经安装<br><img src="http://i1.piimg.com/591560/4716d3856ba6e9f4.png" alt="xx"></li>
-<li>定位到nginx目录，运行<code>make</code>命令进行编译，然后切换到root权限，到nginx目录执行<code>make install</code>命令进行安装</li>
-<li>定位到安装路径下：<code>/usr/local/nginx/sbin</code>，运行命令<code>./nginx</code>，在浏览器中输入阿里云的host地址，如果出现下图类似内容，则安装成功<br><img src="http://i1.piimg.com/591560/af24b8e898055aed.png" alt="xx"></li>
-</ol>
-<h3 id="二、配置nginx配置文件"><a href="#二、配置nginx配置文件" class="headerlink" title="二、配置nginx配置文件"></a>二、配置nginx配置文件</h3><ol>
-<li>将证书和key放在<em>/usr/local/nginx/conf</em>目录下，下面备用</li>
-<li>打开并下载路径<em>/usr/local/nginx/conf</em>下的<strong><em>nginx.conf</em></strong>文件：<br>　　1. 将<strong><em>worker_processes</em></strong>(允许生成的进程数)、<strong><em>worker_connections </em></strong>(最大连接数)设置大点<br>　　2. 配置代理服务器，在此均使用单节点的方式进行:<pre><code><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">upstream myappServer&#123;</span><br><span class="line">	server localhost:8001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ol>
-<p>以此类推，配置多个系统<br>　　3. 配置server模块：<br>        <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">client_max_body_size 500M;   --上传文件限制大小</span><br><span class="line">listen       80 default backlog=2048; --监听端口</span><br><span class="line">listen 443 ssl; --ssl加密传输接口</span><br><span class="line">server_name  localhost; </span><br><span class="line">ssl_certificate      /usr/local/nginx/conf/server.crt; --ssl证书</span><br><span class="line">ssl_certificate_key  /usr/local/nginx/conf/server.key; --ssl key</span><br><span class="line"></span><br><span class="line">proxy_set_header       Host $host;  --主域名</span><br><span class="line">proxy_set_header  X-Real-IP  $remote_addr; --真实地址</span><br><span class="line">proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">proxy_set_header X-Forwarded-Proto  $scheme;</span><br></pre></td></tr></table></figure></p>
-<pre><code>4. 匹配规则：
-    <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">location /myapp/ &#123;   --匹配规则为*/mychs/*的地址请求</span><br><span class="line">	proxy_pass http://mychsServer/myapp/; -- mychsServer对应上面的myServer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</code></pre><ol start="3">
-<li>保存，定位到<strong><em>sbin</em></strong>目录下,运行命令<code>./nginx -s reload</code>即可重新加载nginx配置文件</li>
-</ol>
-<h3 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h3><p>启动 Nginx：<code>sudo ./sbin/nginx</code><br>停止 Nginx：<code>sudo ./sbin/nginx -s stop</code>或<code>sudo ./sbin/nginx -s quit</code><br>Nginx 重载配置: <code>sudo ./sbin/nginx -s reload</code><br>查看配置文件是否正确: <code>./sbin/nginx –t</code><br>强制停止: <code>pkill -9 nginx</code></p>
+    <title>快速排序</title>
+    <url>/2019/05/02/quick-sort/</url>
+    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>快速排序的核心思想是分治：选择数组中某个数作为基数，通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数都比基数小，另外一部分的所有数都都比基数大，然后再按此方法对这两部分数据分别进行快速排序，循环递归，最终使整个数组变成有序。</p>
+<a id="more"></a>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int n[] = &#123; 6, 5, 2, 7, 3, 9, 8, 4, 10, 1 &#125;;</span><br><span class="line">		quicksort(n);</span><br><span class="line">		System.out.print(&quot;快排结果：&quot;);</span><br><span class="line">		for (int m : n) &#123;</span><br><span class="line">			System.out.print(m + &quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void quicksort(int n[]) &#123;</span><br><span class="line">		sort(n, 0, n.length - 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void sort(int n[], int l, int r) &#123;</span><br><span class="line">		if (l &lt; r) &#123;</span><br><span class="line">			// 一趟快排，并返回交换后基数的下标</span><br><span class="line">			int index = patition(n, l, r);</span><br><span class="line">			// 递归排序基数左边的数组</span><br><span class="line">			sort(n, l, index - 1);</span><br><span class="line">			// 递归排序基数右边的数组</span><br><span class="line">			sort(n, index + 1, r);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static int patition(int n[], int l, int r) &#123;</span><br><span class="line">		// p为基数，即待排序数组的第一个数</span><br><span class="line">		int p = n[l];</span><br><span class="line">		int i = l;</span><br><span class="line">		int j = r;</span><br><span class="line">		while (i &lt; j) &#123;</span><br><span class="line">			// 从右往左找第一个小于基数的数</span><br><span class="line">			while (n[j] &gt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				j--;</span><br><span class="line">			&#125;</span><br><span class="line">			// 从左往右找第一个大于基数的数</span><br><span class="line">			while (n[i] &lt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			// 找到后交换两个数</span><br><span class="line">			swap(n, i, j);</span><br><span class="line">		&#125;</span><br><span class="line">		// 使划分好的数分布在基数两侧</span><br><span class="line">		swap(n, l, i);</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static void swap(int n[], int i, int j) &#123;</span><br><span class="line">		int temp = n[i];</span><br><span class="line">		n[i] = n[j];</span><br><span class="line">		n[j] = temp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">快排结果：1 2 3 4 5 6 7 8 9 10 </span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>快速排序是相对其他排序出现频率最高的排序算法。</p>
 ]]></content>
       <categories>
-        <category>nginx</category>
+        <category>算法</category>
       </categories>
       <tags>
-        <tag>nginx</tag>
+        <tag>排序</tag>
+        <tag>算法</tag>
+        <tag>快速排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>选择排序</title>
+    <url>/2019/05/02/selection-sort/</url>
+    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。 选择排序是不稳定的排序方法（比如序列[5， 5， 3]第一次就将第一个[5]与[3]交换，导致第一个5挪动到第二个5后面）。<br> <strong>性质：</strong>不稳定的排序方法</p>
+<a id="more"></a>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void selection_sort(int* a, int n) &#123;</span><br><span class="line">  for (int i = 1; i &lt; n; ++i) &#123;</span><br><span class="line">    int ith = i;</span><br><span class="line">    for (int j = i + 1; j &lt;= n; ++j) &#123;</span><br><span class="line">      if (a[j] &lt; a[ith]) &#123;</span><br><span class="line">        ith = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int t = a[i];</span><br><span class="line">    a[i] = a[ith];</span><br><span class="line">    a[ith] = t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>交换时间：最好的情况全部元素已经有序，则 交换次数为0；最差的情况，全部元素逆序，就要交换 n-1 次；</p>
+<p>所以最优的时间复杂度  和最差的时间复杂度   和平均时间复杂度  都为 ：O(n^2)</p>
+<p>空间复杂度，最优的情况下（已经有顺序）复杂度为：O(0) ；最差的情况下（全部元素都要重新排序）复杂度为：O(n );；平均的时间复杂度：O(1)</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>选择排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>markdow基本语法</title>
+    <url>/2019/04/26/markdown-grammars/</url>
+    <content><![CDATA[<p>标题：</p>
+<p>#h1级标题</p>
+<p>##h2级标题</p>
+<p>###h3级标题</p>
+<p>####h4级标题</p>
+<p>#####h5级标题</p>
+<p>######h6级标题</p>
+<p>分割线：三个以上的短线 即可作出分割线</p>
+<hr>
+<h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>非常自然，一行文字就是一个段落。</p>
+<p>比如<a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你需要另起一段，请在两个段落之间隔一个空行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br><span class="line"></span><br><span class="line">这是另一个段落。</span><br></pre></td></tr></table></figure>
+<p>会解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落&lt;p&gt;</span><br><span class="line">&lt;p&gt;这是另一个段落&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>不隔一个空行的换行行为，在一些编辑器中被解释为换行，即插入一个<code></code>标签。对与另外一些编辑器，会被解释为插入一个空格。对于后者，若要插入换行标签，请在当前一行的结尾打两个空格。</p>
+<h2 id="粗体、斜体"><a href="#粗体、斜体" class="headerlink" title="粗体、斜体"></a>粗体、斜体</h2><p>可以使用星号<code>*</code>或下划线<code>_</code>指定粗体或者斜体。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br><span class="line">_这也是斜体_</span><br><span class="line">**这是粗体**</span><br><span class="line">***这是粗体+斜体***</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;em&gt;这是斜体&lt;/em&gt;</span><br><span class="line">&lt;em&gt;这也是斜体&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;这是粗体&lt;/strong&gt;</span><br><span class="line">&lt;strong&gt;&lt;em&gt;这是粗体+斜体&lt;/strong&gt;&lt;/em&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>一部分编辑器支持删除线，它不是经典markdown中的要素。用波浪线<code>~</code>定义删除线。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~就像这样~~</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;strike&gt;就像这样&lt;/strike&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>markdown总支持1~6六级标题，通过在一行之前加上不同数量的井号来表示。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是 H1 #</span><br><span class="line"></span><br><span class="line">## 这是 H2 ##</span><br><span class="line"></span><br><span class="line">### 这是 H3 ###</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">###### 这是 H6 ######</span><br></pre></td></tr></table></figure>
+<p>行尾可以加上任意数量的井号字符，这些字符不会算作标题内容。通常会加上相等数量的字符以保持对称。</p>
+<p>此外，H1和H2也可以采用在文本下方添加底线来实现，比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是 H1</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">这是 H2</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>通过在行首加上大于号<code>&gt;</code>来添加引用格式。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span><br><span class="line">consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span><br><span class="line">Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span><br><span class="line"></span><br><span class="line">&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span><br><span class="line">id sem consectetuer libero luctus adipiscing.</span><br></pre></td></tr></table></figure>
+<p>引用可以嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is the first level of quoting.</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; This is nested blockquote.</span><br><span class="line">&gt;</span><br><span class="line">&gt; Back to the first level.</span><br></pre></td></tr></table></figure>
+<p>也可以嵌套其他格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ## 这是一个标题。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 1.   这是第一行列表项。</span><br><span class="line">&gt; 2.   这是第二行列表项。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 给出一些例子代码：</span><br><span class="line">&gt;</span><br><span class="line">&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*   Red</span><br><span class="line">*   Green</span><br><span class="line">*   Blue</span><br></pre></td></tr></table></figure>
+<p>等同于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+   Red</span><br><span class="line">+   Green</span><br><span class="line">+   Blue</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-   Red</span><br><span class="line">-   Green</span><br><span class="line">-   Blue</span><br></pre></td></tr></table></figure>
+<p>有序列表则使用数字接着一个英文句点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">2.  McHale</span><br><span class="line">3.  Parish</span><br></pre></td></tr></table></figure>
+<p>数字并不会影响输出的 HTML 结果，也就是说上面的例子等同于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">1.  McHale</span><br><span class="line">1.  Parish</span><br></pre></td></tr></table></figure>
+<h2 id="内联代码"><a href="#内联代码" class="headerlink" title="内联代码"></a>内联代码</h2><p>用反引号<code>`来标记内联代码，它们会解释成</code>标签。如果代码的内容中有反引号，请用两个反引号包裹。代码中的<code>&amp;</code>、<code>&lt;</code>、<code>&gt;</code>符号都会自动转义，请放心使用。</p>
+<h2 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h2><p>有两种方式标记代码区域，原生风格是行首缩进死个空格。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个普通段落：</span><br><span class="line"></span><br><span class="line">    这是一个代码区块。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个普通段落：&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;&lt;code&gt;这是一个代码区块。</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
+<p>除了行首的4个空格会被移出，其它不变。像内联代码一样，上述三种符号也会被转义。但在代码段中，星号之类的markdown标记符号则不会解析。</p>
+<p>还有一种是github的风格，代码段的前后用三个反引号独占一行来标记。</p>
+<p><img src="https://wizardforcel.gitbooks.io/markdown-simple-world/img/2-1.png" alt="img"></p>
+<p>目前主流编辑器都支持这种风格。</p>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* * *</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">- - -</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example](http://example.com/)</span><br><span class="line">[an example](http://example.com/ &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&apos;http://example.com/&apos;&gt;an example&lt;/a&gt;</span><br><span class="line">&lt;a href=&apos;http://example.com/&apos; title=&quot;Optional Title&quot;&gt;an example&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>除了上面的行内式，也可以使用参考式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example][id]</span><br></pre></td></tr></table></figure>
+<p>然后在任意空白位置定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[id]: http://example.com/ &quot;Optional Title&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; /&gt;</span><br><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; title=&apos;Optional Title&apos; /&gt;</span><br></pre></td></tr></table></figure>
+<p>同样，图像也有类似的参考式语法。</p>
+<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>如果链接的地址和名字重复，可以用尖括号语法将其简化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;http://example.com/&gt;</span><br></pre></td></tr></table></figure>
+<p>就相当于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[http://example.com/](http://example.com/)</span><br></pre></td></tr></table></figure>
+<p>切记，大多数编辑器都会自动将符合url规则的东西视为链接，并且解释成链接。很多时候作者由于疏忽等缘故，链接和后面的中文之间缺少空格，导致链接不正常。所以我建议，链接要么加上尖括号，要么两端加上空格。</p>
+<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><p>markdown支持在以下字符前面插入反斜杠</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure>
+<p>插入之后，将不再解析这些字符，而是原样输出。</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格是github风格独有的语法，但近年来渐渐被大多数编辑器支持。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">&lt;thead&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;th align=&quot;left&quot;&gt;Item&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;right&quot;&gt;Value&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;center&quot;&gt;Qty&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/thead&gt;</span><br><span class="line">&lt;tbody&gt;&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Computer&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1600&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;5&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Phone&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$12&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;12&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Pipe&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;234&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/tbody&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<p>要注意第二行的冒号决定了居左居右还是居中，如果你不加冒号，默认是居左的。</p>
+<p>另外可以把第一行去掉，做成没有表头的表格，但第二行始终是要有的。</p>
+<h2 id="内联-HTML"><a href="#内联-HTML" class="headerlink" title="内联 HTML"></a>内联 HTML</h2><p>markdown 的语法简洁，但有其局限性，所以特意保留了内联html这种方式。任何html标签及其内容，都会原样输出到结果中。也就是说，标签中的星号等作为markdown结构的符号，以及构成html标签和实体的符号，都不会做任何转义。</p>
+]]></content>
+      <categories>
+        <category>Markdown学习</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
 </search>

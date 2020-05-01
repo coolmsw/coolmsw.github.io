@@ -1,0 +1,1161 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Python基础知识有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。 1 缩进当语句以冒号：结尾时，缩进的语句视为代码块 1234567age = 20if age &amp;gt;= 18:    print(&amp;apos;your age is&amp;apos;, a">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础知识">
+<meta property="og:url" content="http://yoursite.com/2019/05/08/python-zhishi/index.html">
+<meta property="og:site_name" content="mswcool&#39;blog">
+<meta property="og:description" content="Python基础知识有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。 1 缩进当语句以冒号：结尾时，缩进的语句视为代码块 1234567age = 20if age &amp;gt;= 18:    print(&amp;apos;your age is&amp;apos;, a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-01T17:40:46.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python基础知识">
+<meta name="twitter:description" content="Python基础知识有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。 1 缩进当语句以冒号：结尾时，缩进的语句视为代码块 1234567age = 20if age &amp;gt;= 18:    print(&amp;apos;your age is&amp;apos;, a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/08/python-zhishi/">
+
+
+
+
+
+  <title> python基础知识 | mswcool'blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0f1fd626060161a4a86d92f1cbeecd13";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mswcool'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">纪录学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/python-zhishi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shengweimao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mswcool'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T21:11:50+08:00">
+                2019-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python学习/" itemprop="url" rel="index">
+                    <span itemprop="name">python学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+         <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">字数统计:</span>
+                 <span class="post-count">3,209(字)</span>
+                 
+               </span>
+          
+            <span class="post-time">
+           &nbsp; | &nbsp;
+                 <span class="post-meta-item-icon">
+                   <i class="fa fa-calendar-o"></i>
+                 </span>
+                 <span class="post-meta-item-text">阅读时长:</span>
+                 <span class="post-count">12(分)</span>
+           
+         </span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python基础知识"><a href="#Python基础知识" class="headerlink" title="Python基础知识"></a>Python基础知识</h1><p>有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。</p>
+<h3 id="1-缩进"><a href="#1-缩进" class="headerlink" title="1 缩进"></a>1 缩进</h3><p>当语句以冒号：结尾时，缩进的语句视为代码块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = 20</span><br><span class="line">if age &gt;= 18:</span><br><span class="line">    print(&apos;your age is&apos;, age)</span><br><span class="line">    print(&apos;adult&apos;)</span><br><span class="line">else:</span><br><span class="line">    print(&apos;you are child’)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>else if 可以缩写成 elif<a id="more"></a></p>
+<h3 id="2-转义"><a href="#2-转义" class="headerlink" title="2 转义"></a>2 转义</h3><p>使用r’’来表示内部的字符串不转义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print(r&apos;\\\t\\&apos;)</span><br><span class="line">\\\t\\</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="3-‘’’"><a href="#3-‘’’" class="headerlink" title="3 ‘’’"></a>3 ‘’’</h3><p>使用’’’ (三个“’”单引号来允许多行内容)</p>
+<h3 id="4-布尔值"><a href="#4-布尔值" class="headerlink" title="4 布尔值"></a>4 布尔值</h3><p>两种值： True 和 False<br>可以用逻辑运算符 and or not 来参与运算</p>
+<h3 id="5-空值"><a href="#5-空值" class="headerlink" title="5 空值"></a>5 空值</h3><p>None 特殊的空值</p>
+<h3 id="6-变量常量"><a href="#6-变量常量" class="headerlink" title="6 变量常量"></a>6 变量常量</h3><p>动态语言，不需要声明类型，a = 2 常量用大写和下划线表示，但是不能保证这个值不会变化</p>
+<h3 id="7-除法"><a href="#7-除法" class="headerlink" title="7 除法"></a>7 除法</h3><p>/ 除法的结果是浮点数 // 地板除的结果是整数</p>
+<h3 id="8-字符串str"><a href="#8-字符串str" class="headerlink" title="8 字符串str"></a>8 字符串str</h3><ul>
+<li>ord() 函数获取字符的整数表示</li>
+<li>chr() 函数把编码转换为对应的字符</li>
+<li>bytes类型带b前缀的单引号或双引号表示： 如 b’ABC’ ABC每个字符都只占用一个字节. （可以使用encode/decode进行编码）</li>
+<li>len() 计算字符个数</li>
+<li>格式化 使用%运算符来格式化字符串。 或者用format()方法， 替换字符串内的{0},{1}…如 print(‘Hello, {0}, 成绩提升了{1:.1f}%’.format(‘小明’, 17.125)) 打印 Hello, 小明, 成绩提升了17.1%</li>
+<li>str(), int(), float() 进行类型转换</li>
+<li>startswith()和endswith() 判断是否传入的字符串开始或结束</li>
+<li>join() 将字符串列表拼接成一个字符串 ‘,’.join([])</li>
+<li>split() 将一个字符串分割成一个字符串列表 ‘asf’.split(‘ ‘)</li>
+<li>rjust(), ljust(), center() 通过插入空格或其他字符来进行对齐</li>
+<li>strip(), strip(),strip() 删除空白字符，或传入的字符并且字符单个匹配</li>
+<li></li>
+</ul>
+<p>注意：</p>
+<ol>
+<li>不能进行字符串和整型数的“+”操作， 因为不支持自动类型转换。</li>
+<li>字符串乘以整型数，“*”为字符串复制，进行复制字符串。</li>
+</ol>
+<h3 id="9-list"><a href="#9-list" class="headerlink" title="9 list"></a>9 list</h3><ul>
+<li>有序集合，可以添加和删除元素。 classmates = [‘Michael’, ‘Bob’, ‘Tracy’]</li>
+<li>classmates[-1], 获取最后一个元素， -2，倒数第二个。</li>
+<li>append 追加元素到末尾</li>
+<li>insert 把元素插入到指定位置</li>
+<li>pop 删除list末尾的元素， pop(i) 删除指定索引位置的元素</li>
+</ul>
+<h3 id="10-tuple"><a href="#10-tuple" class="headerlink" title="10 tuple"></a>10 tuple</h3><p>元组，有序列表，初始化后不能修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">classmates = (&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy’)  </span><br><span class="line">t = (1,)  //  一个元素的时候需要加一个逗号</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用tuple(数组)，可以将数组转化为元组</li>
+<li>使用list(元组)，可以将元组转化为数组</li>
+</ul>
+<h3 id="11-循环"><a href="#11-循环" class="headerlink" title="11 循环"></a>11 循环</h3><ul>
+<li>for…in循环</li>
+<li>range() 提供生成整数序列 range(101) 生成0-100的整数序列</li>
+<li>while 循环</li>
+<li>break 语句退出循环</li>
+<li>continue 跳过当前的这次循环，开始下一次循环</li>
+</ul>
+<h3 id="12-字典"><a href="#12-字典" class="headerlink" title="12 字典"></a>12 字典</h3><ul>
+<li>dict 与iOS的Dictionary和Android的map一样</li>
+<li>d = {‘Micheal’: 95, ‘Bob’: 75, ‘Tracy’: 85}</li>
+<li>dict[‘key’] 当key不存在的时候会报错。需要先进行in判断</li>
+<li>get() 获取value， 如果key不存在返回None， d.get(‘Thomas’, -1) 如果不存在，返回指定值</li>
+<li>pop() 删除key和对应的value</li>
+<li>setdefault() 当key不存在时，设置默认值，然后返回value。如果key存在，则直接返回value。</li>
+</ul>
+<h3 id="13-in"><a href="#13-in" class="headerlink" title="13 in"></a>13 in</h3><p>判断是否在集合中 ‘Thomas’ in d</p>
+<h3 id="14-set"><a href="#14-set" class="headerlink" title="14 set"></a>14 set</h3><ul>
+<li>一组不能重复的key 初始化 s = set([1,2,3,4])</li>
+<li>add(key) 添加元素</li>
+<li>remove(key) 删除元素</li>
+</ul>
+<h3 id="15-def函数"><a href="#15-def函数" class="headerlink" title="15 def函数"></a>15 def函数</h3><ul>
+<li>def my_abs(x): 函数体</li>
+<li>pass 语句，定义什么都不做的空函数</li>
+<li>isinstance() 检查类型, isinstance(x, (int, float)) 检查x是否是int或float类型.包括继承关系</li>
+<li>return 可以返回多个值，使用的是truple</li>
+<li>默认参数 def power(x, n=2): 那么第二个参数可以不传。 默认参数要牢记一点： 默认参数必须指向不变对象！</li>
+<li>可变参数 参数前面加一个*号</li>
+<li>关键字参数 参数前面加两个*号， 传入的是一个字典</li>
+<li>命名关键字参数 特殊分隔符<em>,后被视为命名关键字参数。如果已经定义了可变参数，那么不需要再写一个</em>，</li>
+<li>参数顺序，必选参数-&gt;默认参数-&gt;可变参数-&gt;命名关键字参数-&gt;关键字参数</li>
+</ul>
+<h3 id="16-切片Slice"><a href="#16-切片Slice" class="headerlink" title="16 切片Slice"></a>16 切片Slice</h3><p>L[0:3] 取集合的前三个元素，相当于L[0], L[1], L[2] L[::5] 从0开始，每5个取一个 可以去字符串，结合进行切片操作</p>
+<h3 id="17-迭代Iteration"><a href="#17-迭代Iteration" class="headerlink" title="17 迭代Iteration"></a>17 迭代Iteration</h3><p>enumerate 可以将list变成索引-元素</p>
+<h3 id="18-列表生成式"><a href="#18-列表生成式" class="headerlink" title="18 列表生成式"></a>18 列表生成式</h3><p>[m + n for m in ‘ABC’ for n in ‘XYZ’] 将表达式写前面后面紧跟for，可以二层，三层及以上</p>
+<h3 id="19-生成器generator"><a href="#19-生成器generator" class="headerlink" title="19 生成器generator"></a>19 生成器generator</h3><ul>
+<li>一边循环一边计算。将列表生成式的[]换成(), 就是生成器。</li>
+<li>列表生成式是返回一个列表，而生成器是返回一个generator，通过next()函数获取下一个值。</li>
+<li>如果函数中定义了yield 关键字，那么这个函数就变成了generator</li>
+</ul>
+<h3 id="20-迭代器Iterable"><a href="#20-迭代器Iterable" class="headerlink" title="20 迭代器Iterable"></a>20 迭代器Iterable</h3><ul>
+<li>可以直接作用于for循环的对象list, tuple, dict, set, str等统称为迭代器Iterable。</li>
+<li>可以被next()函数调用并不断返回下一个值的对象成为迭代器Iterator。</li>
+<li>使用iter()函数，可以将Iterable变成Iterator。</li>
+</ul>
+<h3 id="21-捕获异常"><a href="#21-捕获异常" class="headerlink" title="21 捕获异常"></a>21 捕获异常</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">except  XXX:</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="22-高阶函数"><a href="#22-高阶函数" class="headerlink" title="22 高阶函数"></a>22 高阶函数</h3><p>一个函数可以接受另一个函数作为参数，这个函数就是高阶函数。</p>
+<ul>
+<li>map() 接受2个参数，一个函数和一个Iterable。使用函数对Iterable中每一个元素进行运算。</li>
+<li>reduce() 接受2个参数，一个函数和一个Iterable， 这个函数必须接受两个参数。 把结果和下一个元素使用函数进行累计计算。</li>
+<li>filter() 用于过滤序列，接受一个函数和一个Iterable。</li>
+<li>sorted() 接受一个列表和一个函数。</li>
+<li>闭包（返回函数）不要引用任何循环变量或者后续会发生变化的变量。</li>
+<li>函数变量，<strong>name</strong> 属性获取函数的名字。</li>
+<li>偏函数，使用functools.partial()把函数的某些参数给固定住，返回一个新的函数。</li>
+</ul>
+<h3 id="23-装饰器decorator"><a href="#23-装饰器decorator" class="headerlink" title="23 装饰器decorator"></a>23 装饰器decorator</h3><p>在代码运行期间动态增加功能的方式，称为装饰器。 @log 置于函数定义处，不仅会运行函数，还会在运行前执行log的内容。</p>
+<h3 id="24-模块、包"><a href="#24-模块、包" class="headerlink" title="24 模块、包"></a>24 模块、包</h3><p>每个py文件就是一个模块，每个文件夹就是一个包，包中必须要有一个<strong>init</strong>.py的文件。 模块不能和Python自带的模块名冲突，否者将无法导入系统自带的模块。</p>
+<ul>
+<li>导入模块 import，然后可以直接用模块内的变量和函数</li>
+<li>变量名使用“_”开头，说明是private的不能直接引用，不然是public。</li>
+</ul>
+<h3 id="25-类"><a href="#25-类" class="headerlink" title="25 类"></a>25 类</h3><ul>
+<li>class Student(object): class后紧跟类型，（）中是继承的类。</li>
+<li>可以自由绑定属性</li>
+<li>使用<strong>init</strong>函数实例类并绑定属性</li>
+<li>类中的函数，第一参数一定是self。调用的时候self不需要传递，其他参数正常传入。</li>
+<li>属性名前面添加下划线”__”，那么这个属性就是私有变量，只有内部可以访问</li>
+<li>如果属性名是下划线”__”开头和结尾的，那么这个属性是特殊属性，可以直接访问</li>
+<li>type() 获取对象的类属性</li>
+<li>dir() 获取对象的所有属性和方法，使用hasattr(obj, ‘x’)判断是否有属性x，setattr(obj, ‘y’, 19)设置一个属性y并赋值19，getattr(obj, ‘y’) 获取属性y的值</li>
+<li>类属性，在类中直接定义属性，使用类名访问</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name, score):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.score = score</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="26-限制实例属性"><a href="#26-限制实例属性" class="headerlink" title="26 限制实例属性"></a>26 限制实例属性</h3><p>对类和实例可以动态的添加属性和方法，使用<strong>slots</strong>可以限制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    __slots__ = (&apos;name&apos;, &apos;age&apos;) # 用tuple定义允许绑定的属性名称</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="27-property"><a href="#27-property" class="headerlink" title="27 @property"></a>27 @property</h3><p>负责把一个方法变成属性调用。 @property把getter方法变成属性， 并会创建另一个装饰器@xxx.setter把setter方法变成属性赋值。 如果没有定义@xxx.setter那么说明这个属性是只读属性</p>
+<h3 id="28-多继承MixIn"><a href="#28-多继承MixIn" class="headerlink" title="28 多继承MixIn"></a>28 多继承MixIn</h3><p>一个类可以继承多个类。</p>
+<h3 id="29-定制类"><a href="#29-定制类" class="headerlink" title="29 定制类"></a>29 定制类</h3><ul>
+<li><strong>str</strong> 返回类的描述，可以重载<strong>str</strong>来实现输出类的描述</li>
+<li><strong>iter</strong> 使类支持for…in循环操作，同时需要实现<strong>next</strong>方法用来支持迭代</li>
+<li><strong>getitem</strong> 使类可以像list一样获取第几个元素</li>
+</ul>
+<h3 id="30-枚举类"><a href="#30-枚举类" class="headerlink" title="30 枚举类"></a>30 枚举类</h3><p>Enum类 value属性自动赋值给成员int常量，默认从1开始计数</p>
+<h3 id="31-文件读"><a href="#31-文件读" class="headerlink" title="31 文件读"></a>31 文件读</h3><ul>
+<li>open()函数，打开一个文件对象</li>
+<li>read()函数， 读取内容到内存</li>
+<li>close()函数，关闭文件</li>
+<li>with 语句，可以自动调用close函数</li>
+<li>write() 写文件 with open(‘/path/to/file’, ‘r’) as f: print(f.read())</li>
+</ul>
+<h3 id="32-StringIO"><a href="#32-StringIO" class="headerlink" title="32 StringIO"></a>32 StringIO</h3><p>内存中读写str getvalue() 获取写入后的str</p>
+<h3 id="33-BytesIO"><a href="#33-BytesIO" class="headerlink" title="33 BytesIO"></a>33 BytesIO</h3><p>内存中读写bytes</p>
+<h3 id="34-操作文件和目录"><a href="#34-操作文件和目录" class="headerlink" title="34 操作文件和目录"></a>34 操作文件和目录</h3><ul>
+<li>os模块直接调用操作系统提供的接口函数</li>
+<li>name 操作系统类型</li>
+<li>uname() 详细的系统信息</li>
+<li>environ 环境变量</li>
+<li>path 操作文件和目录模块 abspath(), join(), mkdir(), reader(), split(), splitext(),</li>
+<li>rename 重命名</li>
+<li>remove 删掉文件</li>
+</ul>
+<h3 id="35-序列化"><a href="#35-序列化" class="headerlink" title="35 序列化"></a>35 序列化</h3><p>pickling pickle 模块</p>
+<ul>
+<li>对象序列化 pickle.dumps(d)</li>
+<li>对象反序列化 pickle.load(f) json模块 可以直接进行对dict进行json的转换</li>
+</ul>
+<h3 id="36-多进程"><a href="#36-多进程" class="headerlink" title="36 多进程"></a>36 多进程</h3><p>fork() 调用创建一个子进程 getpid() 获取进程的ID getppid() 获取父进程的ID</p>
+<h3 id="37-del"><a href="#37-del" class="headerlink" title="37 del"></a>37 del</h3><p>删除一个定义的变量 删除列表中一个元素</p>
+<h3 id="38-exec"><a href="#38-exec" class="headerlink" title="38 exec"></a>38 exec</h3><p>内置语句 执行一个表达式</p>
+<h3 id="39-raise"><a href="#39-raise" class="headerlink" title="39 raise"></a>39 raise</h3><p>触发一个异常</p>
+<h3 id="40-星号"><a href="#40-星号" class="headerlink" title="40 *星号"></a>40 *星号</h3><p>*   该位置接受任意多个非关键字（non-keyword）参数，在函数中将其转化为元组（1,2,3,4） <strong>  该位置接受任意多个关键字（keyword）参数，在函数</strong>位置上转化为词典 [key:value, key:value ]</p>
+<h3 id="41-super"><a href="#41-super" class="headerlink" title="41 super"></a>41 super</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class C(B):</span><br><span class="line">       def meth(self, arg):</span><br><span class="line">           super(C, self).meth(arg)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h3 id="42-指数"><a href="#42-指数" class="headerlink" title="42 **指数"></a>42 **指数</h3><p>指数操作， 2 ** 3 得到8</p>
+<h3 id="43-print不换行"><a href="#43-print不换行" class="headerlink" title="43 print不换行"></a>43 print不换行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;Hello&apos;, end=&apos; &apos;)</span><br><span class="line">print(&quot;World&quot;)</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>打印 Hello World</p>
+<h3 id="44-global"><a href="#44-global" class="headerlink" title="44 global"></a>44 global</h3><p>将局部变量作用域使用global声明变量，那么这个变量为全局变量</p>
+<h3 id="45-copy"><a href="#45-copy" class="headerlink" title="45 copy"></a>45 copy</h3><p>copy.copy() 函数用来复制列表或字典这样的可变值。 copy.deepcopy() 函数用来复制列表中包含列表的情况。</p>
+<h3 id="46-isX字符串方法"><a href="#46-isX字符串方法" class="headerlink" title="46 isX字符串方法"></a>46 isX字符串方法</h3><ul>
+<li>slower() 字符都是小写</li>
+<li>ismpper() 字符都是大写</li>
+<li>isalpha() 只包含字母，且非空</li>
+<li>isalnum() 只包含字母和数字，且非空</li>
+<li>isdecimal() 只包含数字字符，且非空(不包含小数点)</li>
+<li>isspace() 只包含空格，制表符和换行，且非空</li>
+<li>istitle() 仅包含大写字母开头，后面是小写字母的单词</li>
+</ul>
+<h3 id="47-正则表达式"><a href="#47-正则表达式" class="headerlink" title="47 正则表达式"></a>47 正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">phoneNumRegex = re.compile(r&apos;(\d\d\d)-(\d\d\d-\d\d\d\d)’)  #创建正则表达式</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>search返回一个March对象</li>
+<li>findall()返回一组字符串</li>
+<li>sub() 用新的字符串替换掉匹配的模式 匹配符</li>
+<li>字符？ 表示它前面的分组在这个模式中是可选的（0次或1次）</li>
+<li>字符* 表示它之前的分组在这个模式中匹配0次或多次</li>
+<li>字符+ 表示它之前的分组在这个模式中匹配1次或多次</li>
+<li>符号{} 表示它之前的分组重复指定次数，用两个数字“，”分隔表示一个范围 通配符： ‘.’ 匹配除了换行之外的所有字符，仅仅匹配一个字符</li>
+<li>使用.* 来匹配除了换行符的所有字符</li>
+<li>？ 后面添加一个？，表示非贪心匹配，也就是匹配最短符合的字符串</li>
+<li>re.DOTALL 表示匹配所有字符</li>
+<li>re.IGNORECASE 或 re.I 表示不区分大小写</li>
+<li>re.VERBOSE 忽略正则表达式中的空格和注释 字符分类</li>
+<li>\d 0到9的任何数字</li>
+<li>\D 除了0到9的数字之外的任何字符</li>
+<li>\w 任何字母、数字和下划线字符 （相当于单词word）</li>
+<li>\W 除了字母、数字和下划线字符之外的任何字符</li>
+<li>\s 空格、制表符或换行符 （相当于空白space）</li>
+<li>\S 除了空格、制表符或换行符之外的任何字符</li>
+<li>[123] 自定义字符分类，匹配中括号内的字符。字符’.’,’*’,’?’,’(‘和’)’需要转义</li>
+<li>^ 中括号中插入^表示非字符类。也表明必须此分组开始</li>
+<li>$ 必须此分组结尾</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/03/fenzhi-tanxin-donggui/" rel="next" title="贪心、分治、动规你了解多少">
+                <i class="fa fa-chevron-left"></i> 贪心、分治、动规你了解多少
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/02/dp/" rel="prev" title="经典DP问题">
+                经典DP问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yNzkyMi80NDk5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="shengweimao">
+          <p class="site-author-name" itemprop="name">shengweimao</p>
+           
+              <p class="site-description motion-element" itemprop="description">奋斗吧少年</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python基础知识"><span class="nav-number">1.</span> <span class="nav-text">Python基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-缩进"><span class="nav-number">1.0.1.</span> <span class="nav-text">1 缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-转义"><span class="nav-number">1.0.2.</span> <span class="nav-text">2 转义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-‘’’"><span class="nav-number">1.0.3.</span> <span class="nav-text">3 ‘’’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-布尔值"><span class="nav-number">1.0.4.</span> <span class="nav-text">4 布尔值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-空值"><span class="nav-number">1.0.5.</span> <span class="nav-text">5 空值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-变量常量"><span class="nav-number">1.0.6.</span> <span class="nav-text">6 变量常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-除法"><span class="nav-number">1.0.7.</span> <span class="nav-text">7 除法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-字符串str"><span class="nav-number">1.0.8.</span> <span class="nav-text">8 字符串str</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-list"><span class="nav-number">1.0.9.</span> <span class="nav-text">9 list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-tuple"><span class="nav-number">1.0.10.</span> <span class="nav-text">10 tuple</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-循环"><span class="nav-number">1.0.11.</span> <span class="nav-text">11 循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-字典"><span class="nav-number">1.0.12.</span> <span class="nav-text">12 字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-in"><span class="nav-number">1.0.13.</span> <span class="nav-text">13 in</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-set"><span class="nav-number">1.0.14.</span> <span class="nav-text">14 set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-def函数"><span class="nav-number">1.0.15.</span> <span class="nav-text">15 def函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-切片Slice"><span class="nav-number">1.0.16.</span> <span class="nav-text">16 切片Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-迭代Iteration"><span class="nav-number">1.0.17.</span> <span class="nav-text">17 迭代Iteration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-列表生成式"><span class="nav-number">1.0.18.</span> <span class="nav-text">18 列表生成式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-生成器generator"><span class="nav-number">1.0.19.</span> <span class="nav-text">19 生成器generator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-迭代器Iterable"><span class="nav-number">1.0.20.</span> <span class="nav-text">20 迭代器Iterable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-捕获异常"><span class="nav-number">1.0.21.</span> <span class="nav-text">21 捕获异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-高阶函数"><span class="nav-number">1.0.22.</span> <span class="nav-text">22 高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-装饰器decorator"><span class="nav-number">1.0.23.</span> <span class="nav-text">23 装饰器decorator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-模块、包"><span class="nav-number">1.0.24.</span> <span class="nav-text">24 模块、包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-类"><span class="nav-number">1.0.25.</span> <span class="nav-text">25 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-限制实例属性"><span class="nav-number">1.0.26.</span> <span class="nav-text">26 限制实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-property"><span class="nav-number">1.0.27.</span> <span class="nav-text">27 @property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-多继承MixIn"><span class="nav-number">1.0.28.</span> <span class="nav-text">28 多继承MixIn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-定制类"><span class="nav-number">1.0.29.</span> <span class="nav-text">29 定制类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30-枚举类"><span class="nav-number">1.0.30.</span> <span class="nav-text">30 枚举类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#31-文件读"><span class="nav-number">1.0.31.</span> <span class="nav-text">31 文件读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-StringIO"><span class="nav-number">1.0.32.</span> <span class="nav-text">32 StringIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-BytesIO"><span class="nav-number">1.0.33.</span> <span class="nav-text">33 BytesIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-操作文件和目录"><span class="nav-number">1.0.34.</span> <span class="nav-text">34 操作文件和目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#35-序列化"><span class="nav-number">1.0.35.</span> <span class="nav-text">35 序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#36-多进程"><span class="nav-number">1.0.36.</span> <span class="nav-text">36 多进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#37-del"><span class="nav-number">1.0.37.</span> <span class="nav-text">37 del</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#38-exec"><span class="nav-number">1.0.38.</span> <span class="nav-text">38 exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#39-raise"><span class="nav-number">1.0.39.</span> <span class="nav-text">39 raise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#40-星号"><span class="nav-number">1.0.40.</span> <span class="nav-text">40 *星号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#41-super"><span class="nav-number">1.0.41.</span> <span class="nav-text">41 super</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#42-指数"><span class="nav-number">1.0.42.</span> <span class="nav-text">42 **指数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#43-print不换行"><span class="nav-number">1.0.43.</span> <span class="nav-text">43 print不换行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#44-global"><span class="nav-number">1.0.44.</span> <span class="nav-text">44 global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#45-copy"><span class="nav-number">1.0.45.</span> <span class="nav-text">45 copy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#46-isX字符串方法"><span class="nav-number">1.0.46.</span> <span class="nav-text">46 isX字符串方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#47-正则表达式"><span class="nav-number">1.0.47.</span> <span class="nav-text">47 正则表达式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">shengweimao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
