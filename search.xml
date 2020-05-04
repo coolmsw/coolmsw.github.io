@@ -21,42 +21,6 @@
       </tags>
   </entry>
   <entry>
-    <title>经典DP问题</title>
-    <url>/2020/04/02/dp/</url>
-    <content><![CDATA[<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><strong>最长递增子序列</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/585d46a1447b4064b749f08c2ab9ce66" target="_blank" rel="noopener">[编程题]最长递增子序列-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于一个数字序列，请设计一个复杂度为O(nlogn)的算法，返回该序列的最长上升子序列的长度，这里的子序列定义为这样一个序列U1，U2…，其中Ui &lt; Ui+1，且A[Ui] &lt; A[Ui+1]。<br>给定一个数字序列A及序列的长度n，请返回最长上升子序列的长度。</p>
-<p><strong>测试样例</strong><br>[2,1,4,3,1,5,6],7<br>返回：4</p>
-<p><strong>解题思路</strong><br>dp[i]记录长度为i的上升子序列的最后一个数中的最小值（可能有多个长度为i的上升子序列，我们只记录最后一个数最小的那个）<a id="more"></a><br>每次遍历的时候在dp[0,max]中找出第一个比A[i]大的数进行替换</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(int[] A,int n)&#123;</span><br><span class="line">	int[] dp = new int[n];</span><br><span class="line">	dp[0] = A[0];</span><br><span class="line">	int max = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		int index = binarySearch(dp, 0, max, A[i]);</span><br><span class="line">		if(index&lt;n)&#123;</span><br><span class="line">			dp[index] = A[i];</span><br><span class="line">			if(index&gt;max)</span><br><span class="line">				max = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return max+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回第一个比target大的数的下标</span><br><span class="line"> * 如果没有target大的数，则返回end+1</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public static int binarySearch(int[] dp,int start,int end,int target)&#123;</span><br><span class="line">	if(start==end)&#123;</span><br><span class="line">		if(dp[start]&gt;=target)</span><br><span class="line">			return start;</span><br><span class="line">		else</span><br><span class="line">			return start+1;</span><br><span class="line">	&#125;</span><br><span class="line">	int mid = (start+end)/2;</span><br><span class="line">	if(dp[mid]&gt;target)&#123;</span><br><span class="line">		if(mid==start)</span><br><span class="line">			return start;</span><br><span class="line">		return binarySearch(dp, start, mid-1, target);</span><br><span class="line">	&#125;</span><br><span class="line">	else if(dp[mid]&lt;target)</span><br><span class="line">		return binarySearch(dp, mid+1, end, target);</span><br><span class="line">	else</span><br><span class="line">		return mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	int[] A = &#123;2,1,4,3,1,5,6&#125;;</span><br><span class="line">	System.out.println(findLongest(A, A.length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a><strong>最长公共子序列</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/c996bbb77dd447d681ec6907ccfb488a" target="_blank" rel="noopener">[编程题]最长公共子序列-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于两个字符串，请设计一个高效算法，求他们的最长公共子序列的长度，这里的最长公共子序列定义为有两个序列U1,U2,U3…Un和V1,V2,V3…Vn,其中Ui&amp;ltUi+1，Vi&amp;ltVi+1。且A[Ui]== B[Vi]。<br>给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。保证两串长度均小于等于300。</p>
-<p><strong>测试样例</strong><br>“1A2C3D4B56”,10,”B1D23CA45B6A”,12<br>返回：6</p>
-<p><strong>解题思路</strong><br>dp[i][j]代表子串A[0…i]和子串B[0…j]最长公共子序列的长度<br>如果A[i]==B[j],dp[i][j]=dp[i-1][j-1]<br>否则，dp[i][j]=max{dp[i][j-1],dp[i-1][j]}</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLCS(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">           dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">           dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">           for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">               int tempMax = 0;</span><br><span class="line">               if(A.charAt(i-1)==B.charAt(j-1))</span><br><span class="line">                   tempMax = dp[i-1][j-1]+1;</span><br><span class="line">               else</span><br><span class="line">                   tempMax = Math.max(dp[i][j-1], dp[i-1][j]);</span><br><span class="line">               dp[i][j] = tempMax;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return dp[n][m];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;rsymsknwbiapzhuoeyhjubogitoqfkswhbqhwqzyjuvdlzjlhlaubecnkzgvurdsuvqghpjazgxvue&quot;;</span><br><span class="line">	String B = &quot;sclzdzbtrrkdybusjyjrszzqaebkpdtqnqadndvkenqirqqsplmceuuzhukcxxnkcyyvucqjlkysfarxkulpayvtwfmfaqpikzdslpklomafvtesecxygahwnyljldutzsoywiwkugerfbfefcqfvcrzcvbevufzbkbhfeshhdasqo&quot;;</span><br><span class="line">	System.out.println(findLCS(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a><strong>最长公共子串</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/02e7cc263f8a49e8b1e1dc9c116f7602" target="_blank" rel="noopener">[编程题]最长公共子串-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于两个字符串，请设计一个时间复杂度为O(m*n)的算法(这里的m和n为两串的长度)，求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列U1,U2,..Un和V1,V2,…Vn，其中Ui + 1 == Ui+1,Vi + 1 == Vi+1，同时Ui == Vi。<br>给定两个字符串A和B，同时给定两串的长度n和m。</p>
-<p><strong>测试样例</strong><br>“1AB2345CD”,9,”12345EF”,7<br>返回：4</p>
-<p><strong>解题思路</strong><br>dp[i][j]代表以A[i-1]和B[j-1]为结尾的公共子串的最长长度（若A[i-1]!=B[j-1],dp[i][j]==0）<br>如果A[i-1]==B[i-1]&amp;&amp;A[i-2]==B[i-2], dp[i][j] == dp[i-1][j-1] + 1<br>如果A[i-1]==B[i-1], dp[i][j] = 1<br>如果A[i-1]!=B[i-1], dp[i][j] = 0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       </span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">       	dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">       	dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       	for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">       		if(A.charAt(i-1)==B.charAt(j-1))&#123;</span><br><span class="line">       			if(i-2&gt;=0 &amp;&amp; j-2&gt;=0 &amp;&amp; A.charAt(i-2)==B.charAt(j-2))</span><br><span class="line">       				dp[i][j] = dp[i-1][j-1] + 1;</span><br><span class="line">       			else&#123;</span><br><span class="line">       				dp[i][j] = 1;</span><br><span class="line">       			&#125;</span><br><span class="line">       			</span><br><span class="line">       			if(dp[i][j]&gt;max)</span><br><span class="line">           			max = dp[i][j];</span><br><span class="line">       		&#125;</span><br><span class="line">       		else&#123;</span><br><span class="line">       			dp[i][j] = 0;</span><br><span class="line">       		&#125;</span><br><span class="line">       	&#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return max;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;12345CC1235&quot;;</span><br><span class="line">	String B = &quot;12345B12345&quot;;</span><br><span class="line">	System.out.println(findLongest(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>dp</tag>
-        <tag>动态规划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>桶排序</title>
     <url>/2019/05/01/bucket-sort/</url>
     <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
@@ -100,6 +64,42 @@
         <tag>桶排序</tag>
         <tag>基数排序</tag>
         <tag>计数排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>经典DP问题</title>
+    <url>/2020/04/02/dp/</url>
+    <content><![CDATA[<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><strong>最长递增子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/585d46a1447b4064b749f08c2ab9ce66" target="_blank" rel="noopener">[编程题]最长递增子序列-牛客网</a></p>
+</blockquote>
+<p><strong>题目</strong><br>对于一个数字序列，请设计一个复杂度为O(nlogn)的算法，返回该序列的最长上升子序列的长度，这里的子序列定义为这样一个序列U1，U2…，其中Ui &lt; Ui+1，且A[Ui] &lt; A[Ui+1]。<br>给定一个数字序列A及序列的长度n，请返回最长上升子序列的长度。</p>
+<p><strong>测试样例</strong><br>[2,1,4,3,1,5,6],7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i]记录长度为i的上升子序列的最后一个数中的最小值（可能有多个长度为i的上升子序列，我们只记录最后一个数最小的那个）<a id="more"></a><br>每次遍历的时候在dp[0,max]中找出第一个比A[i]大的数进行替换</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(int[] A,int n)&#123;</span><br><span class="line">	int[] dp = new int[n];</span><br><span class="line">	dp[0] = A[0];</span><br><span class="line">	int max = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		int index = binarySearch(dp, 0, max, A[i]);</span><br><span class="line">		if(index&lt;n)&#123;</span><br><span class="line">			dp[index] = A[i];</span><br><span class="line">			if(index&gt;max)</span><br><span class="line">				max = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return max+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回第一个比target大的数的下标</span><br><span class="line"> * 如果没有target大的数，则返回end+1</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public static int binarySearch(int[] dp,int start,int end,int target)&#123;</span><br><span class="line">	if(start==end)&#123;</span><br><span class="line">		if(dp[start]&gt;=target)</span><br><span class="line">			return start;</span><br><span class="line">		else</span><br><span class="line">			return start+1;</span><br><span class="line">	&#125;</span><br><span class="line">	int mid = (start+end)/2;</span><br><span class="line">	if(dp[mid]&gt;target)&#123;</span><br><span class="line">		if(mid==start)</span><br><span class="line">			return start;</span><br><span class="line">		return binarySearch(dp, start, mid-1, target);</span><br><span class="line">	&#125;</span><br><span class="line">	else if(dp[mid]&lt;target)</span><br><span class="line">		return binarySearch(dp, mid+1, end, target);</span><br><span class="line">	else</span><br><span class="line">		return mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	int[] A = &#123;2,1,4,3,1,5,6&#125;;</span><br><span class="line">	System.out.println(findLongest(A, A.length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a><strong>最长公共子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/c996bbb77dd447d681ec6907ccfb488a" target="_blank" rel="noopener">[编程题]最长公共子序列-牛客网</a></p>
+</blockquote>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个高效算法，求他们的最长公共子序列的长度，这里的最长公共子序列定义为有两个序列U1,U2,U3…Un和V1,V2,V3…Vn,其中Ui&amp;ltUi+1，Vi&amp;ltVi+1。且A[Ui]== B[Vi]。<br>给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。保证两串长度均小于等于300。</p>
+<p><strong>测试样例</strong><br>“1A2C3D4B56”,10,”B1D23CA45B6A”,12<br>返回：6</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表子串A[0…i]和子串B[0…j]最长公共子序列的长度<br>如果A[i]==B[j],dp[i][j]=dp[i-1][j-1]<br>否则，dp[i][j]=max{dp[i][j-1],dp[i-1][j]}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLCS(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">           dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">           dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">           for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">               int tempMax = 0;</span><br><span class="line">               if(A.charAt(i-1)==B.charAt(j-1))</span><br><span class="line">                   tempMax = dp[i-1][j-1]+1;</span><br><span class="line">               else</span><br><span class="line">                   tempMax = Math.max(dp[i][j-1], dp[i-1][j]);</span><br><span class="line">               dp[i][j] = tempMax;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return dp[n][m];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;rsymsknwbiapzhuoeyhjubogitoqfkswhbqhwqzyjuvdlzjlhlaubecnkzgvurdsuvqghpjazgxvue&quot;;</span><br><span class="line">	String B = &quot;sclzdzbtrrkdybusjyjrszzqaebkpdtqnqadndvkenqirqqsplmceuuzhukcxxnkcyyvucqjlkysfarxkulpayvtwfmfaqpikzdslpklomafvtesecxygahwnyljldutzsoywiwkugerfbfefcqfvcrzcvbevufzbkbhfeshhdasqo&quot;;</span><br><span class="line">	System.out.println(findLCS(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a><strong>最长公共子串</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/02e7cc263f8a49e8b1e1dc9c116f7602" target="_blank" rel="noopener">[编程题]最长公共子串-牛客网</a></p>
+</blockquote>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个时间复杂度为O(m*n)的算法(这里的m和n为两串的长度)，求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列U1,U2,..Un和V1,V2,…Vn，其中Ui + 1 == Ui+1,Vi + 1 == Vi+1，同时Ui == Vi。<br>给定两个字符串A和B，同时给定两串的长度n和m。</p>
+<p><strong>测试样例</strong><br>“1AB2345CD”,9,”12345EF”,7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表以A[i-1]和B[j-1]为结尾的公共子串的最长长度（若A[i-1]!=B[j-1],dp[i][j]==0）<br>如果A[i-1]==B[i-1]&amp;&amp;A[i-2]==B[i-2], dp[i][j] == dp[i-1][j-1] + 1<br>如果A[i-1]==B[i-1], dp[i][j] = 1<br>如果A[i-1]!=B[i-1], dp[i][j] = 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       </span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">       	dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">       	dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       	for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">       		if(A.charAt(i-1)==B.charAt(j-1))&#123;</span><br><span class="line">       			if(i-2&gt;=0 &amp;&amp; j-2&gt;=0 &amp;&amp; A.charAt(i-2)==B.charAt(j-2))</span><br><span class="line">       				dp[i][j] = dp[i-1][j-1] + 1;</span><br><span class="line">       			else&#123;</span><br><span class="line">       				dp[i][j] = 1;</span><br><span class="line">       			&#125;</span><br><span class="line">       			</span><br><span class="line">       			if(dp[i][j]&gt;max)</span><br><span class="line">           			max = dp[i][j];</span><br><span class="line">       		&#125;</span><br><span class="line">       		else&#123;</span><br><span class="line">       			dp[i][j] = 0;</span><br><span class="line">       		&#125;</span><br><span class="line">       	&#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return max;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;12345CC1235&quot;;</span><br><span class="line">	String B = &quot;12345B12345&quot;;</span><br><span class="line">	System.out.println(findLongest(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>dp</tag>
+        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
@@ -314,6 +314,102 @@ branch: master</code></li>
       </tags>
   </entry>
   <entry>
+    <title>markdow基本语法</title>
+    <url>/2019/04/26/markdown-grammars/</url>
+    <content><![CDATA[<p>标题：</p>
+<p>#h1级标题</p>
+<p>##h2级标题</p>
+<p>###h3级标题</p>
+<p>####h4级标题</p>
+<p>#####h5级标题</p>
+<p>######h6级标题</p>
+<p>分割线：三个以上的短线 即可作出分割线</p>
+<hr>
+<h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>非常自然，一行文字就是一个段落。</p>
+<p>比如<a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你需要另起一段，请在两个段落之间隔一个空行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br><span class="line"></span><br><span class="line">这是另一个段落。</span><br></pre></td></tr></table></figure>
+<p>会解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落&lt;p&gt;</span><br><span class="line">&lt;p&gt;这是另一个段落&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>不隔一个空行的换行行为，在一些编辑器中被解释为换行，即插入一个<code></code>标签。对与另外一些编辑器，会被解释为插入一个空格。对于后者，若要插入换行标签，请在当前一行的结尾打两个空格。</p>
+<h2 id="粗体、斜体"><a href="#粗体、斜体" class="headerlink" title="粗体、斜体"></a>粗体、斜体</h2><p>可以使用星号<code>*</code>或下划线<code>_</code>指定粗体或者斜体。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br><span class="line">_这也是斜体_</span><br><span class="line">**这是粗体**</span><br><span class="line">***这是粗体+斜体***</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;em&gt;这是斜体&lt;/em&gt;</span><br><span class="line">&lt;em&gt;这也是斜体&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;这是粗体&lt;/strong&gt;</span><br><span class="line">&lt;strong&gt;&lt;em&gt;这是粗体+斜体&lt;/strong&gt;&lt;/em&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>一部分编辑器支持删除线，它不是经典markdown中的要素。用波浪线<code>~</code>定义删除线。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~就像这样~~</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;strike&gt;就像这样&lt;/strike&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>markdown总支持1~6六级标题，通过在一行之前加上不同数量的井号来表示。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是 H1 #</span><br><span class="line"></span><br><span class="line">## 这是 H2 ##</span><br><span class="line"></span><br><span class="line">### 这是 H3 ###</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">###### 这是 H6 ######</span><br></pre></td></tr></table></figure>
+<p>行尾可以加上任意数量的井号字符，这些字符不会算作标题内容。通常会加上相等数量的字符以保持对称。</p>
+<p>此外，H1和H2也可以采用在文本下方添加底线来实现，比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是 H1</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">这是 H2</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>通过在行首加上大于号<code>&gt;</code>来添加引用格式。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span><br><span class="line">consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span><br><span class="line">Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span><br><span class="line"></span><br><span class="line">&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span><br><span class="line">id sem consectetuer libero luctus adipiscing.</span><br></pre></td></tr></table></figure>
+<p>引用可以嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is the first level of quoting.</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; This is nested blockquote.</span><br><span class="line">&gt;</span><br><span class="line">&gt; Back to the first level.</span><br></pre></td></tr></table></figure>
+<p>也可以嵌套其他格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ## 这是一个标题。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 1.   这是第一行列表项。</span><br><span class="line">&gt; 2.   这是第二行列表项。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 给出一些例子代码：</span><br><span class="line">&gt;</span><br><span class="line">&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*   Red</span><br><span class="line">*   Green</span><br><span class="line">*   Blue</span><br></pre></td></tr></table></figure>
+<p>等同于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+   Red</span><br><span class="line">+   Green</span><br><span class="line">+   Blue</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-   Red</span><br><span class="line">-   Green</span><br><span class="line">-   Blue</span><br></pre></td></tr></table></figure>
+<p>有序列表则使用数字接着一个英文句点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">2.  McHale</span><br><span class="line">3.  Parish</span><br></pre></td></tr></table></figure>
+<p>数字并不会影响输出的 HTML 结果，也就是说上面的例子等同于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">1.  McHale</span><br><span class="line">1.  Parish</span><br></pre></td></tr></table></figure>
+<h2 id="内联代码"><a href="#内联代码" class="headerlink" title="内联代码"></a>内联代码</h2><p>用反引号<code>`来标记内联代码，它们会解释成</code>标签。如果代码的内容中有反引号，请用两个反引号包裹。代码中的<code>&amp;</code>、<code>&lt;</code>、<code>&gt;</code>符号都会自动转义，请放心使用。</p>
+<h2 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h2><p>有两种方式标记代码区域，原生风格是行首缩进死个空格。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个普通段落：</span><br><span class="line"></span><br><span class="line">    这是一个代码区块。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个普通段落：&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;&lt;code&gt;这是一个代码区块。</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
+<p>除了行首的4个空格会被移出，其它不变。像内联代码一样，上述三种符号也会被转义。但在代码段中，星号之类的markdown标记符号则不会解析。</p>
+<p>还有一种是github的风格，代码段的前后用三个反引号独占一行来标记。</p>
+<p><img src="https://wizardforcel.gitbooks.io/markdown-simple-world/img/2-1.png" alt="img"></p>
+<p>目前主流编辑器都支持这种风格。</p>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* * *</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">- - -</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example](http://example.com/)</span><br><span class="line">[an example](http://example.com/ &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&apos;http://example.com/&apos;&gt;an example&lt;/a&gt;</span><br><span class="line">&lt;a href=&apos;http://example.com/&apos; title=&quot;Optional Title&quot;&gt;an example&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>除了上面的行内式，也可以使用参考式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example][id]</span><br></pre></td></tr></table></figure>
+<p>然后在任意空白位置定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[id]: http://example.com/ &quot;Optional Title&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; /&gt;</span><br><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; title=&apos;Optional Title&apos; /&gt;</span><br></pre></td></tr></table></figure>
+<p>同样，图像也有类似的参考式语法。</p>
+<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>如果链接的地址和名字重复，可以用尖括号语法将其简化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;http://example.com/&gt;</span><br></pre></td></tr></table></figure>
+<p>就相当于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[http://example.com/](http://example.com/)</span><br></pre></td></tr></table></figure>
+<p>切记，大多数编辑器都会自动将符合url规则的东西视为链接，并且解释成链接。很多时候作者由于疏忽等缘故，链接和后面的中文之间缺少空格，导致链接不正常。所以我建议，链接要么加上尖括号，要么两端加上空格。</p>
+<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><p>markdown支持在以下字符前面插入反斜杠</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure>
+<p>插入之后，将不再解析这些字符，而是原样输出。</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格是github风格独有的语法，但近年来渐渐被大多数编辑器支持。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">&lt;thead&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;th align=&quot;left&quot;&gt;Item&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;right&quot;&gt;Value&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;center&quot;&gt;Qty&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/thead&gt;</span><br><span class="line">&lt;tbody&gt;&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Computer&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1600&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;5&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Phone&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$12&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;12&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Pipe&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;234&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/tbody&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<p>要注意第二行的冒号决定了居左居右还是居中，如果你不加冒号，默认是居左的。</p>
+<p>另外可以把第一行去掉，做成没有表头的表格，但第二行始终是要有的。</p>
+<h2 id="内联-HTML"><a href="#内联-HTML" class="headerlink" title="内联 HTML"></a>内联 HTML</h2><p>markdown 的语法简洁，但有其局限性，所以特意保留了内联html这种方式。任何html标签及其内容，都会原样输出到结果中。也就是说，标签中的星号等作为markdown结构的符号，以及构成html标签和实体的符号，都不会做任何转义。</p>
+]]></content>
+      <categories>
+        <category>Markdown学习</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python基础知识</title>
     <url>/2019/05/08/python-zhishi/</url>
     <content><![CDATA[<h1 id="Python基础知识"><a href="#Python基础知识" class="headerlink" title="Python基础知识"></a>Python基础知识</h1><p>有时候技术总是不够用，明明已经学了很多技能了，但是碰到问题还是不够用。手工处理耗时太长的问题已经困扰着希望解放双手的我们，批处理是唯一的出路，那么python的使用将彻底的解决一切的重复劳动。</p>
@@ -516,102 +612,6 @@ branch: master</code></li>
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>markdow基本语法</title>
-    <url>/2019/04/26/markdown-grammars/</url>
-    <content><![CDATA[<p>标题：</p>
-<p>#h1级标题</p>
-<p>##h2级标题</p>
-<p>###h3级标题</p>
-<p>####h4级标题</p>
-<p>#####h5级标题</p>
-<p>######h6级标题</p>
-<p>分割线：三个以上的短线 即可作出分割线</p>
-<hr>
-<h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>非常自然，一行文字就是一个段落。</p>
-<p>比如<a id="more"></a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>如果你需要另起一段，请在两个段落之间隔一个空行。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br><span class="line"></span><br><span class="line">这是另一个段落。</span><br></pre></td></tr></table></figure>
-<p>会解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落&lt;p&gt;</span><br><span class="line">&lt;p&gt;这是另一个段落&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>不隔一个空行的换行行为，在一些编辑器中被解释为换行，即插入一个<code></code>标签。对与另外一些编辑器，会被解释为插入一个空格。对于后者，若要插入换行标签，请在当前一行的结尾打两个空格。</p>
-<h2 id="粗体、斜体"><a href="#粗体、斜体" class="headerlink" title="粗体、斜体"></a>粗体、斜体</h2><p>可以使用星号<code>*</code>或下划线<code>_</code>指定粗体或者斜体。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br><span class="line">_这也是斜体_</span><br><span class="line">**这是粗体**</span><br><span class="line">***这是粗体+斜体***</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;em&gt;这是斜体&lt;/em&gt;</span><br><span class="line">&lt;em&gt;这也是斜体&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;这是粗体&lt;/strong&gt;</span><br><span class="line">&lt;strong&gt;&lt;em&gt;这是粗体+斜体&lt;/strong&gt;&lt;/em&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>一部分编辑器支持删除线，它不是经典markdown中的要素。用波浪线<code>~</code>定义删除线。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~就像这样~~</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;strike&gt;就像这样&lt;/strike&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>markdown总支持1~6六级标题，通过在一行之前加上不同数量的井号来表示。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是 H1 #</span><br><span class="line"></span><br><span class="line">## 这是 H2 ##</span><br><span class="line"></span><br><span class="line">### 这是 H3 ###</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">###### 这是 H6 ######</span><br></pre></td></tr></table></figure>
-<p>行尾可以加上任意数量的井号字符，这些字符不会算作标题内容。通常会加上相等数量的字符以保持对称。</p>
-<p>此外，H1和H2也可以采用在文本下方添加底线来实现，比如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是 H1</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">这是 H2</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>通过在行首加上大于号<code>&gt;</code>来添加引用格式。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span><br><span class="line">consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span><br><span class="line">Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span><br><span class="line"></span><br><span class="line">&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span><br><span class="line">id sem consectetuer libero luctus adipiscing.</span><br></pre></td></tr></table></figure>
-<p>引用可以嵌套：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is the first level of quoting.</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; This is nested blockquote.</span><br><span class="line">&gt;</span><br><span class="line">&gt; Back to the first level.</span><br></pre></td></tr></table></figure>
-<p>也可以嵌套其他格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ## 这是一个标题。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 1.   这是第一行列表项。</span><br><span class="line">&gt; 2.   这是第二行列表项。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 给出一些例子代码：</span><br><span class="line">&gt;</span><br><span class="line">&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</span><br></pre></td></tr></table></figure>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号或是减号作为列表标记：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*   Red</span><br><span class="line">*   Green</span><br><span class="line">*   Blue</span><br></pre></td></tr></table></figure>
-<p>等同于</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+   Red</span><br><span class="line">+   Green</span><br><span class="line">+   Blue</span><br></pre></td></tr></table></figure>
-<p>和</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-   Red</span><br><span class="line">-   Green</span><br><span class="line">-   Blue</span><br></pre></td></tr></table></figure>
-<p>有序列表则使用数字接着一个英文句点：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">2.  McHale</span><br><span class="line">3.  Parish</span><br></pre></td></tr></table></figure>
-<p>数字并不会影响输出的 HTML 结果，也就是说上面的例子等同于：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">1.  McHale</span><br><span class="line">1.  Parish</span><br></pre></td></tr></table></figure>
-<h2 id="内联代码"><a href="#内联代码" class="headerlink" title="内联代码"></a>内联代码</h2><p>用反引号<code>`来标记内联代码，它们会解释成</code>标签。如果代码的内容中有反引号，请用两个反引号包裹。代码中的<code>&amp;</code>、<code>&lt;</code>、<code>&gt;</code>符号都会自动转义，请放心使用。</p>
-<h2 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h2><p>有两种方式标记代码区域，原生风格是行首缩进死个空格。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个普通段落：</span><br><span class="line"></span><br><span class="line">    这是一个代码区块。</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个普通段落：&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;&lt;code&gt;这是一个代码区块。</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
-<p>除了行首的4个空格会被移出，其它不变。像内联代码一样，上述三种符号也会被转义。但在代码段中，星号之类的markdown标记符号则不会解析。</p>
-<p>还有一种是github的风格，代码段的前后用三个反引号独占一行来标记。</p>
-<p><img src="https://wizardforcel.gitbooks.io/markdown-simple-world/img/2-1.png" alt="img"></p>
-<p>目前主流编辑器都支持这种风格。</p>
-<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* * *</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">- - -</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example](http://example.com/)</span><br><span class="line">[an example](http://example.com/ &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
-<p>会被解释为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&apos;http://example.com/&apos;&gt;an example&lt;/a&gt;</span><br><span class="line">&lt;a href=&apos;http://example.com/&apos; title=&quot;Optional Title&quot;&gt;an example&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-<p>除了上面的行内式，也可以使用参考式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example][id]</span><br></pre></td></tr></table></figure>
-<p>然后在任意空白位置定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[id]: http://example.com/ &quot;Optional Title&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
-<p>会被解释为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; /&gt;</span><br><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; title=&apos;Optional Title&apos; /&gt;</span><br></pre></td></tr></table></figure>
-<p>同样，图像也有类似的参考式语法。</p>
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>如果链接的地址和名字重复，可以用尖括号语法将其简化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;http://example.com/&gt;</span><br></pre></td></tr></table></figure>
-<p>就相当于</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[http://example.com/](http://example.com/)</span><br></pre></td></tr></table></figure>
-<p>切记，大多数编辑器都会自动将符合url规则的东西视为链接，并且解释成链接。很多时候作者由于疏忽等缘故，链接和后面的中文之间缺少空格，导致链接不正常。所以我建议，链接要么加上尖括号，要么两端加上空格。</p>
-<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><p>markdown支持在以下字符前面插入反斜杠</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure>
-<p>插入之后，将不再解析这些字符，而是原样输出。</p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格是github风格独有的语法，但近年来渐渐被大多数编辑器支持。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">&lt;thead&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;th align=&quot;left&quot;&gt;Item&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;right&quot;&gt;Value&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;center&quot;&gt;Qty&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/thead&gt;</span><br><span class="line">&lt;tbody&gt;&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Computer&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1600&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;5&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Phone&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$12&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;12&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Pipe&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;234&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/tbody&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
-<p>要注意第二行的冒号决定了居左居右还是居中，如果你不加冒号，默认是居左的。</p>
-<p>另外可以把第一行去掉，做成没有表头的表格，但第二行始终是要有的。</p>
-<h2 id="内联-HTML"><a href="#内联-HTML" class="headerlink" title="内联 HTML"></a>内联 HTML</h2><p>markdown 的语法简洁，但有其局限性，所以特意保留了内联html这种方式。任何html标签及其内容，都会原样输出到结果中。也就是说，标签中的星号等作为markdown结构的符号，以及构成html标签和实体的符号，都不会做任何转义。</p>
-]]></content>
-      <categories>
-        <category>Markdown学习</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
