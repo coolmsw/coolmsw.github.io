@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>桶排序</title>
+    <url>/2019/05/01/bucket-sort/</url>
+    <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
+<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
+<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
+<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
+<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
+<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
+<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
+<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
+<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
+<p>是不是很方便快捷呢？</p>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
+<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
+<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
+<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
+<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
+<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
+<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
+<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
+<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+        <tag>桶排序</tag>
+        <tag>基数排序</tag>
+        <tag>计数排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>冒泡排序</title>
     <url>/2019/05/01/bubble-sort/</url>
     <content><![CDATA[<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><h2 id="算法基本思想："><a href="#算法基本思想：" class="headerlink" title="算法基本思想："></a>算法基本思想：</h2><p>对相邻的元素进行两两比较，顺序相反则进行交换，这样，每一趟会将最小或最大的元素“浮”到顶端，最终达到完全有序。就好像一串气泡一样，最终从小到大或从大到小依次排下来。</p>
@@ -54,52 +100,6 @@
       <tags>
         <tag>dp</tag>
         <tag>动态规划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>桶排序</title>
-    <url>/2019/05/01/bucket-sort/</url>
-    <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
-<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
-<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
-<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
-<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
-<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
-<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
-<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
-<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
-<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
-<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
-<p>是不是很方便快捷呢？</p>
-<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
-<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
-<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
-<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
-<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
-<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
-<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
-<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
-<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
-<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>算法</tag>
-        <tag>桶排序</tag>
-        <tag>基数排序</tag>
-        <tag>计数排序</tag>
       </tags>
   </entry>
   <entry>
@@ -190,6 +190,25 @@
       </tags>
   </entry>
   <entry>
+    <title>git常用命令</title>
+    <url>/2019/04/12/git-mingling/</url>
+    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><ul>
+<li><code>touch README.md</code> 创建并添加一个名字为readme.md的文件</li>
+<li><code>git init</code> 初始化git仓库</li>
+<li><code>git add README.MD</code> 添加一个文件到本地仓库，用于之后的提交(只有在本地代码库里面的代码才能够提交到git的远程仓库上去)</li>
+<li><code>git add .</code> 添加当前路径下的所有文件到本地仓库(注意那个.与add中间有一个空格)</li>
+<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)<a id="more"></a></li>
+<li><code>git remote add origin https://github.com/***/***.git</code> 创建远程仓库，并为仓库命名,<strong>origin</strong>为仓库的别名(origin则设为默认主机)，用于将来引用,此处的<strong>url</strong>为git上事先创建好的url地址</li>
+<li><code>git push -u origin master</code> 本地的master分支推送到origin主机的master分支</li>
+<li><code>git pull --rebase origin master</code> 代码合并</li>
+<li><code>git config --global --unset http.proxy</code> （出现这个错误时：<code>fatal: unable to access &#39;https://github.com/fuey/blog-code-backups.git/&#39;: Couldn&#39;t resolve host &#39;github.com&#39;</code>，然后再提交就行了）</li>
+</ul>
+<h2 id="提交分支一般步骤"><a href="#提交分支一般步骤" class="headerlink" title="提交分支一般步骤"></a>提交分支一般步骤</h2><ul>
+<li><code>git add .</code>、<code>git commit -m &quot;notes&quot;</code>、<code>git remote add origin https://github.com/***/***.git</code>、 <code>git pull --rebase origin master</code>、<code>git push -u origin master</code>，顺序执行即可</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>博客搭建历程</title>
     <url>/2019/04/12/first/</url>
     <content><![CDATA[<blockquote>
@@ -256,25 +275,6 @@ branch: master</code></li>
       </tags>
   </entry>
   <entry>
-    <title>git常用命令</title>
-    <url>/2019/04/12/git-mingling/</url>
-    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><ul>
-<li><code>touch README.md</code> 创建并添加一个名字为readme.md的文件</li>
-<li><code>git init</code> 初始化git仓库</li>
-<li><code>git add README.MD</code> 添加一个文件到本地仓库，用于之后的提交(只有在本地代码库里面的代码才能够提交到git的远程仓库上去)</li>
-<li><code>git add .</code> 添加当前路径下的所有文件到本地仓库(注意那个.与add中间有一个空格)</li>
-<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)<a id="more"></a></li>
-<li><code>git remote add origin https://github.com/***/***.git</code> 创建远程仓库，并为仓库命名,<strong>origin</strong>为仓库的别名(origin则设为默认主机)，用于将来引用,此处的<strong>url</strong>为git上事先创建好的url地址</li>
-<li><code>git push -u origin master</code> 本地的master分支推送到origin主机的master分支</li>
-<li><code>git pull --rebase origin master</code> 代码合并</li>
-<li><code>git config --global --unset http.proxy</code> （出现这个错误时：<code>fatal: unable to access &#39;https://github.com/fuey/blog-code-backups.git/&#39;: Couldn&#39;t resolve host &#39;github.com&#39;</code>，然后再提交就行了）</li>
-</ul>
-<h2 id="提交分支一般步骤"><a href="#提交分支一般步骤" class="headerlink" title="提交分支一般步骤"></a>提交分支一般步骤</h2><ul>
-<li><code>git add .</code>、<code>git commit -m &quot;notes&quot;</code>、<code>git remote add origin https://github.com/***/***.git</code>、 <code>git pull --rebase origin master</code>、<code>git push -u origin master</code>，顺序执行即可</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>插入排序</title>
     <url>/2019/05/02/insert-sort/</url>
     <content><![CDATA[<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p><strong>插入排序（Insertion Sort）</strong>算法是一个对少量元素进行排序的有效算法。<br> 插入排序是稳定的（即：两个相等的数不会交换位置）。</p>
@@ -311,6 +311,141 @@ branch: master</code></li>
       <tags>
         <tag>排序</tag>
         <tag>插入排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>markdow基本语法</title>
+    <url>/2019/04/26/markdown-grammars/</url>
+    <content><![CDATA[<p>标题：</p>
+<p>#h1级标题</p>
+<p>##h2级标题</p>
+<p>###h3级标题</p>
+<p>####h4级标题</p>
+<p>#####h5级标题</p>
+<p>######h6级标题</p>
+<p>分割线：三个以上的短线 即可作出分割线</p>
+<hr>
+<h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>非常自然，一行文字就是一个段落。</p>
+<p>比如<a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你需要另起一段，请在两个段落之间隔一个空行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br><span class="line"></span><br><span class="line">这是另一个段落。</span><br></pre></td></tr></table></figure>
+<p>会解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落&lt;p&gt;</span><br><span class="line">&lt;p&gt;这是另一个段落&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>不隔一个空行的换行行为，在一些编辑器中被解释为换行，即插入一个<code></code>标签。对与另外一些编辑器，会被解释为插入一个空格。对于后者，若要插入换行标签，请在当前一行的结尾打两个空格。</p>
+<h2 id="粗体、斜体"><a href="#粗体、斜体" class="headerlink" title="粗体、斜体"></a>粗体、斜体</h2><p>可以使用星号<code>*</code>或下划线<code>_</code>指定粗体或者斜体。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br><span class="line">_这也是斜体_</span><br><span class="line">**这是粗体**</span><br><span class="line">***这是粗体+斜体***</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;em&gt;这是斜体&lt;/em&gt;</span><br><span class="line">&lt;em&gt;这也是斜体&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;这是粗体&lt;/strong&gt;</span><br><span class="line">&lt;strong&gt;&lt;em&gt;这是粗体+斜体&lt;/strong&gt;&lt;/em&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>一部分编辑器支持删除线，它不是经典markdown中的要素。用波浪线<code>~</code>定义删除线。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~就像这样~~</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;strike&gt;就像这样&lt;/strike&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>markdown总支持1~6六级标题，通过在一行之前加上不同数量的井号来表示。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是 H1 #</span><br><span class="line"></span><br><span class="line">## 这是 H2 ##</span><br><span class="line"></span><br><span class="line">### 这是 H3 ###</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">###### 这是 H6 ######</span><br></pre></td></tr></table></figure>
+<p>行尾可以加上任意数量的井号字符，这些字符不会算作标题内容。通常会加上相等数量的字符以保持对称。</p>
+<p>此外，H1和H2也可以采用在文本下方添加底线来实现，比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是 H1</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">这是 H2</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>通过在行首加上大于号<code>&gt;</code>来添加引用格式。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span><br><span class="line">consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span><br><span class="line">Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span><br><span class="line"></span><br><span class="line">&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span><br><span class="line">id sem consectetuer libero luctus adipiscing.</span><br></pre></td></tr></table></figure>
+<p>引用可以嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is the first level of quoting.</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; This is nested blockquote.</span><br><span class="line">&gt;</span><br><span class="line">&gt; Back to the first level.</span><br></pre></td></tr></table></figure>
+<p>也可以嵌套其他格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ## 这是一个标题。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 1.   这是第一行列表项。</span><br><span class="line">&gt; 2.   这是第二行列表项。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 给出一些例子代码：</span><br><span class="line">&gt;</span><br><span class="line">&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*   Red</span><br><span class="line">*   Green</span><br><span class="line">*   Blue</span><br></pre></td></tr></table></figure>
+<p>等同于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+   Red</span><br><span class="line">+   Green</span><br><span class="line">+   Blue</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-   Red</span><br><span class="line">-   Green</span><br><span class="line">-   Blue</span><br></pre></td></tr></table></figure>
+<p>有序列表则使用数字接着一个英文句点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">2.  McHale</span><br><span class="line">3.  Parish</span><br></pre></td></tr></table></figure>
+<p>数字并不会影响输出的 HTML 结果，也就是说上面的例子等同于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">1.  McHale</span><br><span class="line">1.  Parish</span><br></pre></td></tr></table></figure>
+<h2 id="内联代码"><a href="#内联代码" class="headerlink" title="内联代码"></a>内联代码</h2><p>用反引号<code>`来标记内联代码，它们会解释成</code>标签。如果代码的内容中有反引号，请用两个反引号包裹。代码中的<code>&amp;</code>、<code>&lt;</code>、<code>&gt;</code>符号都会自动转义，请放心使用。</p>
+<h2 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h2><p>有两种方式标记代码区域，原生风格是行首缩进死个空格。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个普通段落：</span><br><span class="line"></span><br><span class="line">    这是一个代码区块。</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个普通段落：&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;&lt;code&gt;这是一个代码区块。</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
+<p>除了行首的4个空格会被移出，其它不变。像内联代码一样，上述三种符号也会被转义。但在代码段中，星号之类的markdown标记符号则不会解析。</p>
+<p>还有一种是github的风格，代码段的前后用三个反引号独占一行来标记。</p>
+<p><img src="https://wizardforcel.gitbooks.io/markdown-simple-world/img/2-1.png" alt="img"></p>
+<p>目前主流编辑器都支持这种风格。</p>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* * *</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">- - -</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example](http://example.com/)</span><br><span class="line">[an example](http://example.com/ &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&apos;http://example.com/&apos;&gt;an example&lt;/a&gt;</span><br><span class="line">&lt;a href=&apos;http://example.com/&apos; title=&quot;Optional Title&quot;&gt;an example&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>除了上面的行内式，也可以使用参考式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example][id]</span><br></pre></td></tr></table></figure>
+<p>然后在任意空白位置定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[id]: http://example.com/ &quot;Optional Title&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
+<p>会被解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; /&gt;</span><br><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; title=&apos;Optional Title&apos; /&gt;</span><br></pre></td></tr></table></figure>
+<p>同样，图像也有类似的参考式语法。</p>
+<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>如果链接的地址和名字重复，可以用尖括号语法将其简化。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;http://example.com/&gt;</span><br></pre></td></tr></table></figure>
+<p>就相当于</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[http://example.com/](http://example.com/)</span><br></pre></td></tr></table></figure>
+<p>切记，大多数编辑器都会自动将符合url规则的东西视为链接，并且解释成链接。很多时候作者由于疏忽等缘故，链接和后面的中文之间缺少空格，导致链接不正常。所以我建议，链接要么加上尖括号，要么两端加上空格。</p>
+<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><p>markdown支持在以下字符前面插入反斜杠</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure>
+<p>插入之后，将不再解析这些字符，而是原样输出。</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格是github风格独有的语法，但近年来渐渐被大多数编辑器支持。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
+<p>会被解释成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">&lt;thead&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;th align=&quot;left&quot;&gt;Item&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;right&quot;&gt;Value&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;center&quot;&gt;Qty&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/thead&gt;</span><br><span class="line">&lt;tbody&gt;&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Computer&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1600&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;5&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Phone&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$12&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;12&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Pipe&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;234&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/tbody&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<p>要注意第二行的冒号决定了居左居右还是居中，如果你不加冒号，默认是居左的。</p>
+<p>另外可以把第一行去掉，做成没有表头的表格，但第二行始终是要有的。</p>
+<h2 id="内联-HTML"><a href="#内联-HTML" class="headerlink" title="内联 HTML"></a>内联 HTML</h2><p>markdown 的语法简洁，但有其局限性，所以特意保留了内联html这种方式。任何html标签及其内容，都会原样输出到结果中。也就是说，标签中的星号等作为markdown结构的符号，以及构成html标签和实体的符号，都不会做任何转义。</p>
+]]></content>
+      <categories>
+        <category>Markdown学习</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快速排序</title>
+    <url>/2019/05/02/quick-sort/</url>
+    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>快速排序的核心思想是分治：选择数组中某个数作为基数，通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数都比基数小，另外一部分的所有数都都比基数大，然后再按此方法对这两部分数据分别进行快速排序，循环递归，最终使整个数组变成有序。</p>
+<a id="more"></a>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int n[] = &#123; 6, 5, 2, 7, 3, 9, 8, 4, 10, 1 &#125;;</span><br><span class="line">		quicksort(n);</span><br><span class="line">		System.out.print(&quot;快排结果：&quot;);</span><br><span class="line">		for (int m : n) &#123;</span><br><span class="line">			System.out.print(m + &quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void quicksort(int n[]) &#123;</span><br><span class="line">		sort(n, 0, n.length - 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void sort(int n[], int l, int r) &#123;</span><br><span class="line">		if (l &lt; r) &#123;</span><br><span class="line">			// 一趟快排，并返回交换后基数的下标</span><br><span class="line">			int index = patition(n, l, r);</span><br><span class="line">			// 递归排序基数左边的数组</span><br><span class="line">			sort(n, l, index - 1);</span><br><span class="line">			// 递归排序基数右边的数组</span><br><span class="line">			sort(n, index + 1, r);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static int patition(int n[], int l, int r) &#123;</span><br><span class="line">		// p为基数，即待排序数组的第一个数</span><br><span class="line">		int p = n[l];</span><br><span class="line">		int i = l;</span><br><span class="line">		int j = r;</span><br><span class="line">		while (i &lt; j) &#123;</span><br><span class="line">			// 从右往左找第一个小于基数的数</span><br><span class="line">			while (n[j] &gt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				j--;</span><br><span class="line">			&#125;</span><br><span class="line">			// 从左往右找第一个大于基数的数</span><br><span class="line">			while (n[i] &lt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			// 找到后交换两个数</span><br><span class="line">			swap(n, i, j);</span><br><span class="line">		&#125;</span><br><span class="line">		// 使划分好的数分布在基数两侧</span><br><span class="line">		swap(n, l, i);</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static void swap(int n[], int i, int j) &#123;</span><br><span class="line">		int temp = n[i];</span><br><span class="line">		n[i] = n[j];</span><br><span class="line">		n[j] = temp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">快排结果：1 2 3 4 5 6 7 8 9 10 </span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>快速排序是相对其他排序出现频率最高的排序算法。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+        <tag>快速排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>选择排序</title>
+    <url>/2019/05/02/selection-sort/</url>
+    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。 选择排序是不稳定的排序方法（比如序列[5， 5， 3]第一次就将第一个[5]与[3]交换，导致第一个5挪动到第二个5后面）。<br> <strong>性质：</strong>不稳定的排序方法</p>
+<a id="more"></a>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void selection_sort(int* a, int n) &#123;</span><br><span class="line">  for (int i = 1; i &lt; n; ++i) &#123;</span><br><span class="line">    int ith = i;</span><br><span class="line">    for (int j = i + 1; j &lt;= n; ++j) &#123;</span><br><span class="line">      if (a[j] &lt; a[ith]) &#123;</span><br><span class="line">        ith = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int t = a[i];</span><br><span class="line">    a[i] = a[ith];</span><br><span class="line">    a[ith] = t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>交换时间：最好的情况全部元素已经有序，则 交换次数为0；最差的情况，全部元素逆序，就要交换 n-1 次；</p>
+<p>所以最优的时间复杂度  和最差的时间复杂度   和平均时间复杂度  都为 ：O(n^2)</p>
+<p>空间复杂度，最优的情况下（已经有顺序）复杂度为：O(0) ；最差的情况下（全部元素都要重新排序）复杂度为：O(n );；平均的时间复杂度：O(1)</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>选择排序</tag>
       </tags>
   </entry>
   <entry>
@@ -516,141 +651,6 @@ branch: master</code></li>
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快速排序</title>
-    <url>/2019/05/02/quick-sort/</url>
-    <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>快速排序的核心思想是分治：选择数组中某个数作为基数，通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数都比基数小，另外一部分的所有数都都比基数大，然后再按此方法对这两部分数据分别进行快速排序，循环递归，最终使整个数组变成有序。</p>
-<a id="more"></a>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int n[] = &#123; 6, 5, 2, 7, 3, 9, 8, 4, 10, 1 &#125;;</span><br><span class="line">		quicksort(n);</span><br><span class="line">		System.out.print(&quot;快排结果：&quot;);</span><br><span class="line">		for (int m : n) &#123;</span><br><span class="line">			System.out.print(m + &quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void quicksort(int n[]) &#123;</span><br><span class="line">		sort(n, 0, n.length - 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void sort(int n[], int l, int r) &#123;</span><br><span class="line">		if (l &lt; r) &#123;</span><br><span class="line">			// 一趟快排，并返回交换后基数的下标</span><br><span class="line">			int index = patition(n, l, r);</span><br><span class="line">			// 递归排序基数左边的数组</span><br><span class="line">			sort(n, l, index - 1);</span><br><span class="line">			// 递归排序基数右边的数组</span><br><span class="line">			sort(n, index + 1, r);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static int patition(int n[], int l, int r) &#123;</span><br><span class="line">		// p为基数，即待排序数组的第一个数</span><br><span class="line">		int p = n[l];</span><br><span class="line">		int i = l;</span><br><span class="line">		int j = r;</span><br><span class="line">		while (i &lt; j) &#123;</span><br><span class="line">			// 从右往左找第一个小于基数的数</span><br><span class="line">			while (n[j] &gt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				j--;</span><br><span class="line">			&#125;</span><br><span class="line">			// 从左往右找第一个大于基数的数</span><br><span class="line">			while (n[i] &lt;= p &amp;&amp; i &lt; j) &#123;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			// 找到后交换两个数</span><br><span class="line">			swap(n, i, j);</span><br><span class="line">		&#125;</span><br><span class="line">		// 使划分好的数分布在基数两侧</span><br><span class="line">		swap(n, l, i);</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static void swap(int n[], int i, int j) &#123;</span><br><span class="line">		int temp = n[i];</span><br><span class="line">		n[i] = n[j];</span><br><span class="line">		n[j] = temp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">快排结果：1 2 3 4 5 6 7 8 9 10 </span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>快速排序是相对其他排序出现频率最高的排序算法。</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>算法</tag>
-        <tag>快速排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>选择排序</title>
-    <url>/2019/05/02/selection-sort/</url>
-    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。 选择排序是不稳定的排序方法（比如序列[5， 5， 3]第一次就将第一个[5]与[3]交换，导致第一个5挪动到第二个5后面）。<br> <strong>性质：</strong>不稳定的排序方法</p>
-<a id="more"></a>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void selection_sort(int* a, int n) &#123;</span><br><span class="line">  for (int i = 1; i &lt; n; ++i) &#123;</span><br><span class="line">    int ith = i;</span><br><span class="line">    for (int j = i + 1; j &lt;= n; ++j) &#123;</span><br><span class="line">      if (a[j] &lt; a[ith]) &#123;</span><br><span class="line">        ith = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int t = a[i];</span><br><span class="line">    a[i] = a[ith];</span><br><span class="line">    a[ith] = t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>交换时间：最好的情况全部元素已经有序，则 交换次数为0；最差的情况，全部元素逆序，就要交换 n-1 次；</p>
-<p>所以最优的时间复杂度  和最差的时间复杂度   和平均时间复杂度  都为 ：O(n^2)</p>
-<p>空间复杂度，最优的情况下（已经有顺序）复杂度为：O(0) ；最差的情况下（全部元素都要重新排序）复杂度为：O(n );；平均的时间复杂度：O(1)</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>选择排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>markdow基本语法</title>
-    <url>/2019/04/26/markdown-grammars/</url>
-    <content><![CDATA[<p>标题：</p>
-<p>#h1级标题</p>
-<p>##h2级标题</p>
-<p>###h3级标题</p>
-<p>####h4级标题</p>
-<p>#####h5级标题</p>
-<p>######h6级标题</p>
-<p>分割线：三个以上的短线 即可作出分割线</p>
-<hr>
-<h1 id="Markdown-基本语法"><a href="#Markdown-基本语法" class="headerlink" title="Markdown 基本语法"></a>Markdown 基本语法</h1><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>非常自然，一行文字就是一个段落。</p>
-<p>比如<a id="more"></a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>如果你需要另起一段，请在两个段落之间隔一个空行。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个段落。</span><br><span class="line"></span><br><span class="line">这是另一个段落。</span><br></pre></td></tr></table></figure>
-<p>会解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个段落&lt;p&gt;</span><br><span class="line">&lt;p&gt;这是另一个段落&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>不隔一个空行的换行行为，在一些编辑器中被解释为换行，即插入一个<code></code>标签。对与另外一些编辑器，会被解释为插入一个空格。对于后者，若要插入换行标签，请在当前一行的结尾打两个空格。</p>
-<h2 id="粗体、斜体"><a href="#粗体、斜体" class="headerlink" title="粗体、斜体"></a>粗体、斜体</h2><p>可以使用星号<code>*</code>或下划线<code>_</code>指定粗体或者斜体。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*这是斜体*</span><br><span class="line">_这也是斜体_</span><br><span class="line">**这是粗体**</span><br><span class="line">***这是粗体+斜体***</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;em&gt;这是斜体&lt;/em&gt;</span><br><span class="line">&lt;em&gt;这也是斜体&lt;/em&gt;</span><br><span class="line">&lt;strong&gt;这是粗体&lt;/strong&gt;</span><br><span class="line">&lt;strong&gt;&lt;em&gt;这是粗体+斜体&lt;/strong&gt;&lt;/em&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><p>一部分编辑器支持删除线，它不是经典markdown中的要素。用波浪线<code>~</code>定义删除线。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~就像这样~~</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;strike&gt;就像这样&lt;/strike&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>markdown总支持1~6六级标题，通过在一行之前加上不同数量的井号来表示。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是 H1 #</span><br><span class="line"></span><br><span class="line">## 这是 H2 ##</span><br><span class="line"></span><br><span class="line">### 这是 H3 ###</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">###### 这是 H6 ######</span><br></pre></td></tr></table></figure>
-<p>行尾可以加上任意数量的井号字符，这些字符不会算作标题内容。通常会加上相等数量的字符以保持对称。</p>
-<p>此外，H1和H2也可以采用在文本下方添加底线来实现，比如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是 H1</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">这是 H2</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>通过在行首加上大于号<code>&gt;</code>来添加引用格式。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span><br><span class="line">consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span><br><span class="line">Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span><br><span class="line"></span><br><span class="line">&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span><br><span class="line">id sem consectetuer libero luctus adipiscing.</span><br></pre></td></tr></table></figure>
-<p>引用可以嵌套：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; This is the first level of quoting.</span><br><span class="line">&gt;</span><br><span class="line">&gt; &gt; This is nested blockquote.</span><br><span class="line">&gt;</span><br><span class="line">&gt; Back to the first level.</span><br></pre></td></tr></table></figure>
-<p>也可以嵌套其他格式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; ## 这是一个标题。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 1.   这是第一行列表项。</span><br><span class="line">&gt; 2.   这是第二行列表项。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 给出一些例子代码：</span><br><span class="line">&gt;</span><br><span class="line">&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</span><br></pre></td></tr></table></figure>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>无序列表使用星号、加号或是减号作为列表标记：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*   Red</span><br><span class="line">*   Green</span><br><span class="line">*   Blue</span><br></pre></td></tr></table></figure>
-<p>等同于</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+   Red</span><br><span class="line">+   Green</span><br><span class="line">+   Blue</span><br></pre></td></tr></table></figure>
-<p>和</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-   Red</span><br><span class="line">-   Green</span><br><span class="line">-   Blue</span><br></pre></td></tr></table></figure>
-<p>有序列表则使用数字接着一个英文句点：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">2.  McHale</span><br><span class="line">3.  Parish</span><br></pre></td></tr></table></figure>
-<p>数字并不会影响输出的 HTML 结果，也就是说上面的例子等同于：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.  Bird</span><br><span class="line">1.  McHale</span><br><span class="line">1.  Parish</span><br></pre></td></tr></table></figure>
-<h2 id="内联代码"><a href="#内联代码" class="headerlink" title="内联代码"></a>内联代码</h2><p>用反引号<code>`来标记内联代码，它们会解释成</code>标签。如果代码的内容中有反引号，请用两个反引号包裹。代码中的<code>&amp;</code>、<code>&lt;</code>、<code>&gt;</code>符号都会自动转义，请放心使用。</p>
-<h2 id="代码区域"><a href="#代码区域" class="headerlink" title="代码区域"></a>代码区域</h2><p>有两种方式标记代码区域，原生风格是行首缩进死个空格。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个普通段落：</span><br><span class="line"></span><br><span class="line">    这是一个代码区块。</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;这是一个普通段落：&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;&lt;code&gt;这是一个代码区块。</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
-<p>除了行首的4个空格会被移出，其它不变。像内联代码一样，上述三种符号也会被转义。但在代码段中，星号之类的markdown标记符号则不会解析。</p>
-<p>还有一种是github的风格，代码段的前后用三个反引号独占一行来标记。</p>
-<p><img src="https://wizardforcel.gitbooks.io/markdown-simple-world/img/2-1.png" alt="img"></p>
-<p>目前主流编辑器都支持这种风格。</p>
-<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* * *</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">- - -</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example](http://example.com/)</span><br><span class="line">[an example](http://example.com/ &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
-<p>会被解释为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&apos;http://example.com/&apos;&gt;an example&lt;/a&gt;</span><br><span class="line">&lt;a href=&apos;http://example.com/&apos; title=&quot;Optional Title&quot;&gt;an example&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-<p>除了上面的行内式，也可以使用参考式：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[an example][id]</span><br></pre></td></tr></table></figure>
-<p>然后在任意空白位置定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[id]: http://example.com/ &quot;Optional Title&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional Title&quot;)</span><br></pre></td></tr></table></figure>
-<p>会被解释为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; /&gt;</span><br><span class="line">&lt;img src=&apos;/path/to/img.jpg&apos; alt=&apos;Alt text&apos; title=&apos;Optional Title&apos; /&gt;</span><br></pre></td></tr></table></figure>
-<p>同样，图像也有类似的参考式语法。</p>
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>如果链接的地址和名字重复，可以用尖括号语法将其简化。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;http://example.com/&gt;</span><br></pre></td></tr></table></figure>
-<p>就相当于</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[http://example.com/](http://example.com/)</span><br></pre></td></tr></table></figure>
-<p>切记，大多数编辑器都会自动将符合url规则的东西视为链接，并且解释成链接。很多时候作者由于疏忽等缘故，链接和后面的中文之间缺少空格，导致链接不正常。所以我建议，链接要么加上尖括号，要么两端加上空格。</p>
-<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><p>markdown支持在以下字符前面插入反斜杠</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line">*   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">()  括弧</span><br><span class="line">#   井字号</span><br><span class="line">+   加号</span><br><span class="line">-   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br></pre></td></tr></table></figure>
-<p>插入之后，将不再解析这些字符，而是原样输出。</p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格是github风格独有的语法，但近年来渐渐被大多数编辑器支持。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
-<p>会被解释成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">&lt;thead&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;th align=&quot;left&quot;&gt;Item&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;right&quot;&gt;Value&lt;/th&gt;</span><br><span class="line">  &lt;th align=&quot;center&quot;&gt;Qty&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/thead&gt;</span><br><span class="line">&lt;tbody&gt;&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Computer&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1600&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;5&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Phone&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$12&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;12&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">  &lt;td align=&quot;left&quot;&gt;Pipe&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;right&quot;&gt;$1&lt;/td&gt;</span><br><span class="line">  &lt;td align=&quot;center&quot;&gt;234&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/tbody&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
-<p>要注意第二行的冒号决定了居左居右还是居中，如果你不加冒号，默认是居左的。</p>
-<p>另外可以把第一行去掉，做成没有表头的表格，但第二行始终是要有的。</p>
-<h2 id="内联-HTML"><a href="#内联-HTML" class="headerlink" title="内联 HTML"></a>内联 HTML</h2><p>markdown 的语法简洁，但有其局限性，所以特意保留了内联html这种方式。任何html标签及其内容，都会原样输出到结果中。也就是说，标签中的星号等作为markdown结构的符号，以及构成html标签和实体的符号，都不会做任何转义。</p>
-]]></content>
-      <categories>
-        <category>Markdown学习</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
       </tags>
   </entry>
 </search>
