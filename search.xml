@@ -1,52 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>桶排序</title>
-    <url>/2019/05/01/bucket-sort/</url>
-    <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
-<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
-<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
-<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
-<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
-<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
-<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
-<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
-<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
-<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
-<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
-<p>是不是很方便快捷呢？</p>
-<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
-<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
-<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
-<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
-<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
-<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
-<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
-<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
-<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
-<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>算法</tag>
-        <tag>桶排序</tag>
-        <tag>基数排序</tag>
-        <tag>计数排序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>冒泡排序</title>
     <url>/2019/05/01/bubble-sort/</url>
     <content><![CDATA[<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><h2 id="算法基本思想："><a href="#算法基本思想：" class="headerlink" title="算法基本思想："></a>算法基本思想：</h2><p>对相邻的元素进行两两比较，顺序相反则进行交换，这样，每一趟会将最小或最大的元素“浮”到顶端，最终达到完全有序。就好像一串气泡一样，最终从小到大或从大到小依次排下来。</p>
@@ -64,42 +18,6 @@
       <tags>
         <tag>排序</tag>
         <tag>冒泡排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>经典DP问题</title>
-    <url>/2020/04/02/dp/</url>
-    <content><![CDATA[<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><strong>最长递增子序列</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/585d46a1447b4064b749f08c2ab9ce66" target="_blank" rel="noopener">[编程题]最长递增子序列-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于一个数字序列，请设计一个复杂度为O(nlogn)的算法，返回该序列的最长上升子序列的长度，这里的子序列定义为这样一个序列U1，U2…，其中Ui &lt; Ui+1，且A[Ui] &lt; A[Ui+1]。<br>给定一个数字序列A及序列的长度n，请返回最长上升子序列的长度。</p>
-<p><strong>测试样例</strong><br>[2,1,4,3,1,5,6],7<br>返回：4</p>
-<p><strong>解题思路</strong><br>dp[i]记录长度为i的上升子序列的最后一个数中的最小值（可能有多个长度为i的上升子序列，我们只记录最后一个数最小的那个）<a id="more"></a><br>每次遍历的时候在dp[0,max]中找出第一个比A[i]大的数进行替换</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(int[] A,int n)&#123;</span><br><span class="line">	int[] dp = new int[n];</span><br><span class="line">	dp[0] = A[0];</span><br><span class="line">	int max = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		int index = binarySearch(dp, 0, max, A[i]);</span><br><span class="line">		if(index&lt;n)&#123;</span><br><span class="line">			dp[index] = A[i];</span><br><span class="line">			if(index&gt;max)</span><br><span class="line">				max = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return max+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回第一个比target大的数的下标</span><br><span class="line"> * 如果没有target大的数，则返回end+1</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public static int binarySearch(int[] dp,int start,int end,int target)&#123;</span><br><span class="line">	if(start==end)&#123;</span><br><span class="line">		if(dp[start]&gt;=target)</span><br><span class="line">			return start;</span><br><span class="line">		else</span><br><span class="line">			return start+1;</span><br><span class="line">	&#125;</span><br><span class="line">	int mid = (start+end)/2;</span><br><span class="line">	if(dp[mid]&gt;target)&#123;</span><br><span class="line">		if(mid==start)</span><br><span class="line">			return start;</span><br><span class="line">		return binarySearch(dp, start, mid-1, target);</span><br><span class="line">	&#125;</span><br><span class="line">	else if(dp[mid]&lt;target)</span><br><span class="line">		return binarySearch(dp, mid+1, end, target);</span><br><span class="line">	else</span><br><span class="line">		return mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	int[] A = &#123;2,1,4,3,1,5,6&#125;;</span><br><span class="line">	System.out.println(findLongest(A, A.length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a><strong>最长公共子序列</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/c996bbb77dd447d681ec6907ccfb488a" target="_blank" rel="noopener">[编程题]最长公共子序列-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于两个字符串，请设计一个高效算法，求他们的最长公共子序列的长度，这里的最长公共子序列定义为有两个序列U1,U2,U3…Un和V1,V2,V3…Vn,其中Ui&amp;ltUi+1，Vi&amp;ltVi+1。且A[Ui]== B[Vi]。<br>给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。保证两串长度均小于等于300。</p>
-<p><strong>测试样例</strong><br>“1A2C3D4B56”,10,”B1D23CA45B6A”,12<br>返回：6</p>
-<p><strong>解题思路</strong><br>dp[i][j]代表子串A[0…i]和子串B[0…j]最长公共子序列的长度<br>如果A[i]==B[j],dp[i][j]=dp[i-1][j-1]<br>否则，dp[i][j]=max{dp[i][j-1],dp[i-1][j]}</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLCS(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">           dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">           dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">           for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">               int tempMax = 0;</span><br><span class="line">               if(A.charAt(i-1)==B.charAt(j-1))</span><br><span class="line">                   tempMax = dp[i-1][j-1]+1;</span><br><span class="line">               else</span><br><span class="line">                   tempMax = Math.max(dp[i][j-1], dp[i-1][j]);</span><br><span class="line">               dp[i][j] = tempMax;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return dp[n][m];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;rsymsknwbiapzhuoeyhjubogitoqfkswhbqhwqzyjuvdlzjlhlaubecnkzgvurdsuvqghpjazgxvue&quot;;</span><br><span class="line">	String B = &quot;sclzdzbtrrkdybusjyjrszzqaebkpdtqnqadndvkenqirqqsplmceuuzhukcxxnkcyyvucqjlkysfarxkulpayvtwfmfaqpikzdslpklomafvtesecxygahwnyljldutzsoywiwkugerfbfefcqfvcrzcvbevufzbkbhfeshhdasqo&quot;;</span><br><span class="line">	System.out.println(findLCS(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a><strong>最长公共子串</strong></h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/02e7cc263f8a49e8b1e1dc9c116f7602" target="_blank" rel="noopener">[编程题]最长公共子串-牛客网</a></p>
-</blockquote>
-<p><strong>题目</strong><br>对于两个字符串，请设计一个时间复杂度为O(m*n)的算法(这里的m和n为两串的长度)，求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列U1,U2,..Un和V1,V2,…Vn，其中Ui + 1 == Ui+1,Vi + 1 == Vi+1，同时Ui == Vi。<br>给定两个字符串A和B，同时给定两串的长度n和m。</p>
-<p><strong>测试样例</strong><br>“1AB2345CD”,9,”12345EF”,7<br>返回：4</p>
-<p><strong>解题思路</strong><br>dp[i][j]代表以A[i-1]和B[j-1]为结尾的公共子串的最长长度（若A[i-1]!=B[j-1],dp[i][j]==0）<br>如果A[i-1]==B[i-1]&amp;&amp;A[i-2]==B[i-2], dp[i][j] == dp[i-1][j-1] + 1<br>如果A[i-1]==B[i-1], dp[i][j] = 1<br>如果A[i-1]!=B[i-1], dp[i][j] = 0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       </span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">       	dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">       	dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       	for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">       		if(A.charAt(i-1)==B.charAt(j-1))&#123;</span><br><span class="line">       			if(i-2&gt;=0 &amp;&amp; j-2&gt;=0 &amp;&amp; A.charAt(i-2)==B.charAt(j-2))</span><br><span class="line">       				dp[i][j] = dp[i-1][j-1] + 1;</span><br><span class="line">       			else&#123;</span><br><span class="line">       				dp[i][j] = 1;</span><br><span class="line">       			&#125;</span><br><span class="line">       			</span><br><span class="line">       			if(dp[i][j]&gt;max)</span><br><span class="line">           			max = dp[i][j];</span><br><span class="line">       		&#125;</span><br><span class="line">       		else&#123;</span><br><span class="line">       			dp[i][j] = 0;</span><br><span class="line">       		&#125;</span><br><span class="line">       	&#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return max;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;12345CC1235&quot;;</span><br><span class="line">	String B = &quot;12345B12345&quot;;</span><br><span class="line">	System.out.println(findLongest(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>dp</tag>
-        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
@@ -183,134 +101,46 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>dp</tag>
         <tag>分治</tag>
         <tag>动态规化</tag>
+        <tag>dp</tag>
         <tag>贪心</tag>
       </tags>
   </entry>
   <entry>
-    <title>git常用命令</title>
-    <url>/2019/04/12/git-mingling/</url>
-    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><ul>
-<li><code>touch README.md</code> 创建并添加一个名字为readme.md的文件</li>
-<li><code>git init</code> 初始化git仓库</li>
-<li><code>git add README.MD</code> 添加一个文件到本地仓库，用于之后的提交(只有在本地代码库里面的代码才能够提交到git的远程仓库上去)</li>
-<li><code>git add .</code> 添加当前路径下的所有文件到本地仓库(注意那个.与add中间有一个空格)</li>
-<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)<a id="more"></a></li>
-<li><code>git remote add origin https://github.com/***/***.git</code> 创建远程仓库，并为仓库命名,<strong>origin</strong>为仓库的别名(origin则设为默认主机)，用于将来引用,此处的<strong>url</strong>为git上事先创建好的url地址</li>
-<li><code>git push -u origin master</code> 本地的master分支推送到origin主机的master分支</li>
-<li><code>git pull --rebase origin master</code> 代码合并</li>
-<li><code>git config --global --unset http.proxy</code> （出现这个错误时：<code>fatal: unable to access &#39;https://github.com/fuey/blog-code-backups.git/&#39;: Couldn&#39;t resolve host &#39;github.com&#39;</code>，然后再提交就行了）</li>
-</ul>
-<h2 id="提交分支一般步骤"><a href="#提交分支一般步骤" class="headerlink" title="提交分支一般步骤"></a>提交分支一般步骤</h2><ul>
-<li><code>git add .</code>、<code>git commit -m &quot;notes&quot;</code>、<code>git remote add origin https://github.com/***/***.git</code>、 <code>git pull --rebase origin master</code>、<code>git push -u origin master</code>，顺序执行即可</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>博客搭建历程</title>
-    <url>/2019/04/12/first/</url>
-    <content><![CDATA[<blockquote>
-<p>折腾了两天，总算把这个博客给鼓捣出来了，记录一下，帮助一下想要搭建的小伙伴！</p>
+    <title>经典DP问题</title>
+    <url>/2020/04/02/dp/</url>
+    <content><![CDATA[<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><strong>最长递增子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/585d46a1447b4064b749f08c2ab9ce66" target="_blank" rel="noopener">[编程题]最长递增子序列-牛客网</a></p>
 </blockquote>
-<h2 id="源起"><a href="#源起" class="headerlink" title="源起"></a>源起</h2><p>本来早就打算自己搭建个博客了，一来可以记录学习中遇到的各种问题，以防忘记；二来可以督促自己该学习了；三来还可以打发空闲时间，岂不快哉！所以，也就有了这个博客的诞生。</p>
-<a id="more"></a>
-<h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>虽然有了这个搭博客的想法，却一直纠结在博客页面布局上，我想要的是简洁，美观，高大上的类型，必须得自己搭建的博客。了解到现在的主流博客基本都是用Hexo、jekyll或者是express来搭建，或者借助于第三方的平台，比如CSDN，简书，头条等等。后来，偶然间在网上发现了一个博客，是用hexo+next搭建在github上的博客，满足了我的所有要求，简洁，炫酷，简直就是写博客的上选之作，于是，找了一些教程，说干就干…</p>
-<h2 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h2><h3 id="搭建git环境"><a href="#搭建git环境" class="headerlink" title="搭建git环境"></a>搭建git环境</h3><blockquote>
-<p>点击<a href="https://git-for-windows.github.io/" target="_blank" rel="noopener">这里</a>download下载，然后next,next,next…</p>
+<p><strong>题目</strong><br>对于一个数字序列，请设计一个复杂度为O(nlogn)的算法，返回该序列的最长上升子序列的长度，这里的子序列定义为这样一个序列U1，U2…，其中Ui &lt; Ui+1，且A[Ui] &lt; A[Ui+1]。<br>给定一个数字序列A及序列的长度n，请返回最长上升子序列的长度。</p>
+<p><strong>测试样例</strong><br>[2,1,4,3,1,5,6],7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i]记录长度为i的上升子序列的最后一个数中的最小值（可能有多个长度为i的上升子序列，我们只记录最后一个数最小的那个）<a id="more"></a><br>每次遍历的时候在dp[0,max]中找出第一个比A[i]大的数进行替换</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(int[] A,int n)&#123;</span><br><span class="line">	int[] dp = new int[n];</span><br><span class="line">	dp[0] = A[0];</span><br><span class="line">	int max = 0;</span><br><span class="line">	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		int index = binarySearch(dp, 0, max, A[i]);</span><br><span class="line">		if(index&lt;n)&#123;</span><br><span class="line">			dp[index] = A[i];</span><br><span class="line">			if(index&gt;max)</span><br><span class="line">				max = index;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return max+1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回第一个比target大的数的下标</span><br><span class="line"> * 如果没有target大的数，则返回end+1</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public static int binarySearch(int[] dp,int start,int end,int target)&#123;</span><br><span class="line">	if(start==end)&#123;</span><br><span class="line">		if(dp[start]&gt;=target)</span><br><span class="line">			return start;</span><br><span class="line">		else</span><br><span class="line">			return start+1;</span><br><span class="line">	&#125;</span><br><span class="line">	int mid = (start+end)/2;</span><br><span class="line">	if(dp[mid]&gt;target)&#123;</span><br><span class="line">		if(mid==start)</span><br><span class="line">			return start;</span><br><span class="line">		return binarySearch(dp, start, mid-1, target);</span><br><span class="line">	&#125;</span><br><span class="line">	else if(dp[mid]&lt;target)</span><br><span class="line">		return binarySearch(dp, mid+1, end, target);</span><br><span class="line">	else</span><br><span class="line">		return mid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	int[] A = &#123;2,1,4,3,1,5,6&#125;;</span><br><span class="line">	System.out.println(findLongest(A, A.length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a><strong>最长公共子序列</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/c996bbb77dd447d681ec6907ccfb488a" target="_blank" rel="noopener">[编程题]最长公共子序列-牛客网</a></p>
 </blockquote>
-<h3 id="hexo、next安装"><a href="#hexo、next安装" class="headerlink" title="hexo、next安装"></a>hexo、next安装</h3><blockquote>
-<ul>
-<li>打开Git Bash，全局安装hexo：<code>npm install -g hexo</code></li>
-</ul>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个高效算法，求他们的最长公共子序列的长度，这里的最长公共子序列定义为有两个序列U1,U2,U3…Un和V1,V2,V3…Vn,其中Ui&amp;ltUi+1，Vi&amp;ltVi+1。且A[Ui]== B[Vi]。<br>给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。保证两串长度均小于等于300。</p>
+<p><strong>测试样例</strong><br>“1A2C3D4B56”,10,”B1D23CA45B6A”,12<br>返回：6</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表子串A[0…i]和子串B[0…j]最长公共子序列的长度<br>如果A[i]==B[j],dp[i][j]=dp[i-1][j-1]<br>否则，dp[i][j]=max{dp[i][j-1],dp[i-1][j]}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLCS(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">           dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">           dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">           for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">               int tempMax = 0;</span><br><span class="line">               if(A.charAt(i-1)==B.charAt(j-1))</span><br><span class="line">                   tempMax = dp[i-1][j-1]+1;</span><br><span class="line">               else</span><br><span class="line">                   tempMax = Math.max(dp[i][j-1], dp[i-1][j]);</span><br><span class="line">               dp[i][j] = tempMax;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return dp[n][m];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;rsymsknwbiapzhuoeyhjubogitoqfkswhbqhwqzyjuvdlzjlhlaubecnkzgvurdsuvqghpjazgxvue&quot;;</span><br><span class="line">	String B = &quot;sclzdzbtrrkdybusjyjrszzqaebkpdtqnqadndvkenqirqqsplmceuuzhukcxxnkcyyvucqjlkysfarxkulpayvtwfmfaqpikzdslpklomafvtesecxygahwnyljldutzsoywiwkugerfbfefcqfvcrzcvbevufzbkbhfeshhdasqo&quot;;</span><br><span class="line">	System.out.println(findLCS(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a><strong>最长公共子串</strong></h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/116376/summary" target="_blank" rel="noopener">面试常考算法题(九)-经典动态规划1-牛客网</a><br><a href="https://www.nowcoder.com/questionTerminal/02e7cc263f8a49e8b1e1dc9c116f7602" target="_blank" rel="noopener">[编程题]最长公共子串-牛客网</a></p>
 </blockquote>
-<ul>
-<li>定位到想要创建博客的路径上，运行命令：<code>hexo init</code>，创建搭建hexo博客需要的文件</li>
-<li>安装npm依赖包：<code>npm install</code></li>
-<li>从github上拉next到博客路径：<code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
-<li>修改博客配置文件youbolg/_config.yml，找到 <strong><em>theme</em></strong> 字段，并将其值更改为 <strong><em>next</em></strong>，这样就把hexo的主题设置为next了</li>
-<li>其他的基本设置请参考：<a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a></li>
-</ul>
-<h3 id="优化主题"><a href="#优化主题" class="headerlink" title="优化主题"></a>优化主题</h3><blockquote>
-<ul>
-<li>增加文章阅读时长，字数统计显示<br>安装： <code>npm i --save hexo-wordcount</code><br>使用：搜索<strong><em>leancloud-visitors-count</em></strong> 放到下面:</li>
-</ul>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>字数统计:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; wordcount(post.content) &#125;&#125;(字)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">		<span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>阅读时长:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; min2read(post.content) &#125;&#125;(分)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="部署github"><a href="#部署github" class="headerlink" title="部署github"></a>部署github</h3><blockquote>
-<ul>
-<li>登录github、创建repo(注意注册的名字必须和repo名字相同)参考链接：<a href="https://www.cnblogs.com/keZhenxu94/p/5288488.html" target="_blank" rel="noopener">kezhenxue</a></li>
-</ul>
-</blockquote>
-<ul>
-<li>获取并设置ssh key, 复制repo的https url复制到博客配置文件中：<br><code>deploy:
-type: git
-repository: https://github.com/fuey/fuey.github.io.git
-branch: master</code></li>
-<li>设置Git的username 和 email地址：<br><code>git config --global user.name &quot;coolmsw&quot;</code>、<code>git config --global user.email &quot;mswqmn@gmail.com&quot;</code></li>
-<li>检查ssh key，创建ssh key，设置ssh key</li>
-</ul>
-<ol>
-<li>在bash中，检查是否已经存在了SSH keys:<code>ls -al ~/.ssh</code></li>
-<li>如果存在，到C:\Users\用户名\.ssh路径下删除全部的文件</li>
-<li>获取到ssh key：<code>ssh-keygen -t rsa -C &quot;youemailaddress@**.com&quot;</code>,然后到C:\Users\用户名\.ssh路径下看是否已经生成</li>
-<li>生成的话直接执行：<code>clip &lt; ~/.ssh/id_rsa.pub</code>复制ssh key</li>
-<li>然后到刚才创建的repo下，setting-&gt;SSH keys-&gt;add SSH key -&gt;填入title(随便填),key(直接Ctrl+v)。</li>
-<li>测试配置是否正确:<code>ssh -T git@github.com</code>，输入yes，看到successful，那么恭喜你也有了一个炫酷的博客了！</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><blockquote>
-<p>hexo c      #相当于 hexo clean  清除缓存<br>hexo g      #相当于 hexo generate  生成解析过后的博客代码<br>hexo s      #相当于 hexo server  本地服务<br>hexo d      #相当于 hexo deploy  部署到设置的github或者coding</p>
-</blockquote>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a>  | <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo theme list</a>  </p>
-]]></content>
-      <categories>
-        <category>博客</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>git</tag>
-        <tag>github</tag>
-        <tag>nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>插入排序</title>
-    <url>/2019/05/02/insert-sort/</url>
-    <content><![CDATA[<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p><strong>插入排序（Insertion Sort）</strong>算法是一个对少量元素进行排序的有效算法。<br> 插入排序是稳定的（即：两个相等的数不会交换位置）。</p>
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p><strong>直接插入排序</strong>，二分插入排序（又称折半插入排序），链表插入排序，希尔排序（又称缩小增量排序）。<br> （<strong>注：</strong>此文只讲直接插入排序，其他插入排序有时间会另写博客。）</p>
-<h2 id="原理（直接插入排序思想）"><a href="#原理（直接插入排序思想）" class="headerlink" title="原理（直接插入排序思想）"></a>原理（直接插入排序思想）</h2><p><strong>每次从无序表中取出最后一个元素，把它插入到有序表的合适位置，使有序表仍然有序。</strong><br> <strong>详解：</strong></p>
-<a id="more"></a>
-<blockquote>
-<p>从数组的第二个元素开始,将数组中的每一个元素按照（升序或者降序）规则插入到已排好序的数组中以达到排序的目的.<br>一般情况下将数组的第一个元素作为起始元素,从第二个元素开始依次插入。由于要插入到的数组是已经排好序的,所以只要从右向左（或者从后向前）找到排序插入点插入元素，以此类推，直到将最后一个数组元素插入到数组中,整个排序过程完成。</p>
-</blockquote>
-<h2 id="原理过程图（升序排列为例）"><a href="#原理过程图（升序排列为例）" class="headerlink" title="原理过程图（升序排列为例）"></a>原理过程图（升序排列为例）</h2><p>每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。（如下图）</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-acb8314a712ee2ab.png?imageMogr2/auto-orient/strip|imageView2/2/w/607/format/webp" alt="img"></p>
-<p>插入排序原理图.png</p>
-<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><blockquote>
-<p>将有n个元素的数组排序。<br>最佳情况就是，数组已经是正序排列了，在这种情况下，需要进行的比较操作是  （n-1）次即可。<br>最坏情况就是，数组是反序排列，那么此时需要进行的比较共有n(n-1)/2次。<br>插入排序的赋值操作是比较操作的次数加上 (n-1）次。<br>平均插入排序算法的<strong>时间复杂度为 O(n²)</strong>。因而，插入排序不适合对于数据量比较大的排序应用。但是，如果需要排序的数据量很小（eg：量级小于千），那么插入排序是一个不错的选择</p>
-</blockquote>
-<blockquote>
-<p><strong>Note：尽管插入排序的时间复杂度也是O(n²)，但一般情况下，插入排序会比冒泡排序快一倍，要比选择排序还要快一点。</strong></p>
-</blockquote>
-<h2 id="性能分析-稳定性"><a href="#性能分析-稳定性" class="headerlink" title="性能分析(稳定性)"></a>性能分析(稳定性)</h2><blockquote>
-<p>插入排序是在一个已经有序的小序列的基础上，一次插入一个元素。当然，刚开始这个有序的小序列只有1个元素，就是第一个元素。比较是从有序序列的末尾开始，也就是想要插入的元素和已经有序的最大者开始比起，如果比它大则直接插入在其后面，否则一直往前找直到找到它该插入的位置。如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序就是排好序后的顺序，所以插入排序是稳定的。</p>
-</blockquote>
-<p>##　示例代码（ Java）</p>
-<p>＃＃＃　核心代码</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  </span></span><br><span class="line"><span class="comment">     * 原理：每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。</span></span><br><span class="line"><span class="comment">     * 升序为例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;<span class="comment">// i: 代表即将插入的元素角标,作为每一组比较数据的最后一个元素    </span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;   <span class="comment">//j:代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">                    arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">                    arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="直接插入排序完整代码示例"><a href="#直接插入排序完整代码示例" class="headerlink" title="直接插入排序完整代码示例"></a>直接插入排序完整代码示例</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ArrayTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] arr=&#123;<span class="number">90</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">45</span>,<span class="number">34</span>,<span class="number">88</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序前；</span></span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"原数组："</span>);</span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序</span></span><br><span class="line">        insertionSort(arr);</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"升序排序后："</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序后：</span></span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  升序为例</span></span><br><span class="line"><span class="comment">     * 原理：每次将最后一个元素作为插入元素，  与有序数列比较后 插入正确位置</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;  <span class="comment">//i&lt;6  1,2,3,4,5</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;       <span class="comment">//j=i  代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    swap(arr,j,j<span class="number">-1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    发现无论什么排序。都需要对满足条件的元素进行位置置换。</span></span><br><span class="line"><span class="comment">    所以可以把这部分相同的代码提取出来，单独封装成一个函数。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span>(<span class="params"><span class="keyword">int</span>[] arr,<span class="keyword">int</span> a,<span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[a];</span><br><span class="line">        arr[a] = arr[b];</span><br><span class="line">        arr[b] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printArray</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.print(<span class="string">"["</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;arr.length; x++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x!=arr.length<span class="number">-1</span>)</span><br><span class="line">                System.<span class="keyword">out</span>.print(arr[x]+<span class="string">", "</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                System.<span class="keyword">out</span>.println(arr[x]+<span class="string">"]"</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>运行结果：</strong></p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-66391a218cafb18c.png?imageMogr2/auto-orient/strip|imageView2/2/w/252/format/webp" alt="img"></p>
-<p>插入排序运行结果.png</p>
-<p>作者：春莉姐姐<br>链接：<a href="https://www.jianshu.com/p/c49884d8805e" target="_blank" rel="noopener">https://www.jianshu.com/p/c49884d8805e</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p><strong>题目</strong><br>对于两个字符串，请设计一个时间复杂度为O(m*n)的算法(这里的m和n为两串的长度)，求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列U1,U2,..Un和V1,V2,…Vn，其中Ui + 1 == Ui+1,Vi + 1 == Vi+1，同时Ui == Vi。<br>给定两个字符串A和B，同时给定两串的长度n和m。</p>
+<p><strong>测试样例</strong><br>“1AB2345CD”,9,”12345EF”,7<br>返回：4</p>
+<p><strong>解题思路</strong><br>dp[i][j]代表以A[i-1]和B[j-1]为结尾的公共子串的最长长度（若A[i-1]!=B[j-1],dp[i][j]==0）<br>如果A[i-1]==B[i-1]&amp;&amp;A[i-2]==B[i-2], dp[i][j] == dp[i-1][j-1] + 1<br>如果A[i-1]==B[i-1], dp[i][j] = 1<br>如果A[i-1]!=B[i-1], dp[i][j] = 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public static int findLongest(String A, int n, String B, int m) &#123;</span><br><span class="line">       int[][] dp = new int[n+1][m+1];</span><br><span class="line">       </span><br><span class="line">       for(int i=0;i&lt;=n;i++)&#123;</span><br><span class="line">       	dp[i][0] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       for(int i=0;i&lt;=m;i++)&#123;</span><br><span class="line">       	dp[0][i] = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       int max = 0;</span><br><span class="line">       for(int i=1;i&lt;=n;i++)&#123;</span><br><span class="line">       	for(int j=1;j&lt;=m;j++)&#123;</span><br><span class="line">       		if(A.charAt(i-1)==B.charAt(j-1))&#123;</span><br><span class="line">       			if(i-2&gt;=0 &amp;&amp; j-2&gt;=0 &amp;&amp; A.charAt(i-2)==B.charAt(j-2))</span><br><span class="line">       				dp[i][j] = dp[i-1][j-1] + 1;</span><br><span class="line">       			else&#123;</span><br><span class="line">       				dp[i][j] = 1;</span><br><span class="line">       			&#125;</span><br><span class="line">       			</span><br><span class="line">       			if(dp[i][j]&gt;max)</span><br><span class="line">           			max = dp[i][j];</span><br><span class="line">       		&#125;</span><br><span class="line">       		else&#123;</span><br><span class="line">       			dp[i][j] = 0;</span><br><span class="line">       		&#125;</span><br><span class="line">       	&#125;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       return max;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">	String A = &quot;12345CC1235&quot;;</span><br><span class="line">	String B = &quot;12345B12345&quot;;</span><br><span class="line">	System.out.println(findLongest(A, A.length(), B, B.length()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
 ]]></content>
       <categories>
         <category>算法</category>
       </categories>
       <tags>
-        <tag>排序</tag>
-        <tag>插入排序</tag>
+        <tag>dp</tag>
+        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
@@ -410,6 +240,176 @@ branch: master</code></li>
       </tags>
   </entry>
   <entry>
+    <title>桶排序</title>
+    <url>/2019/05/01/bucket-sort/</url>
+    <content><![CDATA[<h2 id="初级-桶排序"><a href="#初级-桶排序" class="headerlink" title="初级-桶排序"></a>初级-桶排序</h2><p>一说到排序算法，可能不少同学都会第一时间喊出”我大快排天下第一！”其实不然。我们知道快排这种基于比价的排序算法时间复杂度下限是 O(n log n) 。至于为什么，我们可以简单地将其理解为给定序列的排列方式有 n! 种，然后我们每次进行一次比较最多可以排除掉一半的序列，最后复杂度相当于 O(log(n!))，由斯特林公式我们可以求得复杂度=O(log(n!))=O(n log n)。</p>
+<p>这时如果我们需要一个O(n)级别的排序算法，有没有可能实现呢？答案是肯定的——桶排序应运而生，其复杂度为O(n+max{val[i]})，下面就先介绍一下单关键字的桶排序。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>桶排序的实现原理特别简单，就是将元素依次放入容器中，然后按顺序依次扫描元素，得到各个元素的排名，下面举个栗子：<a id="more"></a></p>
+<p>假如我们有四个元素需要从小到大排序，他们分别是4，1，5，3：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/3492562038.png" alt="px1.png"></a><br>接着我们把元素丢到对应值的容器里：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2662607737.png" alt="px2.png"></a><br>最后我们按从小到大的顺序扫描容器，得出各个元素的排名及各元素从小到大的排序了：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2241123368.png" alt="px3.png"></a><br>这样，我们就在O(n+max{val[i]})的时间复杂度下完成了桶排序。</p>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><p>下面就以最简单的从小到大排序作为例子，桶排序具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int Maxn=11000;//定义元素中最大数为Maxn </span><br><span class="line">int a[Maxn];//开一个大小为Maxn的容器 </span><br><span class="line">int i,j,k,m,n,o,p,js,jl,x;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">        a[x]++;</span><br><span class="line">    &#125;//读入数据，并将其放入容器里 </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;Maxn;i++)</span><br><span class="line">    while(a[i]&gt;0)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]--;</span><br><span class="line">        printf(&quot;%d &quot;,i);</span><br><span class="line">    &#125;//按顺序访问容器，输出其中的元素 </span><br><span class="line">    return 0;</span><br><span class="line">    //完成排序 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进阶-基数排序"><a href="#进阶-基数排序" class="headerlink" title="进阶-基数排序"></a>进阶-基数排序</h2><p>我们通过对桶排序的学习可以发现，桶排序如果遇上元素最大值Maxn比较大的数据，就会爆时间和空间，无法继续胜任了，那如果还是想要O(n)级别的排序算法怎么办呢？这时基数排序就站了出来。</p>
+<h3 id="实现原理-1"><a href="#实现原理-1" class="headerlink" title="实现原理"></a>实现原理</h3><p>基数排序可以理解为是多关键字的桶排序，n为数字可以理解为n个关键字。也就是把最高位当作第一关键字，次高位当成第二关键字……以此类推，进行桶排序。那么关键字的桶排序要如何排序呢？</p>
+<p>其实基数排序的重要思想就是从最后一个关键字进行桶排序，然后再按最后一个关键字排序顺序依次对倒数第二个关键字进行桶排序……依次类推，当完成第一关键字的排序后，基数排序就完成了。什么不是很明白？没事，下面以对两位数，也就是双关键字从小到大排序为例，进行讲解：</p>
+<p>现在我们有A0=32，45，99，17，27，05，02，13六个数需要排序，首先我们按先对每个数的个位，也就是第二关键字进行桶排序，丢入对应的容器中：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/2306780396.png" alt="px4.png"></a></p>
+<p>排序后得到A1=32, 02, 13，45，05，27，99：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1322952828.png" alt="px5.png"></a></p>
+<p>接着按A1的顺序，对各个元素的十位也就是第一关键字进行桶排序，丢入对应的容器中：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1114069972.png" alt="px6.png"></a></p>
+<p>得到排序后的A2=02，05，13，27，32，45，99，此时所有关键字都进行了一次排序，基数排序结束，A2即为A0排序后的序列：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1105989828.png" alt="px8.png"></a></p>
+<p>是不是很方便快捷呢？</p>
+<h3 id="具体代码-1"><a href="#具体代码-1" class="headerlink" title="具体代码"></a>具体代码</h3><p>就以一道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行基数排序的具体代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int v[11];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10;</span><br><span class="line">        for(int i=1;i&lt;=10;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=pd;i&lt;=10;i++)printf(&quot;%d&quot;,v[i]);</span><br><span class="line">        printf(&quot; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[11];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的技术排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=10;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%10;m=m/10;</span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //读入数据，把整数拆成10个关键字排序，每个关键字的值域都是[0,9]，记录初始id </span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=10;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=9;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化的基数排序"><a href="#优化的基数排序" class="headerlink" title="优化的基数排序"></a>优化的基数排序</h2><h3 id="实现原理-2"><a href="#实现原理-2" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们发现正常的基数排序也就是上面操作用的时间复杂度为 (n + log10 (Max{m})) <em>(log10 (Max{m}))，可以简写为 O(n</em>logr m)，其中 n 为元素个数, r 是排序所用的基数， m 为所有元素最大值的大小。但是一般的 logr m接近10，而且还涉及到取模等各种操作，导致整体的常熟比较大，速度略慢。<br>　<br>所以我们考虑一下能不能进行优化？一说到常数的优化，二进制总是少不了的。我们可以以二的幂次为基数的排序，这样的话几乎所有操作都可以围绕二进制操作，常数小，然后再一个就是如果以 2^8=256为一个基数的话,那么int范围内的 logr m也只有4的大小，然后据说255的数组还可能可以写入内存而不是硬盘（也有可能写入缓存）。</p>
+<p>于是我们发现以二的幂次为基数的二进制基数排序是我们所需要的，而且效果也比较优秀。</p>
+<p>下面我们就通过一个例子来深入理解一下酱紫做的原理吧！</p>
+<p>我们现在有四个数要从小到大进行排序，我们以四位为一个关键字，即对于这些八位二进制数，我们后四位为第二关键字，前四位为第一关键字进行排序：</p>
+<p><a href="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1965086191.png" alt="px9.png"></a></p>
+<h3 id="具体代码-2"><a href="#具体代码-2" class="headerlink" title="具体代码"></a>具体代码</h3><p>还是以这<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子，展示一下从小到大进行优化后基数排序的具体代码【此版本为未用二进制优化的中间版本，加上二进制优化的大杀器版本见下一板块】实际测试下来可以比普通的基数排序快一半左右：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    short v[6];</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        int pd=10,js=0,jl=1;</span><br><span class="line">        for(int i=1;i&lt;=4;i++)</span><br><span class="line">        if(v[i]&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            pd=i;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=4;i&gt;=pd;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            js+=jl*v[i];</span><br><span class="line">            jl*=256;</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%d &quot;,js);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;a[110000];//将数字按位拆开</span><br><span class="line">int n,m,o;int id[110000],rk[110000],sum[256];</span><br><span class="line">//id[i]表示第k+1号到n号关键字排好后第i个数据的原本编号</span><br><span class="line">//rk[i]表示原本编号为i的数据在进行完k号关键字的计数排序后的排名</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);id[i]=i;</span><br><span class="line">        for(int j=4;j&gt;=1;j--)</span><br><span class="line">        &#123;</span><br><span class="line">            o=m%256;m=m/256;//以256为基数进行优化 </span><br><span class="line">            a[i].v[j]=o;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int *x=id,*y=rk;//因为要交换数组，据说用指针就是O(1)的了</span><br><span class="line">    for(int key=4;key&gt;=1;key--)</span><br><span class="line">    &#123;</span><br><span class="line">        memset(sum,0,sizeof(sum));</span><br><span class="line">        for(int i=1;i&lt;=n;i++)sum[a[i].v[key]]++;</span><br><span class="line">        for(int i=1;i&lt;=256;i++)sum[i]+=sum[i-1];//对第k关键字进行桶排序 </span><br><span class="line"></span><br><span class="line">        for(int i=n;i&gt;=1;i--)y[sum[a[x[i]].v[key]]--]=x[i];</span><br><span class="line">        //y[i]记录排名第i的元素序号，记住不要把a[x[i]]写成a[i]了，x[i]是上一关键字排好后的顺序</span><br><span class="line">        for(int i=1;i&lt;=n;i++)x[y[i]]=i;</span><br><span class="line">        //x[i]记录i号元素的排名 </span><br><span class="line">        swap(x,y);//交换 </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)a[x[i]].print();//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="拓展的基数排序"><a href="#拓展的基数排序" class="headerlink" title="拓展的基数排序"></a>拓展的基数排序</h2><h3 id="实现原理-3"><a href="#实现原理-3" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们有时候还会有一个对于结构体进行多关键字排序的需求，我们注意到C++内定的数据类型至少为1个字节，一般用的整数为4个字节。然后我们发现对于一个32位的整数 k ，我们对k进行32为的比较其实可以认为是先进行16位高位的比较然后再进行16位的低位的比较，在高位相等的时候比较低位，这不就是双关键字排序吗？<br>　　<br>所以结构体的双关键字排序可以这样做：先利用指针类型转换结构体成为32/64位整数，然后再适当调整基数直接排序这些整数，然后就可以得到这些排序后的结构体。</p>
+<p>结构体的内存分布如下：<br><a href="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" target="_blank" rel="noopener"><img src="https://www.jvruo.com/usr/uploads/2019/06/1220118381.png" alt="px10.png"></a></p>
+<p>对于这个结构体，我们只需要使用64位的基数排序，基数 2^16就可以解决了，代码和上面的类似【当然可以二进制优化】，过程也是首先开四个数组作为4个关键字的容器（基数为 2^16，然后把元素用二进制运算拆开，放入容器内，接着对容器进行桶排序；最后利用上一次排序的结果交替利用数组进行下一次排序，如此循环就完成了。</p>
+<h3 id="具体代码-3"><a href="#具体代码-3" class="headerlink" title="具体代码"></a>具体代码</h3><p>继续以这道<a href="https://www.luogu.org/problemnew/show/P1177" target="_blank" rel="noopener">快排的模板题</a>作为例子下面展示二进制优化下的代码，实测下来比不用二进制优化又可以优化30%左右的时间：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;cmath&gt;</span><br><span class="line">#include&lt;cstdio&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int a[110000],b[110000],r1[257],r2[257],r3[257],r4[257];</span><br><span class="line">int n,m,o;int sum[256];</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">    for(int i=1;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        scanf(&quot;%d&quot;,&amp;m);a[i]=m; </span><br><span class="line">        r1[m &amp; 0xff]++;//二进制取低8位</span><br><span class="line">        r2[(m &gt;&gt; 8) &amp; 0xff]++;//二进制取16位</span><br><span class="line">        r3[(m &gt;&gt; 16) &amp; 0xff]++;//二进制取24位</span><br><span class="line">        r4[(m &gt;&gt; 24) &amp; 0xff]++;//二进制取32位</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=256;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        r1[i]+=r1[i-1];</span><br><span class="line">        r2[i]+=r2[i-1];</span><br><span class="line">        r3[i]+=r3[i-1];</span><br><span class="line">        r4[i]+=r4[i-1];</span><br><span class="line">    &#125;//累加</span><br><span class="line"></span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r1[a[i] &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r2[(b[i] &gt;&gt; 8) &amp; 0xff]--]=b[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)b[r3[(a[i] &gt;&gt; 16) &amp; 0xff]--]=a[i];</span><br><span class="line">    for(int i=n;i&gt;=1;i--)a[r4[(b[i] &gt;&gt; 24) &amp; 0xff]--]=b[i];</span><br><span class="line">    //基数排序</span><br><span class="line"></span><br><span class="line">    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,a[i]);//输出 </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这篇Blog相信你已经彻底理解桶排序和基数排序的精髓了，顺带一提，其实基数排序也是可以对浮点数进行排序的哦，这要感谢IEEE 754的标准，它制定的浮点标准还带有一个特性：如果不考虑符号位（浮点数是按照类似于原码使用一个bit表示符号位s，s = 1表示负数），那么同符号浮点数的比较可以等价于无符号整数的比较，方法就是先做一次基数排序，然后再调整正负数部分顺序即可。感兴趣的同学可以自行摸索。最后希望你喜欢这篇Blog！</p>
+<p>参考：<a href="https://www.jvruo.com/archives/595/" target="_blank" rel="noopener">https://www.jvruo.com/archives/595/</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+        <tag>桶排序</tag>
+        <tag>基数排序</tag>
+        <tag>计数排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客搭建历程</title>
+    <url>/2019/04/12/first/</url>
+    <content><![CDATA[<blockquote>
+<p>折腾了两天，总算把这个博客给鼓捣出来了，记录一下，帮助一下想要搭建的小伙伴！</p>
+</blockquote>
+<h2 id="源起"><a href="#源起" class="headerlink" title="源起"></a>源起</h2><p>本来早就打算自己搭建个博客了，一来可以记录学习中遇到的各种问题，以防忘记；二来可以督促自己该学习了；三来还可以打发空闲时间，岂不快哉！所以，也就有了这个博客的诞生。</p>
+<a id="more"></a>
+<h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>虽然有了这个搭博客的想法，却一直纠结在博客页面布局上，我想要的是简洁，美观，高大上的类型，必须得自己搭建的博客。了解到现在的主流博客基本都是用Hexo、jekyll或者是express来搭建，或者借助于第三方的平台，比如CSDN，简书，头条等等。后来，偶然间在网上发现了一个博客，是用hexo+next搭建在github上的博客，满足了我的所有要求，简洁，炫酷，简直就是写博客的上选之作，于是，找了一些教程，说干就干…</p>
+<h2 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h2><h3 id="搭建git环境"><a href="#搭建git环境" class="headerlink" title="搭建git环境"></a>搭建git环境</h3><blockquote>
+<p>点击<a href="https://git-for-windows.github.io/" target="_blank" rel="noopener">这里</a>download下载，然后next,next,next…</p>
+</blockquote>
+<h3 id="hexo、next安装"><a href="#hexo、next安装" class="headerlink" title="hexo、next安装"></a>hexo、next安装</h3><blockquote>
+<ul>
+<li>打开Git Bash，全局安装hexo：<code>npm install -g hexo</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>定位到想要创建博客的路径上，运行命令：<code>hexo init</code>，创建搭建hexo博客需要的文件</li>
+<li>安装npm依赖包：<code>npm install</code></li>
+<li>从github上拉next到博客路径：<code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></li>
+<li>修改博客配置文件youbolg/_config.yml，找到 <strong><em>theme</em></strong> 字段，并将其值更改为 <strong><em>next</em></strong>，这样就把hexo的主题设置为next了</li>
+<li>其他的基本设置请参考：<a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a></li>
+</ul>
+<h3 id="优化主题"><a href="#优化主题" class="headerlink" title="优化主题"></a>优化主题</h3><blockquote>
+<ul>
+<li>增加文章阅读时长，字数统计显示<br>安装： <code>npm i --save hexo-wordcount</code><br>使用：搜索<strong><em>leancloud-visitors-count</em></strong> 放到下面:</li>
+</ul>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">    <span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>字数统计:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; wordcount(post.content) &#125;&#125;(字)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">		<span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-calendar-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>阅读时长:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span>&#123;&#123; min2read(post.content) &#125;&#125;(分)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="部署github"><a href="#部署github" class="headerlink" title="部署github"></a>部署github</h3><blockquote>
+<ul>
+<li>登录github、创建repo(注意注册的名字必须和repo名字相同)参考链接：<a href="https://www.cnblogs.com/keZhenxu94/p/5288488.html" target="_blank" rel="noopener">kezhenxue</a></li>
+</ul>
+</blockquote>
+<ul>
+<li>获取并设置ssh key, 复制repo的https url复制到博客配置文件中：<br><code>deploy:
+type: git
+repository: https://github.com/fuey/fuey.github.io.git
+branch: master</code></li>
+<li>设置Git的username 和 email地址：<br><code>git config --global user.name &quot;coolmsw&quot;</code>、<code>git config --global user.email &quot;mswqmn@gmail.com&quot;</code></li>
+<li>检查ssh key，创建ssh key，设置ssh key</li>
+</ul>
+<ol>
+<li>在bash中，检查是否已经存在了SSH keys:<code>ls -al ~/.ssh</code></li>
+<li>如果存在，到C:\Users\用户名\.ssh路径下删除全部的文件</li>
+<li>获取到ssh key：<code>ssh-keygen -t rsa -C &quot;youemailaddress@**.com&quot;</code>,然后到C:\Users\用户名\.ssh路径下看是否已经生成</li>
+<li>生成的话直接执行：<code>clip &lt; ~/.ssh/id_rsa.pub</code>复制ssh key</li>
+<li>然后到刚才创建的repo下，setting-&gt;SSH keys-&gt;add SSH key -&gt;填入title(随便填),key(直接Ctrl+v)。</li>
+<li>测试配置是否正确:<code>ssh -T git@github.com</code>，输入yes，看到successful，那么恭喜你也有了一个炫酷的博客了！</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><blockquote>
+<p>hexo c      #相当于 hexo clean  清除缓存<br>hexo g      #相当于 hexo generate  生成解析过后的博客代码<br>hexo s      #相当于 hexo server  本地服务<br>hexo d      #相当于 hexo deploy  部署到设置的github或者coding</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">next官方文档</a>  | <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo theme list</a>  </p>
+]]></content>
+      <categories>
+        <category>博客</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>git</tag>
+        <tag>github</tag>
+        <tag>nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git常用命令</title>
+    <url>/2019/04/12/git-mingling/</url>
+    <content><![CDATA[<h1 id="git常用命令"><a href="#git常用命令" class="headerlink" title="git常用命令"></a>git常用命令</h1><ul>
+<li><code>touch README.md</code> 创建并添加一个名字为readme.md的文件</li>
+<li><code>git init</code> 初始化git仓库</li>
+<li><code>git add README.MD</code> 添加一个文件到本地仓库，用于之后的提交(只有在本地代码库里面的代码才能够提交到git的远程仓库上去)</li>
+<li><code>git add .</code> 添加当前路径下的所有文件到本地仓库(注意那个.与add中间有一个空格)</li>
+<li><code>git commit -m &quot;notes&quot;</code> 为本次提交加注释(即本次提交的代码主要简介)<a id="more"></a></li>
+<li><code>git remote add origin https://github.com/***/***.git</code> 创建远程仓库，并为仓库命名,<strong>origin</strong>为仓库的别名(origin则设为默认主机)，用于将来引用,此处的<strong>url</strong>为git上事先创建好的url地址</li>
+<li><code>git push -u origin master</code> 本地的master分支推送到origin主机的master分支</li>
+<li><code>git pull --rebase origin master</code> 代码合并</li>
+<li><code>git config --global --unset http.proxy</code> （出现这个错误时：<code>fatal: unable to access &#39;https://github.com/fuey/blog-code-backups.git/&#39;: Couldn&#39;t resolve host &#39;github.com&#39;</code>，然后再提交就行了）</li>
+</ul>
+<h2 id="提交分支一般步骤"><a href="#提交分支一般步骤" class="headerlink" title="提交分支一般步骤"></a>提交分支一般步骤</h2><ul>
+<li><code>git add .</code>、<code>git commit -m &quot;notes&quot;</code>、<code>git remote add origin https://github.com/***/***.git</code>、 <code>git pull --rebase origin master</code>、<code>git push -u origin master</code>，顺序执行即可</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>插入排序</title>
+    <url>/2019/05/02/insert-sort/</url>
+    <content><![CDATA[<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p><strong>插入排序（Insertion Sort）</strong>算法是一个对少量元素进行排序的有效算法。<br> 插入排序是稳定的（即：两个相等的数不会交换位置）。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p><strong>直接插入排序</strong>，二分插入排序（又称折半插入排序），链表插入排序，希尔排序（又称缩小增量排序）。<br> （<strong>注：</strong>此文只讲直接插入排序，其他插入排序有时间会另写博客。）</p>
+<h2 id="原理（直接插入排序思想）"><a href="#原理（直接插入排序思想）" class="headerlink" title="原理（直接插入排序思想）"></a>原理（直接插入排序思想）</h2><p><strong>每次从无序表中取出最后一个元素，把它插入到有序表的合适位置，使有序表仍然有序。</strong><br> <strong>详解：</strong></p>
+<a id="more"></a>
+<blockquote>
+<p>从数组的第二个元素开始,将数组中的每一个元素按照（升序或者降序）规则插入到已排好序的数组中以达到排序的目的.<br>一般情况下将数组的第一个元素作为起始元素,从第二个元素开始依次插入。由于要插入到的数组是已经排好序的,所以只要从右向左（或者从后向前）找到排序插入点插入元素，以此类推，直到将最后一个数组元素插入到数组中,整个排序过程完成。</p>
+</blockquote>
+<h2 id="原理过程图（升序排列为例）"><a href="#原理过程图（升序排列为例）" class="headerlink" title="原理过程图（升序排列为例）"></a>原理过程图（升序排列为例）</h2><p>每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。（如下图）</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-acb8314a712ee2ab.png?imageMogr2/auto-orient/strip|imageView2/2/w/607/format/webp" alt="img"></p>
+<p>插入排序原理图.png</p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><blockquote>
+<p>将有n个元素的数组排序。<br>最佳情况就是，数组已经是正序排列了，在这种情况下，需要进行的比较操作是  （n-1）次即可。<br>最坏情况就是，数组是反序排列，那么此时需要进行的比较共有n(n-1)/2次。<br>插入排序的赋值操作是比较操作的次数加上 (n-1）次。<br>平均插入排序算法的<strong>时间复杂度为 O(n²)</strong>。因而，插入排序不适合对于数据量比较大的排序应用。但是，如果需要排序的数据量很小（eg：量级小于千），那么插入排序是一个不错的选择</p>
+</blockquote>
+<blockquote>
+<p><strong>Note：尽管插入排序的时间复杂度也是O(n²)，但一般情况下，插入排序会比冒泡排序快一倍，要比选择排序还要快一点。</strong></p>
+</blockquote>
+<h2 id="性能分析-稳定性"><a href="#性能分析-稳定性" class="headerlink" title="性能分析(稳定性)"></a>性能分析(稳定性)</h2><blockquote>
+<p>插入排序是在一个已经有序的小序列的基础上，一次插入一个元素。当然，刚开始这个有序的小序列只有1个元素，就是第一个元素。比较是从有序序列的末尾开始，也就是想要插入的元素和已经有序的最大者开始比起，如果比它大则直接插入在其后面，否则一直往前找直到找到它该插入的位置。如果碰见一个和插入元素相等的，那么插入元素把想插入的元素放在相等元素的后面。所以，相等元素的前后顺序没有改变，从原无序序列出去的顺序就是排好序后的顺序，所以插入排序是稳定的。</p>
+</blockquote>
+<p>##　示例代码（ Java）</p>
+<p>＃＃＃　核心代码</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  </span></span><br><span class="line"><span class="comment">     * 原理：每次将数组最后一个元素作为插入元素，与它前面有序（已排好序）的数组元素进行比较后，插入正确的位置，排序完成。</span></span><br><span class="line"><span class="comment">     * 升序为例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;<span class="comment">// i: 代表即将插入的元素角标,作为每一组比较数据的最后一个元素    </span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;   <span class="comment">//j:代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">                    arr[j] = arr[j - <span class="number">1</span>];</span><br><span class="line">                    arr[j - <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="直接插入排序完整代码示例"><a href="#直接插入排序完整代码示例" class="headerlink" title="直接插入排序完整代码示例"></a>直接插入排序完整代码示例</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ArrayTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] arr=&#123;<span class="number">90</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">45</span>,<span class="number">34</span>,<span class="number">88</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序前；</span></span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"原数组："</span>);</span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序</span></span><br><span class="line">        insertionSort(arr);</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"升序排序后："</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//排序后：</span></span><br><span class="line">        printArray(arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序:  升序为例</span></span><br><span class="line"><span class="comment">     * 原理：每次将最后一个元素作为插入元素，  与有序数列比较后 插入正确位置</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[]  <span class="title">insertionSort</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;  <span class="comment">//i&lt;6  1,2,3,4,5</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt; <span class="number">0</span>; j--) &#123;       <span class="comment">//j=i  代表数组角标</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &lt; arr[j - <span class="number">1</span>]) &#123;<span class="comment">//符合条件，插入元素（交换位置）</span></span><br><span class="line">                    swap(arr,j,j<span class="number">-1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    发现无论什么排序。都需要对满足条件的元素进行位置置换。</span></span><br><span class="line"><span class="comment">    所以可以把这部分相同的代码提取出来，单独封装成一个函数。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span>(<span class="params"><span class="keyword">int</span>[] arr,<span class="keyword">int</span> a,<span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[a];</span><br><span class="line">        arr[a] = arr[b];</span><br><span class="line">        arr[b] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printArray</span>(<span class="params"><span class="keyword">int</span>[] arr</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.print(<span class="string">"["</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;arr.length; x++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(x!=arr.length<span class="number">-1</span>)</span><br><span class="line">                System.<span class="keyword">out</span>.print(arr[x]+<span class="string">", "</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                System.<span class="keyword">out</span>.println(arr[x]+<span class="string">"]"</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果：</strong></p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/6095354-66391a218cafb18c.png?imageMogr2/auto-orient/strip|imageView2/2/w/252/format/webp" alt="img"></p>
+<p>插入排序运行结果.png</p>
+<p>作者：春莉姐姐<br>链接：<a href="https://www.jianshu.com/p/c49884d8805e" target="_blank" rel="noopener">https://www.jianshu.com/p/c49884d8805e</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>插入排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>快速排序</title>
     <url>/2019/05/02/quick-sort/</url>
     <content><![CDATA[<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>快速排序的核心思想是分治：选择数组中某个数作为基数，通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数都比基数小，另外一部分的所有数都都比基数大，然后再按此方法对这两部分数据分别进行快速排序，循环递归，最终使整个数组变成有序。</p>
@@ -428,24 +428,6 @@ branch: master</code></li>
         <tag>排序</tag>
         <tag>算法</tag>
         <tag>快速排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>选择排序</title>
-    <url>/2019/05/02/selection-sort/</url>
-    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。 选择排序是不稳定的排序方法（比如序列[5， 5， 3]第一次就将第一个[5]与[3]交换，导致第一个5挪动到第二个5后面）。<br> <strong>性质：</strong>不稳定的排序方法</p>
-<a id="more"></a>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void selection_sort(int* a, int n) &#123;</span><br><span class="line">  for (int i = 1; i &lt; n; ++i) &#123;</span><br><span class="line">    int ith = i;</span><br><span class="line">    for (int j = i + 1; j &lt;= n; ++j) &#123;</span><br><span class="line">      if (a[j] &lt; a[ith]) &#123;</span><br><span class="line">        ith = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int t = a[i];</span><br><span class="line">    a[i] = a[ith];</span><br><span class="line">    a[ith] = t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>交换时间：最好的情况全部元素已经有序，则 交换次数为0；最差的情况，全部元素逆序，就要交换 n-1 次；</p>
-<p>所以最优的时间复杂度  和最差的时间复杂度   和平均时间复杂度  都为 ：O(n^2)</p>
-<p>空间复杂度，最优的情况下（已经有顺序）复杂度为：O(0) ；最差的情况下（全部元素都要重新排序）复杂度为：O(n );；平均的时间复杂度：O(1)</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>选择排序</tag>
       </tags>
   </entry>
   <entry>
@@ -651,6 +633,24 @@ branch: master</code></li>
       </categories>
       <tags>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>选择排序</title>
+    <url>/2019/05/02/selection-sort/</url>
+    <content><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>选择排序（Selection sort）是一种简单直观的排序算法。它的工作原理是每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。 选择排序是不稳定的排序方法（比如序列[5， 5， 3]第一次就将第一个[5]与[3]交换，导致第一个5挪动到第二个5后面）。<br> <strong>性质：</strong>不稳定的排序方法</p>
+<a id="more"></a>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void selection_sort(int* a, int n) &#123;</span><br><span class="line">  for (int i = 1; i &lt; n; ++i) &#123;</span><br><span class="line">    int ith = i;</span><br><span class="line">    for (int j = i + 1; j &lt;= n; ++j) &#123;</span><br><span class="line">      if (a[j] &lt; a[ith]) &#123;</span><br><span class="line">        ith = j;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int t = a[i];</span><br><span class="line">    a[i] = a[ith];</span><br><span class="line">    a[ith] = t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>交换时间：最好的情况全部元素已经有序，则 交换次数为0；最差的情况，全部元素逆序，就要交换 n-1 次；</p>
+<p>所以最优的时间复杂度  和最差的时间复杂度   和平均时间复杂度  都为 ：O(n^2)</p>
+<p>空间复杂度，最优的情况下（已经有顺序）复杂度为：O(0) ；最差的情况下（全部元素都要重新排序）复杂度为：O(n );；平均的时间复杂度：O(1)</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>选择排序</tag>
       </tags>
   </entry>
 </search>
